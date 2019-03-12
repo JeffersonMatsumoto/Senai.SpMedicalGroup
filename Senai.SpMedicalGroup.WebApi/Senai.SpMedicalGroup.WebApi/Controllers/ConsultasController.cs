@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Senai.SpMedicalGroup.WebApi.Domains;
@@ -23,6 +24,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             ConsultaRepository = new ConsultaRepository();
         }
 
+        [Authorize(Roles = "ADMINISTRADOR")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -36,6 +38,37 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "MÉDICO")]
+        [HttpGet("ConsultasMedicos")]
+        public IActionResult GetConsultasMedicos()
+        {
+            try
+            {
+                return Ok(ConsultaRepository.ListarConsultasMedico()); //break aqui
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "PACIENTE")]
+        [HttpGet("ConsultasPacientes")]
+        public IActionResult GetConsultasPacientes()
+        {
+            try
+            {
+                return Ok(ConsultaRepository.ListarConsultasPaciente());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "ADMINISTRADOR")]
         [HttpPost]
         public IActionResult Post(Consultas consulta)
         {
@@ -50,6 +83,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMINISTRADOR")]
         [HttpPut]
         public IActionResult Put(Consultas consulta)
         {

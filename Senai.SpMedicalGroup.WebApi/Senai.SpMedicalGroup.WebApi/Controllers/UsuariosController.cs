@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Senai.SpMedicalGroup.WebApi.Domains;
@@ -22,6 +23,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             UsuarioRepository = new UsuarioRepository();
         }
 
+        [Authorize(Roles = "ADMINISTRADOR")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -35,6 +37,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMINISTRADOR")]
         [HttpPost]
         public IActionResult Post(Usuarios usuario)
         {

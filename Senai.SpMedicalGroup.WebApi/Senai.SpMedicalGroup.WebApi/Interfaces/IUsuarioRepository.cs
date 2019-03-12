@@ -10,5 +10,6 @@ namespace Senai.SpMedicalGroup.WebApi.Interfaces
     {
         List<Usuarios> Listar();
         void Cadastrar(Usuarios usuario);
+        Usuarios BuscarEmailSenha(string email, string senha);
     }
 }

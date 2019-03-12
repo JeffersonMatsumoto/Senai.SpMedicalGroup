@@ -1,4 +1,5 @@
-﻿using Senai.SpMedicalGroup.WebApi.Domains;
+﻿using Microsoft.EntityFrameworkCore;
+using Senai.SpMedicalGroup.WebApi.Domains;
 using Senai.SpMedicalGroup.WebApi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -46,20 +47,25 @@ namespace Senai.SpMedicalGroup.WebApi.Repositories
             }
         }
 
-        public List<Consultas> ListarConsultasMedico(Medicos medico)
+        public List<Consultas> ListarConsultasMedico()
         {
             using (SpmedgroupContext ctx = new SpmedgroupContext())
             {
                 //Consultas consultaExiste = ctx.Consultas.Find(consulta.Id);
                 //return ctx.Consultas.Find(medico.Id)   .ToList();
-                Consultas medicoConsultas = ctx.Consultas.Find(medico.Id);
-                medicoConsultas = ctx.Consultas.Find(medico.Id);
+                //Consultas medicoConsultas = ctx.Consultas.Find(medico.Id);
+                //medicoConsultas = ctx.Consultas.Find(medico.Id);
+                return ctx.Consultas.Include(c => c.IdMedicoNavigation).ToList();
+                //ctx.Medicos.Include("Consultas").ToList();
             }
         }
 
-        public List<Consultas> ListarConsultasPaciente(Prontuarios paciente)
+        public List<Consultas> ListarConsultasPaciente()
         {
-            throw new NotImplementedException();
+            using (SpmedgroupContext ctx = new SpmedgroupContext())
+            {
+                return ctx.Consultas.Include(c => c.IdProntuarioNavigation).ToList();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Senai.SpMedicalGroup.WebApi.Domains
 {
@@ -11,8 +12,15 @@ namespace Senai.SpMedicalGroup.WebApi.Domains
         }
 
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Informe o nome do médico")]
         public string NomeMedico { get; set; }
+
+        [Required(ErrorMessage = "Informe o CRM do paciente")]
+        [StringLength(5, MinimumLength = 5)]
         public string Crm { get; set; }
+
+        //
         public int? IdClinica { get; set; }
         public int IdEspecialidade { get; set; }
         public int? IdUsuario { get; set; }

@@ -10,9 +10,9 @@ namespace Senai.SpMedicalGroup.WebApi.Interfaces
     {
         List<Consultas> Listar();
 
-        List<Consultas> ListarConsultasMedico(Medicos medico);
+        List<Consultas> ListarConsultasMedico();
 
-        List<Consultas> ListarConsultasPaciente(Prontuarios paciente);
+        List<Consultas> ListarConsultasPaciente();
         
         void Cadastrar(Consultas consulta);
                     
