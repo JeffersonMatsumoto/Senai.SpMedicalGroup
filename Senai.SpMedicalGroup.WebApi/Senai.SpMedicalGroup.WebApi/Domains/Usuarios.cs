@@ -14,9 +14,9 @@ namespace Senai.SpMedicalGroup.WebApi.Domains
         
         public int Id { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [Required(ErrorMessage = "Informe o email")]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Informe um email válido...")]
+        //[RegularExpression(".+\\@.+\\..+", ErrorMessage = "Informe um email válido...")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Informe um email válido")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Informe a senha")]
@@ -30,6 +30,6 @@ namespace Senai.SpMedicalGroup.WebApi.Domains
         public TipoUsuarios IdTipoUsuarioNavigation { get; set; }
         public ICollection<Medicos> Medicos { get; set; }
         public ICollection<Prontuarios> Prontuarios { get; set; }
-        public object UsuarioId { get; internal set; }
+        //public object UsuarioId { get; internal set; }
     }
 }

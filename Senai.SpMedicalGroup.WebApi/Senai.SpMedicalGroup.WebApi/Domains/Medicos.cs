@@ -17,7 +17,7 @@ namespace Senai.SpMedicalGroup.WebApi.Domains
         public string NomeMedico { get; set; }
 
         [Required(ErrorMessage = "Informe o CRM do paciente")]
-        [StringLength(5, MinimumLength = 5)]
+        [StringLength(maximumLength:5, MinimumLength = 5)]
         public string Crm { get; set; }
 
         //

@@ -23,7 +23,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             ProntuarioRepository = new ProntuarioRepository();
         }
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -37,7 +37,8 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        //[Authorize(Roles = "1")]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(Prontuarios prontuario)
         {
@@ -51,7 +52,6 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                 return BadRequest(ex);
             }
         }
-
 
     }
 }

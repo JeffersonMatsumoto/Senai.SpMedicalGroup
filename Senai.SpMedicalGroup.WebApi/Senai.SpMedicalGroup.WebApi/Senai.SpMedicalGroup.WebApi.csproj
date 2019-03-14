@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Interfaces\NovaPasta\**" />
+    <Content Remove="Interfaces\NovaPasta\**" />
+    <EmbeddedResource Remove="Interfaces\NovaPasta\**" />
+    <None Remove="Interfaces\NovaPasta\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

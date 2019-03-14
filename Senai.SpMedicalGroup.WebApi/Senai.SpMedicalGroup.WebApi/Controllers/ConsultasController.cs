@@ -24,7 +24,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             ConsultaRepository = new ConsultaRepository();
         }
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get()
         {
@@ -38,14 +38,14 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR")]
-        [Authorize(Roles = "MÉDICO")]
-        [HttpGet("ConsultasMedicos")]
-        public IActionResult GetConsultasMedicos()
+        [Authorize(Roles = "Administrador, Médico")]
+        //[Authorize(Roles = "Médico")]
+        [HttpGet("ConsultasMedicos/{idmedico}")]
+        public IActionResult GetConsultasMedicos(int idmedico)
         {
             try
             {
-                return Ok(ConsultaRepository.ListarConsultasMedico()); //break aqui
+                return Ok(ConsultaRepository.ListarConsultasMedico(idmedico)); //break aqui
             }
             catch (Exception ex)
             {
@@ -53,14 +53,14 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR")]
-        [Authorize(Roles = "PACIENTE")]
-        [HttpGet("ConsultasPacientes")]
-        public IActionResult GetConsultasPacientes()
+        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Paciente")]
+        [HttpGet("ConsultasPacientes/{idpaciente}")]
+        public IActionResult GetConsultasPacientes(int idpaciente)
         {
             try
             {
-                return Ok(ConsultaRepository.ListarConsultasPaciente());
+                return Ok(ConsultaRepository.ListarConsultasPaciente(idpaciente));
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post(Consultas consulta)
         {
@@ -83,7 +83,8 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
-        [Authorize(Roles = "ADMINISTRADOR")]
+        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Medico")]
         [HttpPut]
         public IActionResult Put(Consultas consulta)
         {

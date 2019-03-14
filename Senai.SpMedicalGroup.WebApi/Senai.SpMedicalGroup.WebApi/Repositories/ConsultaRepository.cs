@@ -47,7 +47,7 @@ namespace Senai.SpMedicalGroup.WebApi.Repositories
             }
         }
 
-        public List<Consultas> ListarConsultasMedico()
+        public List<Consultas> ListarConsultasMedico(int idmedico)
         {
             using (SpmedgroupContext ctx = new SpmedgroupContext())
             {
@@ -55,16 +55,19 @@ namespace Senai.SpMedicalGroup.WebApi.Repositories
                 //return ctx.Consultas.Find(medico.Id)   .ToList();
                 //Consultas medicoConsultas = ctx.Consultas.Find(medico.Id);
                 //medicoConsultas = ctx.Consultas.Find(medico.Id);
-                return ctx.Consultas.Include(c => c.IdMedicoNavigation).ToList();
+
+                //return ctx.Consultas.Include(c => c.IdMedicoNavigation).ToList();
+
                 //ctx.Medicos.Include("Consultas").ToList();
+                return ctx.Consultas.Where(c => c.IdMedicoNavigation.Id == idmedico).ToList();
             }
         }
 
-        public List<Consultas> ListarConsultasPaciente()
+        public List<Consultas> ListarConsultasPaciente(int idpaciente)
         {
             using (SpmedgroupContext ctx = new SpmedgroupContext())
             {
-                return ctx.Consultas.Include(c => c.IdProntuarioNavigation).ToList();
+                return ctx.Consultas.Where(c => c.IdProntuarioNavigation.Id == idpaciente).ToList();
             }
         }
     }

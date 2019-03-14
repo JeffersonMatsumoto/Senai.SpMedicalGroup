@@ -14,36 +14,23 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class ClinicasController : ControllerBase
     {
-        private IUsuarioRepository UsuarioRepository { get; set; }
 
-        public UsuariosController()
-        {
-            UsuarioRepository = new UsuarioRepository();
-        }
+        private IClinicaRepository ClinicaRepository { get; set; }
 
-        [Authorize(Roles = "Administrador")]
-        [HttpGet]
-        public IActionResult Get()
+        public ClinicasController()
         {
-            try
-            {
-                return Ok(UsuarioRepository.Listar());
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            ClinicaRepository = new ClinicaRepository();
         }
 
         [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public IActionResult Post(Usuarios usuario)
+        public IActionResult Post(Clinicas clinica)
         {
             try
             {
-                UsuarioRepository.Cadastrar(usuario);
+                ClinicaRepository.Cadastrar(clinica);
                 return Ok();
             }
             catch (Exception)

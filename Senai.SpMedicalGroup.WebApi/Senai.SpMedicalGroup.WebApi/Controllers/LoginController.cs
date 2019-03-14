@@ -31,6 +31,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
         {
             try
             {
+
                 Usuarios usuarioBuscado = UsuarioRepository.BuscarEmailSenha(login.Email, login.Senha);
 
                 if (usuarioBuscado == null)
@@ -45,7 +46,8 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                 {
                     new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.Id.ToString()),
-                    new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuarioNavigation.Tipo),
+                    new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuarioNavigation.Tipo.ToString()),
+                    //new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuario.ToString())
                 };
 
                 var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("spmedgroup-chave-autenticacao"));
@@ -65,9 +67,9 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                     token = new JwtSecurityTokenHandler().WriteToken(token)
                 });
             }
-            catch
+            catch(Exception XX)
             {
-                return BadRequest();
+                return BadRequest(XX.Message); //aparece o erro no postman
             }
         }
     }
