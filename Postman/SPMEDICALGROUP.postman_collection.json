@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "4aaf6c2a-8c59-489e-9f1b-b407e7a3014d",
+		"name": "SPMEDICALGROUP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "USUARIOS",
+			"item": [
+				{
+					"name": "Usuarios.Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuarios.Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"paciente1@gmail.com\",\n    \"senha\": \"123456paciente\",\n    \"idTipoUsuario\": 3\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CONSULTAS",
+			"item": [
+				{
+					"name": "Versões antigas",
+					"item": [
+						{
+							"name": "Consultas.Listar.ConsultasMedicos",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkplZmZlcnNvbkBnbWFpbC5jb20iLCJqdGkiOiIxMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE1NTI1NzI5NjEsImlzcyI6IlNwTWVkR3JvdXAuV2ViQXBpIiwiYXVkIjoiU3BNZWRHcm91cC5XZWJBcGkifQ.XFAWqa0OZyI2obHwT0BfGCW9sjNp3uxg_2UV_Q2Fd-E"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/consultas/consultasmedicos/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"consultas",
+										"consultasmedicos",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Consultas.Listar.ConsultasPacientes",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkplZmZlcnNvbkBnbWFpbC5jb20iLCJqdGkiOiIxMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE1NTI1NzIxMDQsImlzcyI6IlNwTWVkR3JvdXAuV2ViQXBpIiwiYXVkIjoiU3BNZWRHcm91cC5XZWJBcGkifQ.ZiNO-npbr6Jo7AVGb1bcu39X2yjct-mG2ISFFymV5qk"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/consultas/consultaspacientes/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"consultas",
+										"consultaspacientes",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Consultas.Listar (Lista as consultas dependendo do acesso)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkplZmZlcnNvbkBnbWFpbC5jb20iLCJqdGkiOiIxMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE1NTI1NjY0NDIsImlzcyI6IlNwTWVkR3JvdXAuV2ViQXBpIiwiYXVkIjoiU3BNZWRHcm91cC5XZWJBcGkifQ.V2qMwHlvzQpp6mpp47lr6gH5my6dvKCj6-doCVQGb5Q"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/consultas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultas.Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"descricao\": \"Diagnóstico favorável\",\n  \"dataConsulta\": \"2019-03-23T00:00:00\",\n  \"idMedico\": 1,\n  \"idProntuario\": 23,\n  \"idSituacao\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/consultas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultas.Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 8,\n\t\"descricao\": \"Diagnóstico favorável porém suspeito\",\n\t\"dataConsulta\": \"2019-03-23T00:00:00\",\n\t\"idMedico\": 1,\n\t\"idProntuario\": 23,\n\t\"idSituacao\": 3\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/consultas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRONTUARIOS (PACIENTES)",
+			"item": [
+				{
+					"name": "Prontuarios.Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/prontuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"prontuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Prontuarios.Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkplZmZlcnNvbkBnbWFpbC5jb20iLCJqdGkiOiIxMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE1NTI1NzA3MjIsImlzcyI6IlNwTWVkR3JvdXAuV2ViQXBpIiwiYXVkIjoiU3BNZWRHcm91cC5XZWJBcGkifQ.TbfEPjFBy3gbkgAJInt7HWqcWaf2n7IxF3jnQ1rLZfI"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nomePaciente\": \"Fábio\",\n    \"cpf\": \"12332112345\",\n    \"rg\": \"123321123\",\n\t\"dataNascimento\": \"2000-11-01\",\n    \"telefone\": \"11 3212-0931\",\n    \"idEndereco\": 9,\n    \"idUsuario\": 13\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/prontuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"prontuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CLÍNICAS",
+			"item": [
+				{
+					"name": "Clinicas.Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkplZmZlcnNvbkBnbWFpbC5jb20iLCJqdGkiOiIxMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE1NTI5OTg1NzgsImlzcyI6IlNwTWVkR3JvdXAuV2ViQXBpIiwiYXVkIjoiU3BNZWRHcm91cC5XZWJBcGkifQ.4Ttgox36wbHbbwU08GDAPfymSigubp-M465WvGpwX8o"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/clinicas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"clinicas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clinicas.Cadastrar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkplZmZlcnNvbkBnbWFpbC5jb20iLCJqdGkiOiIxMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluaXN0cmFkb3IiLCJleHAiOjE1NTI5OTg1NzgsImlzcyI6IlNwTWVkR3JvdXAuV2ViQXBpIiwiYXVkIjoiU3BNZWRHcm91cC5XZWJBcGkifQ.4Ttgox36wbHbbwU08GDAPfymSigubp-M465WvGpwX8o"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/clinicas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"clinicas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\":\"Jefferson@gmail.com\",\n  \"senha\":\"123456admin\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
