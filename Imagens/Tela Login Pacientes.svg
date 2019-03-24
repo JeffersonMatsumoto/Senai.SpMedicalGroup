@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="414" height="736" viewBox="0 0 414 736">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Retângulo_4" data-name="Retângulo 4" width="340.942" height="191.78" fill="none"/>
+    </clipPath>
+    <filter id="Botão_Login" x="70" y="504" width="289" height="82" filterUnits="userSpaceOnUse">
+      <feOffset dx="5" dy="5" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-Tela_Login_Pacientes_1">
+      <rect width="414" height="736"/>
+    </clipPath>
+  </defs>
+  <g id="Tela_Login_Pacientes_1" data-name="Tela Login Pacientes – 1" clip-path="url(#clip-Tela_Login_Pacientes_1)">
+    <rect width="414" height="736" fill="#fff"/>
+    <g id="Agrupar_14" data-name="Agrupar 14">
+      <line id="Linha_Senha" data-name="Linha Senha" x2="274" transform="translate(70.5 427.5)" fill="none" stroke="#707070" stroke-width="1"/>
+      <line id="Linha_Email" data-name="Linha Email" x2="274" transform="translate(70.5 328.5)" fill="none" stroke="#707070" stroke-width="1"/>
+      <text id="E-mail" transform="translate(74 298)" fill="#707070" font-size="20" font-family="Tahoma" opacity="0.5"><tspan x="0" y="20">E-mail</tspan></text>
+      <text id="Senha" transform="translate(74 398)" fill="#707070" font-size="20" font-family="Tahoma" opacity="0.5"><tspan x="0" y="20">Senha</tspan></text>
+      <g id="Agrupar_3" data-name="Agrupar 3" transform="translate(37 57)" clip-path="url(#clip-path)">
+        <g id="Agrupar_2" data-name="Agrupar 2">
+          <g id="Agrupar_1" data-name="Agrupar 1" clip-path="url(#clip-path)">
+            <path id="Caminho_1" data-name="Caminho 1" d="M-823.47-211.943l-12.294,12.7q-15.342-14.888-29.994-14.89a22.664,22.664,0,0,0-15.957,6.147q-6.643,6.147-6.642,14.343,0,7.242,5.474,13.8,5.475,6.695,23,15.709,21.356,11.065,29.022,21.31a40.383,40.383,0,0,1,4.445,7.813c.249.585.458,1.122.622,1.558s.279.766.344.954a39.094,39.094,0,0,1,1.613,6.485c.017.1.044.278.078.514a44.894,44.894,0,0,1,.428,6.036c0,.722-.008,2.23-.173,4.15a46.048,46.048,0,0,1-.755,5.28,42.885,42.885,0,0,1-2.56,8.117A43.944,43.944,0,0,1-836.2-88.454q-12.861,12.7-32.149,12.7a56.189,56.189,0,0,1-24.558-5.6,53.314,53.314,0,0,1-19.359-15.436l12.021-13.661q14.65,16.53,31.082,16.529A28,28,0,0,0-849.58-101.3q8.078-7.377,8.079-17.348a22.238,22.238,0,0,0-5.338-14.617q-5.341-6.282-24.094-15.846-20.125-10.38-27.38-20.49a38.591,38.591,0,0,1-7.255-23.086q0-16.937,11.562-28.14t29.214-11.2q20.524,0,41.323,20.081" transform="translate(1009.704 249.777)" fill="#96c8de"/>
+            <path id="Caminho_2" data-name="Caminho 2" d="M-557.872-119.584l-1.484,2.348,9.871,6.495" transform="translate(719.465 157.304)" fill="#88d3a4"/>
+            <path id="Caminho_3" data-name="Caminho 3" d="M-494.239,289.15l-3.867,2.677-5.579-11.178Z" transform="translate(673.679 -171.858)" fill="#88d3a4"/>
+            <path id="Caminho_4" data-name="Caminho 4" d="M-509.045-214.129a22.663,22.663,0,0,1,15.957,6.147q6.643,6.147,6.642,14.343,0,7.243-5.474,13.8-5.475,6.695-23,15.709c-3.163,1.639-6.087,3.263-8.8,4.875h36.536A48.975,48.975,0,0,0-476.489-169.6a38.593,38.593,0,0,0,7.255-23.086q0-16.937-11.562-28.14t-29.214-11.2q-20.524,0-41.323,20.081l12.294,12.7q15.342-14.888,29.994-14.89" transform="translate(712.865 249.777)" fill="#88d3a4"/>
+            <path id="Caminho_5" data-name="Caminho 5" d="M-473.268,177.758l-46.107,26.772-14.873-13.386,24.541-13.386" transform="translate(698.816 -87.238)" fill="#88d3a4"/>
+            <rect id="Retângulo_1" data-name="Retângulo 1" width="9.305" height="41.582" transform="translate(158.633 106.862) rotate(-26.523)" fill="#88d3a4"/>
+            <path id="Caminho_6" data-name="Caminho 6" d="M-463.767,315.625l1.1,2.966.38,1.256.371,1.409.43,1.98.48,3.315.125,1.495.1,1.49-.009.68.009,1.1-.021,1.147-.045,1.083-.094,1.383-.145,1.479-.458,3.106-.218.71-9.668-19.335Z" transform="translate(647.152 -200.624)" fill="#88d3a4"/>
+            <rect id="Retângulo_2" data-name="Retângulo 2" width="8.18" height="7.437" transform="translate(174.978 114.317)" fill="#88d3a4"/>
+            <path id="Caminho_7" data-name="Caminho 7" d="M-463.055,460.373l4.51,6.222,1.308-2.766.7-1.777.576-1.679.459-1.528.363-1.38.27-1.176Z" transform="translate(640.264 -316.309)" fill="#88d3a4"/>
+          </g>
+        </g>
+      </g>
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Botão_Login)">
+        <g id="Botão_Login-2" data-name="Botão Login" transform="translate(74 508)" fill="#82c1d7" stroke="#707070" stroke-width="1">
+          <rect width="271" height="64" rx="32" stroke="none"/>
+          <rect x="0.5" y="0.5" width="270" height="63" rx="31.5" fill="none"/>
+        </g>
+      </g>
+      <text id="Login" transform="translate(184 528)" fill="#fff" font-size="20" font-family="Tahoma-Bold, Tahoma" font-weight="700"><tspan x="0" y="20">Login</tspan></text>
+      <g id="Filtro_Imagem" data-name="Filtro Imagem" transform="translate(0 666)" fill="#82c1d7" stroke="#707070" stroke-width="1" opacity="0.55">
+        <rect width="414" height="71" stroke="none"/>
+        <rect x="0.5" y="0.5" width="413" height="70" fill="none"/>
+      </g>
+      <text id="_2019_-_SP_MEDICAL_GROUP_" data-name="© 2019 - SP MEDICAL GROUP " transform="translate(44.5 692.5)" fill="#707070" stroke="#707070" stroke-width="1" font-size="20" font-family="Tahoma" letter-spacing="0.05em"><tspan x="9.703" y="20">© 2019 - SP MEDICAL GROUP </tspan></text>
+      <text id="Login_para_MÉDICOS" data-name="Login para MÉDICOS" transform="translate(-0.5 607.5)" fill="#707070" font-size="20" font-family="Tahoma"><tspan x="109.142" y="20">Login para </tspan><tspan y="20" font-family="Tahoma-Bold, Tahoma" font-weight="700">MÉDICOS</tspan></text>
+    </g>
+  </g>
+</svg>
