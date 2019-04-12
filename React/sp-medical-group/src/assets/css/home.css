@@ -1,0 +1,16 @@
+#logo {
+    height: 5%;
+    width: 5%;
+}
+
+#filtro{
+    position: relative;
+    z-index: 1;    
+    background: rgba(0, 0, 59, 0.5);
+}
+
+#imgBanner {
+    position: relative;
+    z-index: 2;
+
+}
