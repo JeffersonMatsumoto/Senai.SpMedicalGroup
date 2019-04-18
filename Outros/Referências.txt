@@ -1,0 +1,1 @@
+https://heelpbook.altervista.org/2014/javascript-events-onblur-onchange-onclick-onfocus-onselect-onsubmit/

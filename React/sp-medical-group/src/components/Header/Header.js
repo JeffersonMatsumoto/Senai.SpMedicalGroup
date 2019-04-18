@@ -1,34 +1,54 @@
 import React from 'react'
 // import React, { Component, Fragment } from 'react';
 import Logo from '../../assets/img/Logo.png'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Navbar, Nav } from 'react-bootstrap';
+
+
+//npm install react-bootstrap bootstrap
 
 function Header() {
-    return(
-        <div id="HeaderDiv">
-            {/* <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> */}
-            
-            {/* <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> */}
-            
-            <header style={ {} }>
-                <div>
-                    <nav>
-                        <div>
-                            <ul>
-                                <img id="logo" src={Logo}/>
-                                <li>
-                                    <a>Consultas</a>
-                                </li>
-                                <li>
-                                    <a>Login</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </header>
-        </div>
+    return (
+        <header>
+            {/* <Nav variant="pills">
+                <img id="logo" src={Logo} alt="logo" />
+                <Nav.Item className="nav-item">
+                    <Nav.Link href="/consultas">Consultas</Nav.Link>
+                </Nav.Item>
+                <Nav.Item className="nav-item">
+                    <Nav.Link href="/login">Login</Nav.Link>
+                </Nav.Item>
+            </Nav> */}
+
+            {/* <img id="logo" src={Logo} alt="logo" />
+            <Nav id="header-links">
+                <Nav.Item>
+                    <Nav.Link href="/consultas">Consultas</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                </Nav.Item>
+            </Nav> */}
+            <Navbar fixed="top" style={{ 'borderBottom': '2px solid #ebebeb', 'backgroundColor': 'white' }}>
+                <Navbar.Brand href="/" style={{ 'width' : '75%'}}>
+                    <img
+                        src={Logo}
+                        width="5%"
+                        height="5%"
+                        className="d-inline-block align-top"
+                        alt="React Bootstrap logo"
+                    />
+                </Navbar.Brand>
+                <Nav>
+                    <Nav.Item>
+                        <Nav.Link href="/consultas">CONSULTAS</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item style={{ 'marginLeft' : '50%' }} > 
+                        <Nav.Link href="/login">LOGIN</Nav.Link>
+                    </Nav.Item>
+                </Nav>
+            </Navbar>
+        </header>
     );
 }
 

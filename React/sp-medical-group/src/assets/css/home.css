@@ -1,16 +1,54 @@
-#logo {
-    height: 5%;
-    width: 5%;
+#banner-container{
+    background-color: #82BEDB;
+    opacity: 0.5;
 }
 
-#filtro{
-    position: relative;
-    z-index: 1;    
-    background: rgba(0, 0, 59, 0.5);
+#banner-filtro{
+    background: url('../img/Banner.jpg');
+    background-size: 100%;
+    height: 100vh;
+    width: 100%;
+    line-height: 500%;
+    text-align: center;
+    vertical-align: middle;
 }
 
-#imgBanner {
-    position: relative;
-    z-index: 2;
 
+
+.carousel-inner {
+    height: 100vh;
+    /* background: url('../img/Banner-layout.png'); */
+    background-color: #82BEDB;
+    background-size: 100%;
+    width: 100%;
+}
+
+ol{
+    top: 75%;
+}
+.h2-banner {
+padding-top: 2%;
+}
+
+.img-banner{
+    opacity: 0.9;
+    height: 100vh;
+    width: 100%;
+    z-index: 1;
+}
+
+.carousel-caption{
+    position: unset;
+    left: 0%;
+    right: 0%;
+}
+
+/* .carousel-control-prev, .carousel-control-next{
+    background-color: lightblue;
+} */
+
+.carousel-control-prev-icon, .carousel-control-next-icon{
+    padding: 30%;
+    /* border-radius: 20%; */
+    /* background-color: black; */
 }

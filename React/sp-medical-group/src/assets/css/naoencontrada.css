@@ -1,0 +1,21 @@
+.notfound{   
+    width: 100%;
+    text-align: center;
+    /* height: 100%; */
+    position: absolute;
+    top: 35%;
+}
+
+#container-notfound {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+#h1-notfound {
+    padding-bottom: 0.5rem;
+}
+
+#btn-naoencontrada{
+    width: 25%;
+}
