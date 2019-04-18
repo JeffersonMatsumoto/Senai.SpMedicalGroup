@@ -43,7 +43,7 @@ function Header() {
                     <Nav.Item>
                         <Nav.Link href="/consultas">CONSULTAS</Nav.Link>
                     </Nav.Item>
-                    <Nav.Item style={{ 'marginLeft' : '50%' }} > 
+                    <Nav.Item style={{ 'marginLeft' : '50%' }} >
                         <Nav.Link href="/login">LOGIN</Nav.Link>
                     </Nav.Item>
                 </Nav>

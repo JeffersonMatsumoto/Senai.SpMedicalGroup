@@ -6,21 +6,108 @@ import React, { Component } from 'react';
 import Header from '../../components/Header/Header.js';
 import Rodape from '../../components/Rodape/Rodape.js';
 
+import "../../assets/css/funcionalidades.css";
+
+import { Button } from 'react-bootstrap';
+
+// https://fontawesome.com/how-to-use/on-the-web/using-with/react
+
+// npm i --save @fortawesome/fontawesome-svg-core
+// npm i --save @fortawesome/free-solid-svg-icons
+// npm i --save @fortawesome/react-fontawesome
+
+// Then in your app, import and add an icon to the Library:
+// ERA NO APP.JS MAS...
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStroopwafel, faPlusSquare, faClipboardList } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faStroopwafel)
+library.add(faPlusSquare)
+library.add(faClipboardList)
+
+
 class Funcionalidades extends Component {
-    render() {
-      return (
+  render() {
+    return (
+      <div>
         <div>
-          <div>
-            <Header/>
+          <Header />
+          <div id="container-funcionalidades">
+            <h1>Funcionalidades</h1>
 
-            
+            <div id="funcionalidades-grid">
+            <div id="cadastros">
+              <h3>Cadastros</h3>
+              <div className="funcionalidade-item">
+                <Button href="/clinicas" className="btn-funcionalidade" variant="outline-info">
+                  <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="plus-square" />
+                  <p id="p-btn">Clínicas</p>
+                </Button>
+              </div>
 
+              <div className="funcionalidade-item">
+                <Button href="/usuarios" className="btn-funcionalidade" variant="outline-info">
+                  <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="plus-square" />
+                  <p id="p-btn">Usuários</p>
+                </Button>
+              </div>
 
-            <Rodape/>
+              <div className="funcionalidade-item">
+                <Button href="/prontuarios" className="btn-funcionalidade" variant="outline-info">
+                  <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="plus-square" />
+                  <p id="p-btn">Pacientes</p>
+                </Button>
+              </div>
+
+              <div className="funcionalidade-item">
+                <Button href="/consultas" className="btn-funcionalidade" variant="outline-info">
+                  <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="plus-square" />
+                  <p id="p-btn">Consultas</p>
+                </Button>
+              </div>
+            </div>
+
+            <div id="listas">
+              <h3>Listas</h3>
+              <div className="funcionalidade-item">
+                <Button className="btn-funcionalidade" variant="outline-primary">
+                  <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
+                  <p id="p-btn">Clínicas</p>
+                </Button>
+              </div>
+
+              <div className="funcionalidade-item">
+                <Button className="btn-funcionalidade" variant="outline-primary">
+                  <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
+                  <p id="p-btn">Usuários</p>
+                </Button>
+              </div>
+
+              <div className="funcionalidade-item">
+                <Button className="btn-funcionalidade" variant="outline-primary">
+                  <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
+                  <p id="p-btn">Pacientes</p>
+                </Button>
+              </div>
+
+              <div className="funcionalidade-item">
+                <Button className="btn-funcionalidade" variant="outline-primary">
+                  <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
+                  <p id="p-btn">Consultas</p>
+                </Button>
+              </div>
+              
+            </div>
+            </div>
+
           </div>
+          <Rodape />
         </div>
-      );
-    }
+      </div>
+    );
   }
+}
 
-  export default Funcionalidades;
+export default Funcionalidades;

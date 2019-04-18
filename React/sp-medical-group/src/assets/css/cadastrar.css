@@ -1,6 +1,9 @@
 .forms{
-    padding: 8%;
-    left: 25%;
+    padding: 3%;
+    border: 5px solid #ebebeb;
+    outline: 5px solid #fff;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.5);
+    margin: 7%;
 }
 
 #btns{
@@ -12,7 +15,8 @@
 
 h3{
     text-align: center;
-    padding: 1%;    
+    padding: 1%;
+    margin-bottom: 1%;
 }
 
 #tipo-usuario{

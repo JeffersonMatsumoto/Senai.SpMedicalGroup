@@ -19,6 +19,8 @@ import CadastroPaciente from './pages/Administrador/Cadastrar/CadastrarPaciente.
 import CadastroConsulta from './pages/Administrador/Cadastrar/CadastrarConsulta';
 import CadastroClinica from './pages/Administrador/Cadastrar/CadastrarClinica';
 
+import ListaClinica from './pages/Administrador/Listar/ListarClinica';
+
 import Funcionalidades from './pages/Administrador/Funcionalidades.js';
 
 // ReactDOM.render(<App />, document.getElementById('root'));
@@ -86,6 +88,8 @@ const routing = (
                 {/* <PermissaoAdmin path="/CadastroPaciente" component={CadastroPaciente} /> */}
                 
                 <Route path="/funcionalidades" component={Funcionalidades}/>
+
+                <Route path="/listaclinica" component={ListaClinica}/>
 
                 <Route component={NaoEncontrada} />
             </Switch>
