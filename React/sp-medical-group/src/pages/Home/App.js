@@ -7,13 +7,14 @@ import SegundoBanner from '../../assets/img/Banner-layout.png';
 import "../../assets/css/home.css";
 import { Carousel } from 'react-bootstrap';
 
+// https://www.w3schools.com/howto/howto_css_parallax.asp
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <div id="container">
+        {/* <div id="container"> */}
           <Header />
           {/* <div style= {{'height': '1000px', 'backgroundColor' : 'black' }}> */}
           {/* <span style={{ 'height': '1000000px', 'width': '100%', 'backgroundImage' : 'url('+Banner+')', 'backgroundSize' : 'cover'  }} src={Banner} alt="banner" ></span> */}
@@ -29,7 +30,7 @@ class App extends Component {
               <h1 id="h1-home" onClick={()=>alert("Em desenvolvimento...")}>  Veja suas consultas quando e onde quiser utilizando nosso app ! </h1>
               </div>
             </div> */}
-
+          <div id="banner-container">
           <Carousel>
 
             <Carousel.Item>
@@ -62,9 +63,9 @@ class App extends Component {
             </Carousel.Item> */}
 
           </Carousel>
-
+          </div>
           <Rodape />
-        </div>
+        {/* </div> */}
       </div>
     );
   }

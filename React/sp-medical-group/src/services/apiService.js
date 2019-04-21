@@ -3,7 +3,7 @@ import axios from 'axios';
 //Serviço generico para fazer as chamadas para api
 export default {
   call(endpoint) {
-    let urlApi = `http://192.168.4.112:5000/api/${endpoint}`;
+    let urlApi = `http://localhost:5000/api/${endpoint}`;
 
     return {
       getOne: ({ id }) => axios.get(`${urlApi}/${id}`),

@@ -20,6 +20,9 @@ import CadastroConsulta from './pages/Administrador/Cadastrar/CadastrarConsulta'
 import CadastroClinica from './pages/Administrador/Cadastrar/CadastrarClinica';
 
 import ListaClinica from './pages/Administrador/Listar/ListarClinica';
+import ListaConsulta from './pages/Administrador/Listar/ListarConsulta';
+import ListaPaciente from './pages/Administrador/Listar/ListarPaciente';
+import ListaUsuario from './pages/Administrador/Listar/ListarUsuario';
 
 import Funcionalidades from './pages/Administrador/Funcionalidades.js';
 
@@ -32,7 +35,7 @@ const PermissaoAdmin = ({ component: Component }) => (
         usuarioAutenticado() && parseJwt().Role === "Administrador" ? (
           <Component {...props} />
         ) : (
-          <Redirect to={{ pathname: "/login" }} />
+          <Redirect to={{ pathname: "/funcionalidades" }} />
         )
       }
     />
@@ -78,24 +81,26 @@ const routing = (
                 
                 {/* dpois mudar para permissaoadmin */}
                 {/* <PermissaoAdmin path="/usuario" component={CadastroUsuario} /> */}
-                <Route path="/usuarios" component={CadastroUsuario} />
 
-                <Route path="/prontuarios" component={CadastroPaciente}/>
+                <PermissaoAdmin path="/usuarios" component={CadastroUsuario} />
+                <PermissaoAdmin path="/prontuarios" component={CadastroPaciente}/>
+                <PermissaoAdmin path="/consultas" component={CadastroConsulta}/>
+                <PermissaoAdmin path="/clinicas" component={CadastroClinica}/>
 
-                <Route path="/consultas" component={CadastroConsulta}/>
-
-                <Route path="/clinicas" component={CadastroClinica}/>
                 {/* <PermissaoAdmin path="/CadastroPaciente" component={CadastroPaciente} /> */}
                 
-                <Route path="/funcionalidades" component={Funcionalidades}/>
+                <PermissaoAdmin path="/funcionalidades" component={Funcionalidades}/>
 
-                <Route path="/listaclinica" component={ListaClinica}/>
+                <PermissaoAdmin path="/listaclinicas" component={ListaClinica}/>
+                <PermissaoAdmin path="/listaconsultas" component={ListaConsulta}/>
+                <PermissaoAdmin path="/listapacientes" component={ListaPaciente}/>
+                <PermissaoAdmin path="/listausuarios" component={ListaUsuario}/>
 
                 <Route component={NaoEncontrada} />
             </Switch>
         </div>
     </Router>
-)
+);
 
 ReactDOM.render(routing, document.getElementById('root'));
 
@@ -103,3 +108,6 @@ ReactDOM.render(routing, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+
+// https://gist.github.com/gitaarik/8735255

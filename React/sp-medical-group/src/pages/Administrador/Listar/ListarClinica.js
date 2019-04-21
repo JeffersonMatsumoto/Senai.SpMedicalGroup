@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Axios from "axios";
+// import Axios from "axios";
 import { Table, Button } from 'react-bootstrap';
 
 import Header from '../../../components/Header/Header.js';
@@ -7,7 +7,7 @@ import Rodape from '../../../components/Rodape/Rodape';
 
 
 
-class CadastrarUsuario extends Component {
+class ListarClinica extends Component {
 
     constructor() {
         super();
@@ -17,7 +17,7 @@ class CadastrarUsuario extends Component {
     }
 
     buscarClinicas() {
-        fetch('http://localhost:5000/api/clinicas')
+        fetch('http://localhost:3000/api/clinicas')
             .then(resposta => resposta.json())
             .then(data => this.setState({ listaClinicas: data }))
             .catch((erro) => console.log(erro))
@@ -27,27 +27,27 @@ class CadastrarUsuario extends Component {
         this.buscarClinicas();
     }
 
-    cadastraUsuario(event) {
-        event.preventDefault();
+    // cadastraUsuario(event) {
+    //     event.preventDefault();
 
-        Axios.get("http://localhost:5000/api/clinicas",
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("usuario-spmedicalgroup")
-                }
-            })
-            .then(resposta => resposta)
-            .then(this.buscarClinicas())
-            .catch(erro => console.log(erro))
-    }
+    //     Axios.get("http://localhost:5000/api/clinicas",
+    //         {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "Authorization": "Bearer " + localStorage.getItem("usuario-spmedicalgroup")
+    //             }
+    //         })
+    //         .then(resposta => resposta)
+    //         .then(this.buscarClinicas())
+    //         .catch(erro => console.log(erro))
+    // }
 
     render() {
         return (
-            <div>
+            <div style={{ padding : '10%' }}>
                 <Header></Header>
 
-                <table>
+                <Table striped bordered hover >
                     <thead>
                         <tr>
                             <th>Nome Fantasia</th>
@@ -73,16 +73,18 @@ class CadastrarUsuario extends Component {
                             })
                         }
                     </tbody>
-                </table>
-
-                <Button href="/funcionalidades" id="btns" type="submit" value="Cadastrar" className="btn" size="lg" variant="primary">
-                    Retornar
+                </Table>
+                
+                {/* onClick cm permissao? */}
+                <Button href="/funcionalidades" id="btns"  className="btn" size="lg" variant="primary">
+                    Voltar
                 </Button>
 
                 <Rodape></Rodape>
+                {/* </div> */}
             </div>
         );
     }
 } //https://react-bootstrap.github.io/components/forms/
 
-export default CadastrarUsuario;
+export default ListarClinica;

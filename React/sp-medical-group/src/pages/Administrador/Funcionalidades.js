@@ -35,7 +35,7 @@ class Funcionalidades extends Component {
         <div>
           <Header />
           <div id="container-funcionalidades">
-            <h1>Funcionalidades</h1>
+            <h1 id="h1-func">Funcionalidades</h1>
 
             <div id="funcionalidades-grid">
             <div id="cadastros">

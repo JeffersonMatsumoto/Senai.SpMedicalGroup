@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import {parseJwt} from '../../services/auth';
+import {parseJwt} from '../../services/auth.js';
 // import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header.js';
 import Rodape from '../../components/Rodape/Rodape.js';
@@ -9,7 +9,7 @@ import { Form, Button } from 'react-bootstrap';
 
 import "../../assets/css/login.css";
 
-import Axios from "axios";
+import axios from "axios";
 
 
 // add referencia documentacao
@@ -37,7 +37,8 @@ class Login extends Component {
 
     efetuaLogin(event) {
         event.preventDefault();
-        Axios.post("localhost:3000/api/login", {
+        axios.post("http://localhost:5000/api/login", 
+        {
            email : this.state.email,
            senha: this.state.senha
         })
@@ -46,16 +47,19 @@ class Login extends Component {
                 console.log(data);
                 localStorage.setItem("usuario-spmedicalgroup", data.data.token);
                 // Verifica o tipo de usuário e redireciona para a página default
-        //         console.log(parseJwt().Role);
-        //         if(parseJwt().Role == "Administrador"){
-        //           this.props.history.push("/eventos/cadastrar");
-        //         } else {
-                  this.props.history.push("/cadastrar");
-        //         }
-            } else {
+                console.log(parseJwt().Role);
+                if(parseJwt().Role === "Administrador"){
+                    console.log("Funciona");
+                    this.props.history.push("/funcionalidades");
+                } else if (parseJwt().Role === "Médico") {
+                    this.props.history.push("/listarconsultasmedicos");
+                } else if (parseJwt().Role === "Paciente") {
+                    this.props.history.push("/listarconsultaspaciente");
+                }
+            }
+            else {
                 alert('Email ou senha inválido, por favor tente novamente...')
             }
-        //     } 
         })
         .catch(erro => {
             this.setState({ erroMensagem : 'Email ou senha inválido'});
@@ -68,7 +72,7 @@ class Login extends Component {
                 <Header />
                 <div id="container-login">
                     <div className="login">
-                        <Form id="form-login" onSubmit={this.efetuaLogin.bind(this)}>
+                        <form id="form-login" onSubmit={this.efetuaLogin.bind(this)}>
 
                                 <Form.Group id="form-title">
                                     {/* <img id="img-login" src={Logo} alt="logo-login" /> */}
@@ -77,35 +81,43 @@ class Login extends Component {
 
                                 <Form.Group controlId="formBasicEmail">
                                 
-                                    <Form.Label
-                                    value={this.state.email}
-                                    onChange={this.atualizaEstadoEmail.bind(this)}>
+                                    <Form.Label>
                                         Email
                                     </Form.Label>
                                     
-                                    <Form.Control type="email" placeholder="exemplo@provedora.com" required />
+                                    <Form.Control 
+                                    value={this.state.email}
+                                    onChange={this.atualizaEstadoEmail.bind(this)}
+                                    type="email" 
+                                    placeholder="exemplo@provedora.com" 
+                                    required />
 
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicPassword">
 
-                                    <Form.Label
-                                    value={this.state.senha}
-                                    onChange={this.atualizaEstadoSenha.bind(this)}>
+                                    <Form.Label>
                                         Senha
                                     </Form.Label>
                                     
-                                    <Form.Control type="password" placeholder="Insira sua senha..." minLength="6"  maxLength="12" required />
+                                    <Form.Control 
+                                    value={this.state.senha}
+                                    onChange={this.atualizaEstadoSenha.bind(this)}
+                                    type="password" 
+                                    placeholder="Insira sua senha..." 
+                                    minLength="6"  
+                                    maxLength="12" 
+                                    required />
 
                                 </Form.Group>
 
                                 <Form.Group className="btn-login">
                                     <p>{this.state.erroMensegem}</p>
-                                    <Button className="btn" size="lg" variant="primary" type="submit">Entrar</Button>
+                                    <Button type="submit" className="btn" size="lg" variant="primary" >Entrar</Button>
 
                                 </Form.Group>
 
-                        </Form>
+                        </form>
 
                     </div>
                 </div>
