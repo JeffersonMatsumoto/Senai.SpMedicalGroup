@@ -27,6 +27,10 @@ class Login extends Component {
 
     }
 
+    componentDidUpdate() {
+        this.efetuaLogin();
+      }
+
     atualizaEstadoEmail(event) {
         this.setState({ email: event.target.value });
     }
@@ -35,6 +39,7 @@ class Login extends Component {
         this.setState({ senha: event.target.value });
     }
 
+    //loop
     efetuaLogin(event) {
         event.preventDefault();
         axios.post("http://localhost:5000/api/login", 
@@ -49,12 +54,13 @@ class Login extends Component {
                 // Verifica o tipo de usuário e redireciona para a página default
                 console.log(parseJwt().Role);
                 if(parseJwt().Role === "Administrador"){
-                    console.log("Funciona");
+                    console.log("Teste para aparecer no console");
                     this.props.history.push("/funcionalidades");
                 } else if (parseJwt().Role === "Médico") {
-                    this.props.history.push("/listarconsultasmedicos");
+                    this.props.history.push("/consultasmedicos");
                 } else if (parseJwt().Role === "Paciente") {
-                    this.props.history.push("/listarconsultaspaciente");
+                    console.log("Teste para aparecer no console");
+                    this.props.history.push("/consultaspaciente");
                 }
             }
             else {
@@ -112,9 +118,9 @@ class Login extends Component {
                                 </Form.Group>
 
                                 <Form.Group className="btn-login">
-                                    <p>{this.state.erroMensegem}</p>
-                                    <Button type="submit" className="btn" size="lg" variant="primary" >Entrar</Button>
-
+                                    <p>{this.state.erroMensagem}</p>
+                                    <Button  type="submit" className="btn" size="lg" variant="primary" >Entrar</Button>
+                                    {/* href="/funcionalidades" */}
                                 </Form.Group>
 
                         </form>

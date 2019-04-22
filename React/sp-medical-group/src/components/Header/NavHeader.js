@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { parseJwt, usuarioAutenticado } from "../../services/auth";
 
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { Nav } from 'react-bootstrap';
 
 class NavHeader extends Component {
@@ -17,10 +17,14 @@ class NavHeader extends Component {
       return (
         <div>
 
-          <Nav.Link to="/funcionalidades">Funcionalidades</Nav.Link>
+          <Nav.Link>
+            <Link  to="/funcionalidades" >
+            Funcionalidades
+            </Link>
+            </Nav.Link>
 
           {/* <Link to="/consultas/cadastrar">Consultas</Link> */}
-          
+
           <span
             onClick={this.logout.bind(this)}
             style={{ cursor: "pointer" }}
@@ -33,7 +37,11 @@ class NavHeader extends Component {
     } else if (usuarioAutenticado() && parseJwt().Role === "Médico") {
       return (
         <div>
-          <Nav.Link to="/consultasmedico">Consultas</Nav.Link>
+          <Nav.Link>
+            <Link  to="/consultasmedico" >
+            Consultas
+            </Link>
+          </Nav.Link>
           <span
             onClick={this.logout.bind(this)}
             style={{ cursor: "pointer" }}
@@ -45,7 +53,11 @@ class NavHeader extends Component {
     } else if (usuarioAutenticado() && parseJwt().Role === "Paciente") {
       return (
         <div>
-          <Nav.Link to="/consultaspaciente" style={{ color: 'black'}} >Consultas</Nav.Link>
+          <Nav.Link>
+            <Link to="/consultaspaciente">
+              Consultas
+          </Link>
+          </Nav.Link>
           <span
             onClick={this.logout.bind(this)}
             style={{ cursor: "pointer" }}
@@ -54,10 +66,12 @@ class NavHeader extends Component {
           </span>
         </div>
       );
-      } else {
+    } else {
       return (
         <div>
-          <Nav.Link to="/login">Login</Nav.Link>
+          <Nav.Link>
+            <Link to="/login">Login</Link>
+          </Nav.Link>
         </div>
       );
     }

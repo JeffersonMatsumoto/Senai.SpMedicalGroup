@@ -26,6 +26,9 @@ import ListaUsuario from './pages/Administrador/Listar/ListarUsuario';
 
 import Funcionalidades from './pages/Administrador/Funcionalidades.js';
 
+import ConsultaMedico from './pages/Medico/ConsultasMedico.js';
+import ConsultaPaciente from './pages/Paciente/ConsultasPaciente.js';
+
 // ReactDOM.render(<App />, document.getElementById('root'));
 
 //Verifica se o usuário esta logado e se o role é do tipo Admin
@@ -82,6 +85,8 @@ const routing = (
                 {/* dpois mudar para permissaoadmin */}
                 {/* <PermissaoAdmin path="/usuario" component={CadastroUsuario} /> */}
 
+
+                {/* url ou só rota? endpoint é o q vai ser a url final? */}
                 <PermissaoAdmin path="/usuarios" component={CadastroUsuario} />
                 <PermissaoAdmin path="/prontuarios" component={CadastroPaciente}/>
                 <PermissaoAdmin path="/consultas" component={CadastroConsulta}/>
@@ -95,6 +100,9 @@ const routing = (
                 <PermissaoAdmin path="/listaconsultas" component={ListaConsulta}/>
                 <PermissaoAdmin path="/listapacientes" component={ListaPaciente}/>
                 <PermissaoAdmin path="/listausuarios" component={ListaUsuario}/>
+
+                <PermissaoMedico path="/consultasmedico" component={ConsultaMedico}/>
+                <PermissaoPaciente path="/consultaspaciente" component={ConsultaPaciente}/>
 
                 <Route component={NaoEncontrada} />
             </Switch>
