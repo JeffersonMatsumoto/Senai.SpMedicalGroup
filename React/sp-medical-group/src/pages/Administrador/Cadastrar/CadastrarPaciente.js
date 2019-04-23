@@ -69,7 +69,7 @@ class CadastrarPaciente extends Component {
             {
                 Email: this.state.email,
                 Senha: this.state.senha,
-                IdTipoUsuarios: this.state.idtipousuario,
+                IdTipoUsuarios: this.state.idtipousuario
             },
             {
                 headers: {

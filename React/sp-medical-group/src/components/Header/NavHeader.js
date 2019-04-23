@@ -13,7 +13,7 @@ class NavHeader extends Component {
   }
 
   render() {
-    if (usuarioAutenticado() && parseJwt().Role === "Administrador") {
+    if (usuarioAutenticado() && parseJwt().Permissao === "Administrador") {
       return (
         <div>
 
@@ -34,7 +34,7 @@ class NavHeader extends Component {
 
         </div>
       );
-    } else if (usuarioAutenticado() && parseJwt().Role === "Médico") {
+    } else if (usuarioAutenticado() && parseJwt().Permissao === "Médico") {
       return (
         <div>
           <Nav.Link>
@@ -50,7 +50,7 @@ class NavHeader extends Component {
           </span>
         </div>
       );
-    } else if (usuarioAutenticado() && parseJwt().Role === "Paciente") {
+    } else if (usuarioAutenticado() && parseJwt().Permissao === "Paciente") {
       return (
         <div>
           <Nav.Link>

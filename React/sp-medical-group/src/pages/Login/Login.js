@@ -24,12 +24,14 @@ class Login extends Component {
             senha: '',
             erroMensagem: ''
         }
-
     }
+    // componentWillUpdate() {
+    //     this.efetuaLogin();
+    // }
 
-    componentDidUpdate() {
-        this.efetuaLogin();
-      }
+    // componentDidMount(){
+    //     this.efetuaLogin();
+    // }
 
     atualizaEstadoEmail(event) {
         this.setState({ email: event.target.value });
@@ -40,31 +42,32 @@ class Login extends Component {
     }
 
     //loop
-    efetuaLogin(event) {
+    efetuarLogin(event) {
         event.preventDefault();
         axios.post("http://localhost:5000/api/login", 
+        
         {
            email : this.state.email,
-           senha: this.state.senha
+           senha : this.state.senha
         })
+
         .then(data => {
             if(data.status === 200){
-                console.log(data);
-                localStorage.setItem("usuario-spmedicalgroup", data.data.token);
-                // Verifica o tipo de usuário e redireciona para a página default
-                console.log(parseJwt().Role);
-                if(parseJwt().Role === "Administrador"){
+                // console.log(data);
+                localStorage.setItem("user", data.data.token);
+                // this.props.history.push("/consultasmedico");
+                console.log(parseJwt().Permissao);
+                this.props.history.push("/funcionalidades");
+                if(parseJwt().Permissao === 'Administrador'){
                     console.log("Teste para aparecer no console");
                     this.props.history.push("/funcionalidades");
                 } else if (parseJwt().Role === "Médico") {
                     this.props.history.push("/consultasmedicos");
                 } else if (parseJwt().Role === "Paciente") {
-                    console.log("Teste para aparecer no console");
                     this.props.history.push("/consultaspaciente");
+                }else {
+                    this.props.history.push("/login")
                 }
-            }
-            else {
-                alert('Email ou senha inválido, por favor tente novamente...')
             }
         })
         .catch(erro => {
@@ -78,8 +81,8 @@ class Login extends Component {
                 <Header />
                 <div id="container-login">
                     <div className="login">
-                        <form id="form-login" onSubmit={this.efetuaLogin.bind(this)}>
-
+                        <form id="form-login" onSubmit={this.efetuarLogin.bind(this)}>
+                                
                                 <Form.Group id="form-title">
                                     {/* <img id="img-login" src={Logo} alt="logo-login" /> */}
                                     <h4><b>LOGIN</b></h4>
@@ -132,5 +135,21 @@ class Login extends Component {
         );
     }
 }
-
+// {/* <input
+//                                 placeholder="username"
+//                                 type="email"
+//                                 value={this.state.email}
+//                                 onChange={this.atualizaEstadoEmail.bind(this)}
+//                                 name="username"
+//                             /><input
+//                                 className="input__login"
+//                                 placeholder="username"
+//                                 type="password"
+//                                 value={this.state.senha}
+//                                 onChange={this.atualizaEstadoSenha.bind(this)}
+//                                 name="password"
+//                             />
+//                             <p>{this.state.erro}</p>
+//                             <button type="submit" >Entrar</button> */}
 export default Login;
+

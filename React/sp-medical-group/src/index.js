@@ -29,16 +29,16 @@ import Funcionalidades from './pages/Administrador/Funcionalidades.js';
 import ConsultaMedico from './pages/Medico/ConsultasMedico.js';
 import ConsultaPaciente from './pages/Paciente/ConsultasPaciente.js';
 
-// ReactDOM.render(<App />, document.getElementById('root'));
+// ReactDOM.render(routing, document.getElementById('root'));
 
 //Verifica se o usuário esta logado e se o role é do tipo Admin
 const PermissaoAdmin = ({ component: Component }) => (
     <Route
       render={props =>
-        usuarioAutenticado() && parseJwt().Role === "Administrador" ? (
+        usuarioAutenticado() && parseJwt().Permissao === "Administrador" ? (
           <Component {...props} />
         ) : (
-          <Redirect to={{ pathname: "/funcionalidades" }} />
+          <Redirect to={{ pathname: "/login" }} />
         )
       }
     />
@@ -76,15 +76,9 @@ const routing = (
             <Switch>
                 <Route exact path="/" component={App}/>
                 <Route path="/login" component={Login} />
-
-                {/* <PermissaoAdmin path="/tiposeventos" component={TiposEventos} /> */}
-        
-                {/* <PermissaoComum exact path="/eventos" component={EventoIndex} /> */}
-                {/* <PermissaoAdmin path="/cadastrar" component={EventoCadastro} /> */}
-                
+                        
                 {/* dpois mudar para permissaoadmin */}
                 {/* <PermissaoAdmin path="/usuario" component={CadastroUsuario} /> */}
-
 
                 {/* url ou só rota? endpoint é o q vai ser a url final? */}
                 <PermissaoAdmin path="/usuarios" component={CadastroUsuario} />

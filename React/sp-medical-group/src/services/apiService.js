@@ -9,7 +9,7 @@ export default {
       getOne: ({ id }) => axios.get(`${urlApi}/${id}`),
       getAll: () => axios.get(`${urlApi}`),
       update: (toUpdate) =>  axios.put(urlApi,toUpdate),
-      create: (toCreate) =>  axios.put(urlApi,toCreate),
+      create: (toCreate) =>  axios.post(urlApi,toCreate),
       delete: ({ id }) =>  axios.delete(`${urlApi}/${id}`)
     }
   }
