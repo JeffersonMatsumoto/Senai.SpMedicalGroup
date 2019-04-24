@@ -13,23 +13,30 @@ class ListarConsulta extends Component {
             listaConsulta: []
         }
     }
-
+    componentDidMount() {
+        this.buscarConsultas();
+    }
     buscarConsultas() {
-        fetch('http://localhost:5000/api/consultas')
+        fetch('http://localhost:5000/api/consultas',{
+            method:'GET',
+            headers:
+        {
+            "Content-Type":"application/json",
+            "Authorization": "Bearer " + localStorage.getItem("user")
+        }
+    })
             .then(resposta => resposta.json())
             .then(data => this.setState({ listaConsulta: data }))
             .catch((erro) => console.log(erro))
     }
 
-    componentDidMount() {
-        this.buscarConsultas();
-    }
+
 
     render() {
         return (
-            <div style={{ padding : '10%' }}>
+            <div>
                 <Header></Header>
-
+                <div  style={{ padding : '10%' }}>
                 <Table striped bordered hover >
                     <thead>
                         <tr>
@@ -49,11 +56,11 @@ class ListarConsulta extends Component {
                             this.state.listaConsulta.map(function(consulta) {
                                 return (
                                     <tr key={consulta.id}>
-                                        <td>{consulta.medico}</td>
-                                        <td>{consulta.paciente}</td>
-                                        <td>{consulta.dataconsulta}</td>
+                                        <td>{consulta.idMedico}</td>
+                                        <td>{consulta.idProntuario}</td>
+                                        <td>{consulta.dataConsulta}</td>
                                         <td>{consulta.descricao}</td>
-                                        <td>{consulta.situacao}</td>
+                                        <td>{consulta.idSituacao}</td>
                                     </tr>
                                 );
                             })
@@ -65,7 +72,7 @@ class ListarConsulta extends Component {
                 <Button href="/funcionalidades" id="btns"  className="btn" size="lg" variant="primary">
                     Voltar
                 </Button>
-
+                </div>
                 <Rodape></Rodape>
                 {/* </div> */}
             </div>

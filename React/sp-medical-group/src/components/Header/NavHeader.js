@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { parseJwt, usuarioAutenticado } from "../../services/auth";
 
 import { withRouter, Link } from "react-router-dom";
-import { Nav } from 'react-bootstrap';
+// import { Nav } from 'react-bootstrap';
+
+import "../../assets/css/nav.css";
 
 class NavHeader extends Component {
 
   logout(event) {
     event.preventDefault();
-    localStorage.removeItem("usuario-spmedicalgroup");
+    localStorage.removeItem("user");
     this.props.history.push("/");
   }
 
@@ -17,61 +19,73 @@ class NavHeader extends Component {
       return (
         <div>
 
-          <Nav.Link>
-            <Link  to="/funcionalidades" >
-            Funcionalidades
+          {/* <Nav.Link> */}
+            <Link className="link" to="/funcionalidades" style={{ 'margin-right' : '5em'}}>
+              Funcionalidades
             </Link>
-            </Nav.Link>
+          {/* </Nav.Link> */}
 
           {/* <Link to="/consultas/cadastrar">Consultas</Link> */}
-
-          <span
-            onClick={this.logout.bind(this)}
-            style={{ cursor: "pointer" }}
-          >
-            Sair
-          </span>
-
+          {/* <Nav.Link> */}
+            <Link to="/" className="link" >
+              <span
+                onClick={this.logout.bind(this)}
+                style={{ cursor: "pointer" }}
+              >
+                Sair
+              </span>
+            </Link>
+          {/* </Nav.Link> */}
         </div>
       );
     } else if (usuarioAutenticado() && parseJwt().Permissao === "Médico") {
       return (
         <div>
-          <Nav.Link>
-            <Link  to="/consultasmedico" >
-            Consultas
+          {/* <Nav.Link> */}
+            <Link className="link" to="/consultasmedico" style={{ 'margin-right' : '5em'}}>
+              Minhas consultas
             </Link>
-          </Nav.Link>
-          <span
-            onClick={this.logout.bind(this)}
-            style={{ cursor: "pointer" }}
-          >
-            Sair
-          </span>
+          {/* </Nav.Link> */}
+
+          {/* <Nav.Link> */}
+            <Link to="/" className="link">
+              <span
+                onClick={this.logout.bind(this)}
+                style={{ cursor: "pointer" }}
+              >
+                Sair
+              </span>
+            </Link>
+          {/* </Nav.Link> */}
         </div>
       );
     } else if (usuarioAutenticado() && parseJwt().Permissao === "Paciente") {
       return (
         <div>
-          <Nav.Link>
-            <Link to="/consultaspaciente">
-              Consultas
+          {/* <Nav.Link> */}
+            <Link className="link" to="/consultaspaciente" style={{ 'margin-right' : '5em'}}>
+              Minhas consultas
           </Link>
-          </Nav.Link>
-          <span
-            onClick={this.logout.bind(this)}
-            style={{ cursor: "pointer" }}
-          >
-            Sair
-          </span>
+          {/* </Nav.Link> */}
+          
+          {/* <Nav.Link> */}
+            <Link className="link" to="/" >
+              <span
+                onClick={this.logout.bind(this)}
+                style={{ cursor: "pointer" }}
+              >
+                Sair
+              </span>
+            </Link>
+          {/* </Nav.Link> */}
         </div>
       );
     } else {
       return (
         <div>
-          <Nav.Link>
-            <Link to="/login">Login</Link>
-          </Nav.Link>
+          {/* <Nav.Link> */}
+            <Link className="link" to="/login">Login</Link>
+          {/* </Nav.Link> */}
         </div>
       );
     }

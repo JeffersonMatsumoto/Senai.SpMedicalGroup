@@ -17,52 +17,61 @@ class ListarUsuario extends Component {
             listaUsuario: []
         }
     }
+    
+    componentDidMount() {
+        this.buscarUsuarios();
+    }
 
     buscarUsuarios() {
-        fetch('http://localhost:5000/api/usuarios')
+        fetch('http://localhost:5000/api/usuarios', {
+            method: 'GET',
+            headers:
+            {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("user")
+            }
+        })
             .then(resposta => resposta.json())
             .then(data => this.setState({ listaUsuario: data }))
             .catch((erro) => console.log(erro))
     }
 
-    componentDidMount() {
-        this.buscarUsuarios();
-    }
+
 
     render() {
         return (
-            <div style={{ padding : '10%' }}>
+            <div >
                 <Header></Header>
+                <div style={{ padding: '10%' }}>
+                    <Table striped bordered hover >
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Senha</th>
+                                <th>Tipo usuário</th>
+                            </tr>
+                        </thead>
 
-                <Table striped bordered hover >
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Senha</th>
-                            <th>Tipo usuário</th>
-                        </tr>
-                    </thead>
+                        <tbody>
+                            {
+                                this.state.listaUsuario.map(function (usuario) {
+                                    return (
+                                        <tr key={usuario.id}>
+                                            <td>{usuario.email}</td>
+                                            <td>{usuario.senha}</td>
+                                            <td>{usuario.idTipoUsuario}</td>
+                                        </tr>
+                                    );
+                                })
+                            }
+                        </tbody>
+                    </Table>
 
-                    <tbody>
-                        {
-                            this.state.listaUsuario.map(function(usuario) {
-                                return (
-                                    <tr key={usuario.id}>
-                                        <td>{usuario.email}</td>
-                                        <td>{usuario.senha}</td>
-                                        <td>{usuario.idtipousuario}</td>
-                                    </tr>
-                                );
-                            })
-                        }
-                    </tbody>
-                </Table>
-                
-                {/* onClick cm permissao? */}
-                <Button href="/" id="btns"  className="btn" size="lg" variant="primary">
-                    Voltar
+                    {/* onClick cm permissao? */}
+                    <Button href="/funcionalidades" id="btns" className="btn" size="lg" variant="primary">
+                        Voltar
                 </Button>
-
+                </div>
                 <Rodape></Rodape>
                 {/* </div> */}
             </div>

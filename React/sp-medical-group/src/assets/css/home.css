@@ -1,7 +1,10 @@
 #banner-container{
-    background-color: #82BEDB;
+    /* background-color: #82BEDB; */
     /* opacity: 0.5; */
-    padding-top: 8%;
+    /* margin: 1em; */
+    padding-top: 5em;
+    height: 100%;
+    width: 100%;
 }
 
 /* .h2-banner{
@@ -31,9 +34,9 @@
     width: 100%;
 }
 
-ol{
+/* ol{
     top: 75%;
-}
+} */
 
 
 .img-banner{
@@ -58,4 +61,14 @@ ol{
     padding: 30%;
     /* border-radius: 20%; */
     /* background-color: black; */
+}
+
+#banner-h{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+}
+
+.h{
+    /* text-align: center; */
+    margin-left: 1%;
 }

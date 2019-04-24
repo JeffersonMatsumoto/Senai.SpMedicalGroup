@@ -1,0 +1,13 @@
+.link{
+    
+    color : gray;
+}
+
+.link:hover {
+    color: black;
+    text-decoration: none;
+}
+
+/* .link:active{
+    font-weight: 900;
+} */

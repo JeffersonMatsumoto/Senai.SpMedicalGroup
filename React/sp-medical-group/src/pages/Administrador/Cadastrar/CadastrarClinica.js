@@ -12,6 +12,9 @@ class CadastrarClinica extends Component {
     constructor() {
         super();
         this.state = {
+            // email: '',
+            // senha: '',
+            // idtipousuario: '',
             nomefantasia: '',
             razaosocial: '',
             cnpj: '',
@@ -46,22 +49,29 @@ class CadastrarClinica extends Component {
 
         Axios.post("http://localhost:5000/api/clinicas",
             {
-                Email: this.state.email,
-                Senha: this.state.senha,
-                IdTipoUsuarios: this.state.idtipousuario,
+                // Email: this.state.email,
+                // Senha: this.state.senha,
+                // IdTipoUsuario: this.state.idtipousuario,
+                
+                NomeFantasia: this.state.nomefantasia,
+                RazaoSocial: this.state.razaosocial,
+                Cnpj: this.state.cnpj,
+                HorarioFuncionamento: this.state.horariofuncionamento,
+                Endereco: this.state.endereco
             },
             {
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("usuario-spmedicalgroup")
+                    "Authorization": "Bearer " + localStorage.getItem("user")
                 }
             })
             .then(data => {
                 if (data.status === 200) {
                     console.log(data);
                     this.setState({ Mensagem: 'Clínica cadastrada com sucesso!' });
-                    if (this.state.tipousuario === "Administrador") {
-                        this.props.history.push("/");
+                    alert('Clínica cadastrada com sucesso!' + this.state.razaosocial);
+                    if (this.state.idtipousuario === "1") {
+                        this.props.history.push("/funcionalidades");
                     }
                 }
             })
@@ -148,8 +158,8 @@ class CadastrarClinica extends Component {
                             value={this.state.endereco}
                             required
                             onChange={this.atualizaEstadoEndereco.bind(this)}>
-                            
-                            </Form.Control>
+
+                        </Form.Control>
 
                     </Form.Group>
 

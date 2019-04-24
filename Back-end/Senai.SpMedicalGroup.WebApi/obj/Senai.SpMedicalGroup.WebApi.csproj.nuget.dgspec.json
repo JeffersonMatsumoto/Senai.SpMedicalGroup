@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Aplicação\\Senai.SpMedicalGroup.WebApi\\Senai.SpMedicalGroup.WebApi.csproj": {}
+    "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Back-end\\Senai.SpMedicalGroup.WebApi\\Senai.SpMedicalGroup.WebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Aplicação\\Senai.SpMedicalGroup.WebApi\\Senai.SpMedicalGroup.WebApi.csproj": {
+    "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Back-end\\Senai.SpMedicalGroup.WebApi\\Senai.SpMedicalGroup.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Aplicação\\Senai.SpMedicalGroup.WebApi\\Senai.SpMedicalGroup.WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Back-end\\Senai.SpMedicalGroup.WebApi\\Senai.SpMedicalGroup.WebApi.csproj",
         "projectName": "Senai.SpMedicalGroup.WebApi",
-        "projectPath": "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Aplicação\\Senai.SpMedicalGroup.WebApi\\Senai.SpMedicalGroup.WebApi.csproj",
+        "projectPath": "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Back-end\\Senai.SpMedicalGroup.WebApi\\Senai.SpMedicalGroup.WebApi.csproj",
         "packagesPath": "C:\\Users\\ccgm1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Aplicação\\Senai.SpMedicalGroup.WebApi\\obj\\",
+        "outputPath": "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Back-end\\Senai.SpMedicalGroup.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\ProgramData\\Xamarin\\NuGet\\",

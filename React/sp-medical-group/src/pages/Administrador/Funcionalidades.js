@@ -72,28 +72,28 @@ class Funcionalidades extends Component {
             <div id="listas">
               <h3>Listas</h3>
               <div className="funcionalidade-item">
-                <Button className="btn-funcionalidade" variant="outline-primary">
+                <Button href="/listaclinicas" className="btn-funcionalidade" variant="outline-primary">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
                   <p id="p-btn">Clínicas</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
-                <Button className="btn-funcionalidade" variant="outline-primary">
+                <Button href="/listausuarios" className="btn-funcionalidade" variant="outline-primary">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
                   <p id="p-btn">Usuários</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
-                <Button className="btn-funcionalidade" variant="outline-primary">
+                <Button href="/listapacientes" className="btn-funcionalidade" variant="outline-primary">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
                   <p id="p-btn">Pacientes</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
-                <Button className="btn-funcionalidade" variant="outline-primary">
+                <Button href="/listaconsultas" className="btn-funcionalidade" variant="outline-primary">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
                   <p id="p-btn">Consultas</p>
                 </Button>

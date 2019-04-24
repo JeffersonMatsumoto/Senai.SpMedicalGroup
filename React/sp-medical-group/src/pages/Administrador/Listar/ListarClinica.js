@@ -16,15 +16,22 @@ class ListarClinica extends Component {
         }
     }
 
+    componentDidMount() {
+        this.buscarClinicas();
+    }
+
     buscarClinicas() {
-        fetch('http://localhost:3000/api/clinicas')
+        fetch('http://localhost:5000/api/clinicas',{
+            method:'GET',
+            headers:
+        {
+            "Content-Type":"application/json",
+            "Authorization": "Bearer " + localStorage.getItem("user")
+        }
+    })
             .then(resposta => resposta.json())
             .then(data => this.setState({ listaClinicas: data }))
             .catch((erro) => console.log(erro))
-    }
-
-    componentDidMount() {
-        this.buscarClinicas();
     }
 
     // cadastraUsuario(event) {
@@ -44,9 +51,9 @@ class ListarClinica extends Component {
 
     render() {
         return (
-            <div style={{ padding : '10%' }}>
+            <div >
                 <Header></Header>
-
+                <div style={{ padding : '10%' }}>
                 <Table striped bordered hover >
                     <thead>
                         <tr>
@@ -59,15 +66,16 @@ class ListarClinica extends Component {
                     </thead>
 
                     <tbody>
-                        {
+                        {   
                             this.state.listaClinicas.map(function(clinica) {
                                 return (
+                                    // TEM Q SER QUE NEM ESTA NO POSTMAN
                                     <tr key={clinica.id}>
-                                        <td>{clinica.nomefantasia}</td>
-                                        <td>{clinica.razaosocial}</td>
+                                        <td>{clinica.nomeFantasia}</td>
+                                        <td>{clinica.razaoSocial}</td>
                                         <td>{clinica.cnpj}</td>
-                                        <td>{clinica.horariofuncionamento}</td>
-                                        <td>{clinica.endereco}</td>
+                                        <td>{clinica.horarioFuncionamento}</td>
+                                        <td>{clinica.idEndereco}</td>
                                     </tr>
                                 );
                             })
@@ -79,7 +87,7 @@ class ListarClinica extends Component {
                 <Button href="/funcionalidades" id="btns"  className="btn" size="lg" variant="primary">
                     Voltar
                 </Button>
-
+                </div>
                 <Rodape></Rodape>
                 {/* </div> */}
             </div>
