@@ -1,0 +1,10 @@
+{
+	"nomePaciente" : "Jeff",
+	"endereco" : {
+		"logradouro" : "rua a"
+	}
+}
+
+
+chave.nomePaciente
+chave.endereco.logradouro

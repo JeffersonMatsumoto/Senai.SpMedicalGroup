@@ -29,7 +29,16 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
         {
             try
             {
-                return Ok(UsuarioRepository.Listar());
+                List<Usuarios> usuarios = UsuarioRepository.Listar();
+                var resultado = from u in usuarios
+                                select new
+                                {
+                                    id = u.Id,
+                                    email = u.Email,
+                                    tipo = u.IdTipoUsuarioNavigation.Tipo
+                                };
+                //return Ok(UsuarioRepository.Listar());
+                return Ok(resultado);
             }
             catch (Exception)
             {

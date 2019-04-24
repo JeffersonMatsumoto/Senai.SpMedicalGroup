@@ -48,7 +48,7 @@ const PermissaoAdmin = ({ component: Component }) => (
 const PermissaoMedico = ({ component: Component }) => (
     <Route
       render={props =>
-        usuarioAutenticado() && parseJwt().Role === "Médico" ? (
+        usuarioAutenticado() && parseJwt().Permissao === "Médico" ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: "/login" }} />
@@ -61,7 +61,7 @@ const PermissaoMedico = ({ component: Component }) => (
   const PermissaoPaciente = ({ component: Component }) => (
     <Route
       render={props =>
-        usuarioAutenticado() && parseJwt().Role === "Paciente" ? (
+        usuarioAutenticado() && parseJwt().Permissao === "Paciente" ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: "/login" }} />

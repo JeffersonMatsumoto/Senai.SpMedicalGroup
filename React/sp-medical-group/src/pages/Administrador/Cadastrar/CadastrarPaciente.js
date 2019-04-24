@@ -22,7 +22,8 @@ class CadastrarPaciente extends Component {
             datanascimento: '',
             telefone: '',
             endereco: '', //talvez seja pelo id...
-            erroMensagem: ''
+            erroMensagem: '',
+            idUsuario: 13
         }
     }
 
@@ -60,16 +61,22 @@ class CadastrarPaciente extends Component {
         this.setState({ endereco: event.target.value })
     }
 
-
+    // atualizaEstadoUsuario(event) {
+    //     this.setState({ idUsuario: event.target.value })
+    // }
 
     cadastraPaciente(event) {
         event.preventDefault();
 
         Axios.post("http://localhost:5000/api/prontuarios",
             {
-                Email: this.state.email,
-                Senha: this.state.senha,
-                IdTipoUsuarios: this.state.idtipousuario
+                nomePaciente: this.state.nome,
+                rg: this.state.rg,
+                cpf: this.state.cpf,
+                dataNascimento: this.state.datanascimento,
+                telefone: this.state.telefone,
+                endereco: this.state.endereco,
+                // idUsuario: this.state.idUsuario
             },
             {
                 headers: {
@@ -81,6 +88,7 @@ class CadastrarPaciente extends Component {
                 if (data.status === 200) {
                     console.log(data);
                     this.setState({ Mensagem: 'Paciente cadastrado com sucesso!' });
+                    alert('Paciente cadastrado(a) com sucesso!' + this.state.nome);
                     if (this.state.tipousuario === "Administrador") {
                         this.props.history.push("/");
                     }
@@ -111,7 +119,7 @@ class CadastrarPaciente extends Component {
                         </Col>
                     </Row> 
                     */}
-                    
+
                     <Form.Group>
                         <Form.Label>Nome:</Form.Label>
 
@@ -123,75 +131,75 @@ class CadastrarPaciente extends Component {
                             onChange={this.atualizaEstadoNome.bind(this)} />
 
                     </Form.Group>
-<Row>
-    <Col>
-                    <Form.Group>
-                        <Form.Label>Rg:</Form.Label>
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Rg:</Form.Label>
 
-                        <Form.Control
-                            className="input-ajustado"
-                            type="text"
-                            value={this.state.rg}
-                            minlength="9"
-                            maxlength="9"
-                            required
-                            onChange={this.atualizaEstadoRg.bind(this)} />
+                                <Form.Control
+                                    className="input-ajustado"
+                                    type="text"
+                                    value={this.state.rg}
+                                    minlength="9"
+                                    maxlength="9"
+                                    required
+                                    onChange={this.atualizaEstadoRg.bind(this)} />
 
-                    </Form.Group>
-    </Col>
+                            </Form.Group>
+                        </Col>
 
-    <Col>
-                    <Form.Group>
-                        <Form.Label>Cpf:</Form.Label>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Cpf:</Form.Label>
 
-                        {/* <MascaraInput mask={['(',/[1-9]/,/[1-9]/,')', ' ' , /[1-9]/,/[1-9]/,/[1-9]/,/[1-9]/, ' ', '-' , ' ', /[1-9]/,/[1-9]/,/[1-9]/,/[1-9]/]} guide={true} showMask={true} > */}
-                        {/* </MascaraInput> */}
-                        <Form.Control
-                            className="input-ajustado"
-                            type="text"
-                            value={this.state.cpf}
-                            minLength="11"
-                            maxLength="11"
-                            required
-                            onChange={this.atualizaEstadoCpf.bind(this)} />
+                                {/* <MascaraInput mask={['(',/[1-9]/,/[1-9]/,')', ' ' , /[1-9]/,/[1-9]/,/[1-9]/,/[1-9]/, ' ', '-' , ' ', /[1-9]/,/[1-9]/,/[1-9]/,/[1-9]/]} guide={true} showMask={true} > */}
+                                {/* </MascaraInput> */}
+                                <Form.Control
+                                    className="input-ajustado"
+                                    type="text"
+                                    value={this.state.cpf}
+                                    minLength="11"
+                                    maxLength="11"
+                                    required
+                                    onChange={this.atualizaEstadoCpf.bind(this)} />
 
 
-                    </Form.Group>
-    </Col>
-</Row>
+                            </Form.Group>
+                        </Col>
+                    </Row>
 
-<Row>
-    <Col>
-                    <Form.Group>
-                        <Form.Label>Data de nascimento:</Form.Label>
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Data de nascimento:</Form.Label>
 
-                        <Form.Control
-                            id="data-nascimento"
-                            type="date"
-                            value={this.state.datanascimento}
-                            required
-                            onChange={this.atualizaEstadoDataNascimento.bind(this)} />
+                                <Form.Control
+                                    id="data-nascimento"
+                                    type="date"
+                                    value={this.state.datanascimento}
+                                    required
+                                    onChange={this.atualizaEstadoDataNascimento.bind(this)} />
 
-                    </Form.Group>
-    </Col>
+                            </Form.Group>
+                        </Col>
 
-    <Col>
-                    <Form.Group>
-                        <Form.Label>Telefone:</Form.Label>
+                        <Col>
+                            <Form.Group>
+                                <Form.Label>Telefone:</Form.Label>
 
-                        <Form.Control
-                            id="telefone"
-                            className="input-ajustado"
-                            type="tel"
-                            value={this.state.telefone}
-                            pattern="[0-9]{2}-[0-9]{4}-[0-9]{4}"
-                            placeholder="Ex. (xx) xxxx-xxxx"
-                            required
-                            onChange={this.atualizaEstadoTelefone.bind(this)} />
+                                <Form.Control
+                                    id="telefone"
+                                    className="input-ajustado"
+                                    type="tel"
+                                    value={this.state.telefone}
+                                    // pattern="[0-9]{2} [0-9]{4}-[0-9]{4}"
+                                    placeholder="Ex. (11) 1234-5678"
+                                    required
+                                    onChange={this.atualizaEstadoTelefone.bind(this)} />
 
-                    </Form.Group>
-    </Col>
-</Row>
+                            </Form.Group>
+                        </Col>
+                    </Row>
                     <Form.Group>
                         <Form.Label>Endereço:</Form.Label>
 
@@ -203,6 +211,18 @@ class CadastrarPaciente extends Component {
                             onChange={this.atualizaEstadoEndereco.bind(this)} />
 
                     </Form.Group>
+                    
+                    {/* <Form.Group>
+                        <Form.Label>Usuario (id):</Form.Label>
+
+                        <Form.Control
+                            className="input-ajustado"
+                            type="text"
+                            value={this.state.idUsuario}
+                            required
+                            onChange={this.atualizaEstadoUsuario.bind(this)} />
+
+                    </Form.Group> */}
 
                     {/* <Form.Group>
                         <Form.Label>Senha:</Form.Label>

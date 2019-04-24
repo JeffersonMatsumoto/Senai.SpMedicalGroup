@@ -120,9 +120,10 @@ class CadastrarUsuario extends Component {
                             onChange={this.atualizaEstadoIdTipoUsuario.bind(this)}
                         >
                             {/* para funcionar tem q selecioanr algum por la e n deixaar o padrão.. */}
+                            <option value="" >                            </option>
                             <option value="1" >                         Administrador   </option>
                             <option value="2" >                         Médico          </option>
-                            <option value="3"  >     Paciente        </option>
+                            <option value="3" >                         Paciente        </option>
                         </Form.Control>
                         {/* selected="selected" */}
                     </Form.Group>

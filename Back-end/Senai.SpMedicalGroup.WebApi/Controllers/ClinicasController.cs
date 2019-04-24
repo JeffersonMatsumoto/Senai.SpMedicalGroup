@@ -20,7 +20,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
         private IClinicaRepository ClinicaRepository { get; set; }
 
         public ClinicasController()
-        {
+        { 
             ClinicaRepository = new ClinicaRepository();
         }
 
@@ -45,7 +45,20 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
         {
             try
             {
-                return Ok(ClinicaRepository.Listar());
+                List<Clinicas> clinicas = ClinicaRepository.Listar();
+                var resultado = from c in clinicas
+                                select new
+                                {
+                                    id = c.Id,
+                                    nomeFantasia = c.NomeFantasia,
+                                    razaoSocial = c.RazaoSocial,
+                                    cnpj = c.Cnpj,
+                                    horarioFuncionamento = c.HorarioFuncionamento,
+                                    idEndereco = c.IdEnderecoNavigation.Logradouro,
+                                    medicos = c.Medicos
+                                };
+                //return Ok(ClinicaRepository.Listar());
+                return Ok(resultado);
             }
             catch (Exception)
             {

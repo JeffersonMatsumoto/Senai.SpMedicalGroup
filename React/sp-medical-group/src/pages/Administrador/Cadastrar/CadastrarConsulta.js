@@ -49,9 +49,11 @@ class CadastrarConsulta extends Component {
 
         Axios.post("http://localhost:5000/api/consultas",
             {
-                Email: this.state.email,
-                Senha: this.state.senha,
-                IdTipoUsuarios: this.state.idtipousuario,
+                Medico: this.state.medico,
+                Paciente: this.state.paciente,
+                DataConsulta: this.state.dataconsulta,
+                Descricao: this.state.descricao,
+                Situacao: this.state.situacao
             },
             {
                 headers: {
@@ -63,8 +65,9 @@ class CadastrarConsulta extends Component {
                 if (data.status === 200) {
                     console.log(data);
                     this.setState({ Mensagem: 'Consulta cadastrada com sucesso!' });
+                    alert('Consulta cadastrada com sucesso!');
                     if (this.state.tipousuario === "Administrador") {
-                        this.props.history.push("/");
+                        this.props.history.push("/funcionalidades");
                     }
                 }
             })
@@ -133,19 +136,19 @@ class CadastrarConsulta extends Component {
 
                                 <Form.Control
                                     id="situacao"
-                                    as ="select"
+                                    as="select"
                                     className="input-ajustado"
                                     type="text"
                                     value={this.state.situacao}
                                     required
                                     onChange={this.atualizaEstadoSituacao.bind(this)}>
-                                        <option value="Agendado" selected="selected">       Agendado   </option>
-                                        <option value="Cancelado">                          Cancelado          </option>
-                                        <option value="Realizado">                          Realizado        </option>
+                                    <option value="Agendado" selected="selected">       Agendado   </option>
+                                    <option value="Cancelado">                          Cancelado          </option>
+                                    <option value="Realizado">                          Realizado        </option>
 
                                 </Form.Control>
 
-                            {/* //('Agendado'),('Cancelado'),('Realizado') */}
+                                {/* //('Agendado'),('Cancelado'),('Realizado') */}
                             </Form.Group>
                         </Col>
                     </Row>
@@ -158,8 +161,8 @@ class CadastrarConsulta extends Component {
                             value={this.state.descricao}
                             required
                             onChange={this.atualizaEstadoDescricao.bind(this)}>
-                            
-                            </textarea>
+
+                        </textarea>
 
                     </Form.Group>
 

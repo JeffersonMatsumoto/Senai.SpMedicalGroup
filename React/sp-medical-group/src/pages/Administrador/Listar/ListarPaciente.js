@@ -46,6 +46,7 @@ class ListarPaciente extends Component {
                     <Table striped bordered hover >
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Nome</th>
                                 <th>Rg</th>
                                 <th>Cpf</th>
@@ -64,6 +65,7 @@ class ListarPaciente extends Component {
                                 this.state.listaPaciente.map(function (paciente) {
                                     return (
                                         <tr key={paciente.id}>
+                                            <td>{paciente.id}</td>
                                             <td>{paciente.nomePaciente}</td>
                                             <td>{paciente.rg}</td>
                                             <td>{paciente.cpf}</td>

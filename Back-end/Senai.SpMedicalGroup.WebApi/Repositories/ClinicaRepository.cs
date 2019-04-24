@@ -1,4 +1,5 @@
-﻿using Senai.SpMedicalGroup.WebApi.Domains;
+﻿using Microsoft.EntityFrameworkCore;
+using Senai.SpMedicalGroup.WebApi.Domains;
 using Senai.SpMedicalGroup.WebApi.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Senai.SpMedicalGroup.WebApi.Repositories
         {
             using (SpmedgroupContext ctx = new SpmedgroupContext())
             {
-                return ctx.Clinicas.ToList();
+                return ctx.Clinicas.Include(x => x.IdEnderecoNavigation).ToList();
             }
         }
     }

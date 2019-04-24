@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Rodape from '../../components/Rodape/Rodape.js'
+// import Rodape from '../../components/Rodape/Rodape.js'
 import { Button } from 'react-bootstrap';
 import "../../../src/assets/css/naoencontrada.css"
 import  { Link } from 'react-router-dom'
@@ -16,7 +16,7 @@ class NaoEncontrada extends Component {
                         <Button id="btn-naoencontrada" variant="outline-primary"> Ir para página principal</Button>
                     </Link>
                 </div>
-                <Rodape/>
+                {/* <Rodape style={{ 'position' : 'fixed' }}/> */}
             </div>
         );
     }

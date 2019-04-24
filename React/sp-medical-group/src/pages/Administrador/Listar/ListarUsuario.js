@@ -36,8 +36,6 @@ class ListarUsuario extends Component {
             .catch((erro) => console.log(erro))
     }
 
-
-
     render() {
         return (
             <div >
