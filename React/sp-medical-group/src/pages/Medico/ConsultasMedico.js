@@ -33,7 +33,7 @@ class ListarConsultaMedico extends Component {
         Axios.get("http://localhost:5000/api/consultas", 
         {
             headers: {
-                'Content-Type' : 'application/json', 'Charset' : "UTF-8",
+                'Content-Type' : 'application/json', Charset : 'UTF-8',
                 'Authorization' : "Bearer " + localStorage.getItem("user")
             }
         })
@@ -72,7 +72,7 @@ class ListarConsultaMedico extends Component {
                 <Table striped bordered hover >
                     <thead>
                         <tr>
-                            <th>Médico</th>
+                            {/* <th>Médico</th> */}
                             <th>Paciente</th>
                             <th>Data consulta</th>
 
@@ -88,7 +88,7 @@ class ListarConsultaMedico extends Component {
                             this.state.listaConsulta.map(function(consulta) {
                                 return (
                                     <tr key={consulta.id}>
-                                        <td>{consulta.idMedico}</td>
+                                        {/* <td>{consulta.idMedico}</td> */}
                                         <td>{consulta.idProntuario}</td>
                                         <td>{consulta.dataConsulta}</td>
                                         <td>{consulta.descricao}</td>

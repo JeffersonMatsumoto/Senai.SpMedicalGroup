@@ -69,7 +69,7 @@ class CadastrarClinica extends Component {
                 if (data.status === 200) {
                     console.log(data);
                     this.setState({ Mensagem: 'Clínica cadastrada com sucesso!' });
-                    alert('Clínica cadastrada com sucesso!' + this.state.razaosocial);
+                    alert('Clínica cadastrada com sucesso! ' + this.state.razaosocial);
                     if (this.state.idtipousuario === "1") {
                         this.props.history.push("/funcionalidades");
                     }
@@ -164,9 +164,10 @@ class CadastrarClinica extends Component {
                     </Form.Group>
 
                     <p>{this.state.erroMensagem}</p>
-
+                    <div className="flex-btns">
+                    <Button href="/funcionalidades" id="btns" className="btn" size="lg" variant="primary">Voltar </Button>
                     <Button id="btns" type="submit" value="Cadastrar" className="btn" size="lg" variant="primary">Cadastrar</Button>
-
+                    </div>
                 </Form>
 
                 <Rodape></Rodape>

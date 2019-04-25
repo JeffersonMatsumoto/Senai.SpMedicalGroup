@@ -71,7 +71,7 @@ class ListarConsultaPaciente extends Component {
                     <thead>
                         <tr>
                             <th>Médico</th>
-                            <th>Paciente</th>
+                            {/* <th>Paciente</th> */}
                             <th>Data consulta</th>
 
                             {/* em breve transformar em um botao q ao clicar exibe um modal com a descricao */}
@@ -87,7 +87,7 @@ class ListarConsultaPaciente extends Component {
                                 return (
                                     <tr key={consulta.id}>
                                         <td>{consulta.idMedico}</td>
-                                        <td>{consulta.idProntuario}</td>
+                                        {/* <td>{consulta.idProntuario}</td> */}
                                         <td>{consulta.dataConsulta}</td>
                                         <td>{consulta.descricao}</td>
                                         <td>{consulta.idSituacao}</td>

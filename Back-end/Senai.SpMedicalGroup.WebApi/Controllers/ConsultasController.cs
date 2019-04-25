@@ -107,38 +107,33 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                 //}
                 #endregion
 
+                List<Consultas> consultas = new List<Consultas>();
                 if (usuarioLogado == "Administrador")
                 {
-                    List<Consultas> consultas = ConsultaRepository.Listar();
-                    var resultado = from c in consultas
-                                    select new
-                                    {
-                                        idMedico = c.IdMedicoNavigation.NomeMedico,
-                                        idProntuario = c.IdProntuarioNavigation.NomePaciente,
-                                        dataConsulta = c.DataConsulta,
-                                        descricao = c.Descricao,
-                                        idSituacao = c.IdSituacaoNavigation.Tipo
-                                    };
-                    return Ok(resultado);
-                    //return Ok(ConsultaRepository.Listar());
+                    consultas = ConsultaRepository.Listar();
                 }
-                else if (usuarioLogado == "Médico")
+                else if (usuarioLogado == "Medico")
                 {
-                    //User.HasClaim(ClaimTypes.Role, "Médico");
-                    //int idMedico = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value);
-                    //return Ok(ConsultaRepository.ListarConsultasMedico(idMedico));
-
                     int idUsuario = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value);
-                    return Ok(ConsultaRepository.ListarConsultasMedico(idUsuario)); //ConsultaRepository.ListarConsultasMedico(3) se informar o id, dá certo
-                }//ListarConsultasMedico(BuscarMedicoDoUsuario)
-                
+                    consultas = ConsultaRepository.ListarConsultasMedico(idUsuario);   
+                } 
                 else if (usuarioLogado == "Paciente") //f10 para ir passo a passo
                 {
                     int idUsuario = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value);
-                    return Ok(ConsultaRepository.ListarConsultasPaciente(idUsuario));
+                    consultas = ConsultaRepository.ListarConsultasPaciente(idUsuario);
                 }
 
-                return BadRequest(new { message = "Usuário inválido." });
+                var resultado = from c in consultas
+                                select new
+                                {
+                                    descricao = c.Descricao,
+                                    dataConsulta = c.DataConsulta,
+                                    idMedico = c.IdMedicoNavigation.NomeMedico,
+                                    idProntuario = c.IdProntuarioNavigation.NomePaciente,
+                                    idSituacao = c.IdSituacaoNavigation.Tipo
+                                };
+
+                return Ok(resultado);
             }
             catch (Exception)
             {
@@ -161,7 +156,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             }
         }
 
-        [Authorize(Roles = "Administrador, Médico")]
+        [Authorize(Roles = "Administrador, Medico")]
         [HttpPut]
         public IActionResult Put(Consultas consulta)
         {

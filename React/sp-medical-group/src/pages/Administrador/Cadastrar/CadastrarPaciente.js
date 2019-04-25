@@ -21,9 +21,11 @@ class CadastrarPaciente extends Component {
             cpf: '',
             datanascimento: '',
             telefone: '',
-            endereco: '', //talvez seja pelo id...
+            idEndereco: '', //talvez seja pelo id...
+            idUsuario: '',
             erroMensagem: '',
-            idUsuario: 13
+            listaUsuario: []
+
         }
     }
 
@@ -36,6 +38,10 @@ class CadastrarPaciente extends Component {
     //               documento.value += texto.substring(0,1);
     //     }
     // }
+
+    componentDidMount() {
+        this.buscarUsuarios();
+    }
 
     atualizaEstadoNome(event) {
         this.setState({ nome: event.target.value });
@@ -58,12 +64,29 @@ class CadastrarPaciente extends Component {
     }
 
     atualizaEstadoEndereco(event) {
-        this.setState({ endereco: event.target.value })
+        this.setState({ idEndereco: event.target.value })
     }
 
-    // atualizaEstadoUsuario(event) {
-    //     this.setState({ idUsuario: event.target.value })
-    // }
+    atualizaEstadoUsuario(event) {
+        this.setState({ idUsuario: event.target.value })
+    }
+
+    buscarUsuarios() {
+        fetch('http://localhost:5000/api/usuarios', {
+            method: 'GET',
+            headers:
+            {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("user")
+            }
+        })
+            .then(resposta => 
+                resposta.json())
+            .then(data => 
+                this.setState({ listaUsuario: data })
+            )
+            .catch((erro) => console.log(erro))
+    }
 
     cadastraPaciente(event) {
         event.preventDefault();
@@ -75,8 +98,8 @@ class CadastrarPaciente extends Component {
                 cpf: this.state.cpf,
                 dataNascimento: this.state.datanascimento,
                 telefone: this.state.telefone,
-                endereco: this.state.endereco,
-                // idUsuario: this.state.idUsuario
+                idEndereco: this.state.idEndereco,
+                idUsuario: this.state.idUsuario
             },
             {
                 headers: {
@@ -88,10 +111,10 @@ class CadastrarPaciente extends Component {
                 if (data.status === 200) {
                     console.log(data);
                     this.setState({ Mensagem: 'Paciente cadastrado com sucesso!' });
-                    alert('Paciente cadastrado(a) com sucesso!' + this.state.nome);
-                    if (this.state.tipousuario === "Administrador") {
-                        this.props.history.push("/");
-                    }
+                    alert('Paciente cadastrado(a) com sucesso! ' + this.state.nome);
+                    // if (this.state.tipousuario === "Administrador") {
+                    //     this.props.history.push("/");
+                    // }
                 }
             })
             .catch(erro => {
@@ -102,7 +125,9 @@ class CadastrarPaciente extends Component {
     //https://www.npmjs.com/package/react-input-mask
 
     render() {
+        console.log(this.state.listaUsuario);
         return (
+
             <div>
                 <Header></Header>
                 <Form className="forms" onSubmit={this.cadastraPaciente.bind(this)}>
@@ -201,18 +226,18 @@ class CadastrarPaciente extends Component {
                         </Col>
                     </Row>
                     <Form.Group>
-                        <Form.Label>Endereço:</Form.Label>
+                        <Form.Label>Endereço (id):</Form.Label>
 
                         <Form.Control
                             className="input-ajustado"
                             type="text"
-                            value={this.state.endereco}
+                            value={this.state.idEndereco}
                             required
                             onChange={this.atualizaEstadoEndereco.bind(this)} />
 
                     </Form.Group>
-                    
-                    {/* <Form.Group>
+
+                    <Form.Group>
                         <Form.Label>Usuario (id):</Form.Label>
 
                         <Form.Control
@@ -220,11 +245,23 @@ class CadastrarPaciente extends Component {
                             type="text"
                             value={this.state.idUsuario}
                             required
-                            onChange={this.atualizaEstadoUsuario.bind(this)} />
+                            as="select"
+                            onChange={this.atualizaEstadoUsuario.bind(this)}
+                        >
+                            {
+                                this.state.listaUsuario.map(function (i) {
 
-                    </Form.Group> */}
+                                    return (
+                                        <option key={i.id} value={i.id}> {i.email} </option>
+                                    );
 
-                    {/* <Form.Group>
+                                })
+                            }
+                        </Form.Control>
+
+                        </Form.Group>
+
+                        {/* <Form.Group>
                         <Form.Label>Senha:</Form.Label>
 
                         <Form.Control 
@@ -250,17 +287,20 @@ class CadastrarPaciente extends Component {
 
                     </Form.Group> */}
 
-                    <p>{this.state.erroMensagem}</p>
+                        <p>{this.state.erroMensagem}</p>
 
+                        <div className="flex-btns">
+                    <Button href="/funcionalidades" id="btns" className="btn" size="lg" variant="primary">Voltar </Button>
                     <Button id="btns" type="submit" value="Cadastrar" className="btn" size="lg" variant="primary">Cadastrar</Button>
+                    </div>
 
                 </Form>
 
-                <Rodape></Rodape>
+                    <Rodape></Rodape>
 
             </div>
-        );
-    }
-} //https://react-bootstrap.github.io/components/forms/
-
+                );
+            }
+        } //https://react-bootstrap.github.io/components/forms/
+        
 export default CadastrarPaciente;

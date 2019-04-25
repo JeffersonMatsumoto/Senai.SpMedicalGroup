@@ -20,10 +20,29 @@ class CadastrarConsulta extends Component {
             dataconsulta: '',
             descricao: '',
             situacao: '',
-            erroMensagem: ''
+            erroMensagem: '',
+            listaPaciente: []
         }
     }
 
+    componentDidMount() {
+        this.buscarPacientes();
+    }
+
+    buscarPacientes() {
+        fetch('http://localhost:5000/api/prontuarios', {
+            method:'GET',
+            headers:
+        {
+            "Content-Type":"application/json",
+            "Authorization": "Bearer " + localStorage.getItem("user")
+        }
+    })
+            .then(resposta => resposta.json())
+            .then(data => this.setState({ listaPaciente: data }))
+            .catch((erro) => console.log(erro))
+    }
+    
     atualizaEstadoMedico(event) {
         this.setState({ medico: event.target.value });
     }
@@ -95,6 +114,15 @@ class CadastrarConsulta extends Component {
                                     value={this.state.medico}
                                     required
                                     onChange={this.atualizaEstadoMedico.bind(this)} />
+                                {/* {
+                                    this.state.listaMedico.map(function (i) {
+
+                                        return (
+                                            <option key={i.id} value={i.id}> {i.email} </option>
+                                        );
+
+                                    })
+                                } */}
 
                             </Form.Group>
                         </Col>
@@ -108,8 +136,20 @@ class CadastrarConsulta extends Component {
                                     type="text"
                                     value={this.state.paciente}
                                     required
-                                    onChange={this.atualizaEstadoPaciente.bind(this)} />
+                                    as="select"
+                                    onChange={this.atualizaEstadoPaciente.bind(this)} 
+                                >
 
+                                    {
+                                        this.state.listaPaciente.map(function (i) {
+        
+                                            return (
+                                                <option key={i.id} value={i.id}> {i.nomePaciente} </option>
+                                            );
+        
+                                        })
+                                    }
+                                </Form.Control>
 
                             </Form.Group>
                         </Col>
@@ -142,6 +182,7 @@ class CadastrarConsulta extends Component {
                                     value={this.state.situacao}
                                     required
                                     onChange={this.atualizaEstadoSituacao.bind(this)}>
+                                    {/* <option value="" selected="selected"></option> */}
                                     <option value="Agendado" selected="selected">       Agendado   </option>
                                     <option value="Cancelado">                          Cancelado          </option>
                                     <option value="Realizado">                          Realizado        </option>
@@ -168,7 +209,10 @@ class CadastrarConsulta extends Component {
 
                     <p>{this.state.erroMensagem}</p>
 
+                    <div className="flex-btns">
+                    <Button href="/funcionalidades" id="btns" className="btn" size="lg" variant="primary">Voltar </Button>
                     <Button id="btns" type="submit" value="Cadastrar" className="btn" size="lg" variant="primary">Cadastrar</Button>
+                    </div>
 
                 </Form>
 

@@ -61,7 +61,7 @@ class Login extends Component {
                 if(parseJwt().Permissao === 'Administrador'){
                     console.log("Teste para aparecer no console");
                     this.props.history.push("/funcionalidades");
-                } else if (parseJwt().Permissao === "Médico") {
+                } else if (parseJwt().Permissao === "Medico") {
                     this.props.history.push("/consultasmedico");
                 } else if (parseJwt().Permissao === "Paciente") {
                     this.props.history.push("/consultaspaciente");

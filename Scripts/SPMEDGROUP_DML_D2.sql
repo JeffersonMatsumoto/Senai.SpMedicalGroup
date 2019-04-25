@@ -137,6 +137,10 @@ GO
 INSERT INTO SITUACAO(TIPO)
 VALUES('Agendado'),('Cancelado'),('Realizado')
 
+--select * from TIPO_USUARIOS
+
+--UPDATE TIPO_USUARIOS SET TIPO='Medico' WHERE ID=2
+
 INSERT INTO TIPO_USUARIOS(TIPO)
 VALUES('Administrador'),('Médico'),('Paciente')
 

@@ -38,7 +38,7 @@ class NavHeader extends Component {
           {/* </Nav.Link> */}
         </div>
       );
-    } else if (usuarioAutenticado() && parseJwt().Permissao === "Médico") {
+    } else if (usuarioAutenticado() && parseJwt().Permissao === "Medico") {
       return (
         <div>
           {/* <Nav.Link> */}

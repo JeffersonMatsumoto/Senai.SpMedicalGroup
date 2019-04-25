@@ -51,11 +51,11 @@ class CadastrarUsuario extends Component {
                 if (data.status === 200) {
                     console.log(data);                       
                     this.setState({ Mensagem: 'Usuário cadastrado com sucesso!' });                        
-                    alert('Usuário cadastrado com sucesso!' + this.state.email);
-                    if (this.state.tipousuario === "Administrador") {
-                        alert('Usuário cadastrado com sucesso!' + this.state.email);
-                        this.props.history.push("/funcionalidades");
-                    }
+                    alert('Usuário cadastrado com sucesso! ' + this.state.email);
+                    // if (this.state.tipousuario === "Administrador") {
+                    //     alert('Usuário cadastrado com sucesso!' + this.state.email);
+                    //     this.props.history.push("/funcionalidades");
+                    // }
                 }
             })
             .catch(erro => {
@@ -120,7 +120,7 @@ class CadastrarUsuario extends Component {
                             onChange={this.atualizaEstadoIdTipoUsuario.bind(this)}
                         >
                             {/* para funcionar tem q selecioanr algum por la e n deixaar o padrão.. */}
-                            <option value="" >                            </option>
+                            {/* <option value="" >                            </option> */}
                             <option value="1" >                         Administrador   </option>
                             <option value="2" >                         Médico          </option>
                             <option value="3" >                         Paciente        </option>
@@ -130,8 +130,10 @@ class CadastrarUsuario extends Component {
 
                     <p>{this.state.erroMensagem}</p>
 
+                    <div className="flex-btns">
+                    <Button href="/funcionalidades" id="btns" className="btn" size="lg" variant="primary">Voltar </Button>
                     <Button id="btns" type="submit" value="Cadastrar" className="btn" size="lg" variant="primary">Cadastrar</Button>
-
+                    </div>
                 </Form>
 
                 <Rodape></Rodape>
