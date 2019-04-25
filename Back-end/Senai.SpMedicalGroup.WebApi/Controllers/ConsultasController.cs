@@ -109,7 +109,18 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
 
                 if (usuarioLogado == "Administrador")
                 {
-                    return Ok(ConsultaRepository.Listar());
+                    List<Consultas> consultas = ConsultaRepository.Listar();
+                    var resultado = from c in consultas
+                                    select new
+                                    {
+                                        idMedico = c.IdMedicoNavigation.NomeMedico,
+                                        idProntuario = c.IdProntuarioNavigation.NomePaciente,
+                                        dataConsulta = c.DataConsulta,
+                                        descricao = c.Descricao,
+                                        idSituacao = c.IdSituacaoNavigation.Tipo
+                                    };
+                    return Ok(resultado);
+                    //return Ok(ConsultaRepository.Listar());
                 }
                 else if (usuarioLogado == "Médico")
                 {

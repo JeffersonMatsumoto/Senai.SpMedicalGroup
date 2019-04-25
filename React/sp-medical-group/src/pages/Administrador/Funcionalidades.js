@@ -43,28 +43,28 @@ class Funcionalidades extends Component {
               <div className="funcionalidade-item">
                 <Button href="/clinicas" className="btn-funcionalidade" variant="outline-info">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="plus-square" />
-                  <p id="p-btn">Clínicas</p>
+                  <p id="p-btn">Cadastro de Clínicas</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
                 <Button href="/usuarios" className="btn-funcionalidade" variant="outline-info">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="plus-square" />
-                  <p id="p-btn">Usuários</p>
+                  <p id="p-btn">Cadastro de Usuários</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
                 <Button href="/prontuarios" className="btn-funcionalidade" variant="outline-info">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="plus-square" />
-                  <p id="p-btn">Pacientes</p>
+                  <p id="p-btn">Cadastro de Pacientes</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
                 <Button href="/consultas" className="btn-funcionalidade" variant="outline-info">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="plus-square" />
-                  <p id="p-btn">Consultas</p>
+                  <p id="p-btn">Cadastro de Consultas</p>
                 </Button>
               </div>
             </div>
@@ -74,28 +74,28 @@ class Funcionalidades extends Component {
               <div className="funcionalidade-item">
                 <Button href="/listaclinicas" className="btn-funcionalidade" variant="outline-primary">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
-                  <p id="p-btn">Clínicas</p>
+                  <p id="p-btn">Lista de Clínicas</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
                 <Button href="/listausuarios" className="btn-funcionalidade" variant="outline-primary">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
-                  <p id="p-btn">Usuários</p>
+                  <p id="p-btn">Lista de Usuários</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
                 <Button href="/listapacientes" className="btn-funcionalidade" variant="outline-primary">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
-                  <p id="p-btn">Pacientes</p>
+                  <p id="p-btn">Lista de Pacientes</p>
                 </Button>
               </div>
 
               <div className="funcionalidade-item">
                 <Button href="/listaconsultas" className="btn-funcionalidade" variant="outline-primary">
                   <FontAwesomeIcon className="icon-funcionalidade" style={{ color: '' }} icon="clipboard-list" />
-                  <p id="p-btn">Consultas</p>
+                  <p id="p-btn">Lista de Consultas</p>
                 </Button>
               </div>
               

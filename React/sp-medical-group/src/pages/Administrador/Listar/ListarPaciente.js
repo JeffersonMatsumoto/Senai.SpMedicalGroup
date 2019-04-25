@@ -42,11 +42,11 @@ class ListarPaciente extends Component {
         return (
             <div >
                 <Header></Header>
-                <div style={{ padding: '10%' }}>
+                <div style={{ marginTop : '5%', padding: '5%' }}>
                     <Table striped bordered hover >
                         <thead>
                             <tr>
-                                <th>#</th>
+                                {/* <th>#</th> */}
                                 <th>Nome</th>
                                 <th>Rg</th>
                                 <th>Cpf</th>
@@ -65,7 +65,7 @@ class ListarPaciente extends Component {
                                 this.state.listaPaciente.map(function (paciente) {
                                     return (
                                         <tr key={paciente.id}>
-                                            <td>{paciente.id}</td>
+                                            {/* <td>{paciente.id}</td> */}
                                             <td>{paciente.nomePaciente}</td>
                                             <td>{paciente.rg}</td>
                                             <td>{paciente.cpf}</td>

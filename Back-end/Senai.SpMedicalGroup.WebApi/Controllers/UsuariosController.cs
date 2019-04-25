@@ -35,7 +35,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                                 {
                                     id = u.Id,
                                     email = u.Email,
-                                    tipo = u.IdTipoUsuarioNavigation.Tipo
+                                    idTipoUsuario = u.IdTipoUsuarioNavigation.Tipo
                                 };
                 //return Ok(UsuarioRepository.Listar());
                 return Ok(resultado);

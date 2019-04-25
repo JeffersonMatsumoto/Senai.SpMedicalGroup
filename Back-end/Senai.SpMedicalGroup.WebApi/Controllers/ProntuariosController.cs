@@ -29,7 +29,20 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
         {
             try
             {
-                return Ok(ProntuarioRepository.Listar());
+                List<Prontuarios> prontuarios = ProntuarioRepository.Listar();
+                var resultado = from p in prontuarios
+                                select new
+                                {
+                                    nomePaciente = p.NomePaciente,
+                                    cpf = p.Cpf,
+                                    rg = p.Rg,
+                                    dataNascimento = p.DataNascimento,
+                                    telefone = p.Telefone,
+                                    idEndereco = p.IdEnderecoNavigation.Logradouro,
+                                    idUsuario = p.IdUsuarioNavigation.Email
+                                };
+                return Ok(resultado);
+                //return Ok(ProntuarioRepository.Listar());
             }
             catch (Exception)
             {

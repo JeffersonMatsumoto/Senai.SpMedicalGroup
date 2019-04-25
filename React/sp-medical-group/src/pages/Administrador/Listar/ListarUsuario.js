@@ -45,8 +45,8 @@ class ListarUsuario extends Component {
                         <thead>
                             <tr>
                                 <th>Email</th>
-                                <th>Senha</th>
-                                <th>Tipo usuário</th>
+                                {/* <th>Senha</th> */}
+                                <th>Tipo de usuário</th>
                             </tr>
                         </thead>
 
@@ -56,7 +56,7 @@ class ListarUsuario extends Component {
                                     return (
                                         <tr key={usuario.id}>
                                             <td>{usuario.email}</td>
-                                            <td>{usuario.senha}</td>
+                                            {/* <td>{usuario.senha}</td> */}
                                             <td>{usuario.idTipoUsuario}</td>
                                         </tr>
                                     );
