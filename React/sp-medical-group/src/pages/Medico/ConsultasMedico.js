@@ -9,7 +9,7 @@
 
 import React, { Component } from 'react';
 import Axios from "axios";
-import { Table } from 'react-bootstrap';
+import { Table, Button, FormControl } from 'react-bootstrap';
 
 import Header from '../../components/Header/Header';
 import Rodape from '../../components/Rodape/Rodape';
@@ -19,31 +19,72 @@ class ListarConsultaMedico extends Component {
     constructor() {
         super();
         this.state = {
+            id: '',
+            descricao: '',
             listaConsulta: []
         }
-    }    
-    
-    componentDidMount(){
+    }
+
+    componentDidMount() {
         this.listarconsultas();
     }
-    listarconsultas(){
+
+    listarconsultas() {
 
         // var bearer = 'Bearer ' + localStorage.getItem("user");
 
-        Axios.get("http://localhost:5000/api/consultas", 
-        {
-            headers: {
-                'Content-Type' : 'application/json', Charset : 'UTF-8',
-                'Authorization' : "Bearer " + localStorage.getItem("user")
-            }
-        })
-        .then((response) => {
-            console.log(response);
-            response = this.setState({ listaConsulta : response.data })
-        })
-        .catch((erro) => console.log(erro))  
+        Axios.get("http://localhost:5000/api/consultas",
+            {
+                headers: {
+                    'Content-Type': 'application/json', Charset: 'UTF-8',
+                    'Authorization': "Bearer " + localStorage.getItem("user")
+                }
+            })
+            .then((response) => {
+                console.log(response);
+                response = this.setState({ listaConsulta: response.data })
+            })
+            .catch((erro) => console.log(erro))
     }
-    
+
+    atualizaEstadoId(event) {
+        this.setState({ id: event.target.value })
+    }
+
+    atualizaEstadoDescricao(event) {
+        this.setState({ descricao: event.target.value })
+    }
+
+    editarconsultas(event) {
+        event.preventDefault();
+
+        Axios.put("http://localhost:5000/api/consultas",
+            {
+                id: this.state.id,
+                descricao: this.state.descricao
+            },
+
+            {
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("user")
+                }
+
+            })
+
+            .then(data => {
+                if (data.status === 200) {
+                    this.setState({ Mensagem: 'Descrição da consulta adicionada.' });
+                    alert('Descrição adicionada com sucesso!');
+                }
+            })
+
+            .catch(erro => {
+                this.setState({ Mensagem: 'Há informações inválidas, verifique e tente novamente.' + erro });
+            })
+    }
+
 
     // componentDidMount() {
     //     this.buscarConsultas();
@@ -68,40 +109,70 @@ class ListarConsultaMedico extends Component {
         return (
             <div>
                 <Header></Header>
-                <div  style={{ padding : '10%' }}>
-                <Table striped bordered hover >
-                    <thead>
-                        <tr>
-                            {/* <th>Médico</th> */}
-                            <th>Paciente</th>
-                            <th>Data consulta</th>
+                <div style={{ padding: '10%' }}>
+                    <Table striped bordered hover >
+                        <thead>
+                            <tr>
+                                {/* <th>Médico</th> */}
 
-                            {/* em breve transformar em um botao q ao clicar exibe um modal com a descricao */}
-                            <th>Adicionar descrição</th> 
-                            
-                            <th>Situação</th>
-                        </tr>
-                    </thead>
+                                <th>Id</th>
 
-                    <tbody>
-                        {
-                            this.state.listaConsulta.map(function(consulta) {
-                                return (
-                                    <tr key={consulta.id}>
-                                        {/* <td>{consulta.idMedico}</td> */}
-                                        <td>{consulta.idProntuario}</td>
-                                        <td>{consulta.dataConsulta}</td>
-                                        <td>{consulta.descricao}</td>
-                                        <td>{consulta.idSituacao}</td>
-                                    </tr>
-                                );
-                            })
-                        }
-                    </tbody>
-                </Table>
-                
-                {/* onClick cm permissao? */}
-                {/* <Button href="/" id="btns"  className="btn" size="lg" variant="primary">
+                                <th>Paciente</th>
+                                <th>Data consulta</th>
+
+                                {/* em breve transformar em um botao q ao clicar exibe um modal com a descricao */}
+                                <th>Adicionar descrição</th>
+
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {
+                                this.state.listaConsulta.map(function (consulta) {
+                                    return (
+                                        <tr key={consulta.id}>
+                                            {/* <td>{consulta.idMedico}</td> */}
+
+                                            <td>{consulta.id}</td>
+
+                                            <td>{consulta.idProntuario}</td>
+                                            <td>{consulta.dataConsulta.split("T")[0]}</td>
+
+                                            <td>{consulta.descricao}</td>
+
+                                            <td>{consulta.idSituacao}</td>
+                                        </tr>
+                                    );
+                                })
+                            }
+                        </tbody>
+
+                    </Table>
+
+                    <p>Selecione o Id da consulta que deseja adicionar uma descrição:</p>
+                    <form style={{ display: 'flex' }} onSubmit={this.editarconsultas.bind(this)}>
+                        <select style={{ padding: '.2em', borderRadius: '10%'}} value={this.state.id} name="consulta"
+                            onChange={this.atualizaEstadoId.bind(this)} required>
+                            {
+                                this.state.listaConsulta.map(function (consulta) {
+                                    return (
+                                        <option key={consulta.id}>
+                                            {consulta.id}
+                                        </option>
+                                    );
+                                })
+                            }
+                        </select>
+                        <FormControl style={{ width: '75%', marginLeft: '1em' }} type="text" value={this.state.descricao} onChange={this.atualizaEstadoDescricao.bind(this)} />
+                        <Button style={{ width: '25%', marginLeft: '1em' }} onClick={this.editarconsultas.bind(this)}>Adicionar / Alterar descrição</Button>
+                    </form>
+
+                    {/* <textarea value={this.state.descricao} onChange={(e) => this.setState({ descricao: e.target.value })} />
+                        <button onClick={this.editaConsulta.bind(this)}>Alterar descrição</button> */}
+
+                    {/* onClick cm permissao? */}
+                    {/* <Button href="/" id="btns"  className="btn" size="lg" variant="primary">
                     Voltar
                 </Button> */}
                 </div>

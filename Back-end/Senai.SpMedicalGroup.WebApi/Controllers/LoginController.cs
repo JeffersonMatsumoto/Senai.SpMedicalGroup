@@ -26,6 +26,8 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             UsuarioRepository = new UsuarioRepository();
         }
 
+        //string NomeLogado;
+
         [HttpPost]
         public IActionResult Post(LoginViewModel login)
         {
@@ -41,33 +43,75 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                         mensagem = "Email ou senha inválido"
                     });
                 }
+                else
+                {
+                    string nome;
+                    using (SpmedgroupContext ctx = new SpmedgroupContext())
+                    {
+                        Medicos m = new Medicos();
+                        Prontuarios p = new Prontuarios();
 
-                var claims = new[]
+                        if (ctx.Medicos.FirstOrDefault(x => x.IdUsuario == usuarioBuscado.Id) != null)
+                        {
+                            m = ctx.Medicos.FirstOrDefault(x => x.IdUsuario == usuarioBuscado.Id);
+                            nome = m.NomeMedico;
+                        }
+
+                        else if (ctx.Prontuarios.FirstOrDefault(x => x.IdUsuario == usuarioBuscado.Id) != null)
+                        {
+                            p = ctx.Prontuarios.FirstOrDefault(x => x.IdUsuario == usuarioBuscado.Id);
+                            nome = p.NomePaciente;
+                        }
+
+                        else
+                        {
+                            nome = "Administrador";
+                        }
+                    }
+
+                    //switch (usuarioBuscado.IdTipoUsuarioNavigation.Tipo)
+                    //{
+                    //    //case "Administrador":
+                    //    //    NomeLogado = usuarioBuscado.;
+                    //    //    break;
+                    //    case "Medico":
+                    //        NomeLogado = usuarioBuscado.Medicos.NomeMedico;
+                    //        break;
+
+                    //    case "Paciente":
+                    //        NomeLogado = usuarioBuscado.Prontuarios.NomePaciente;
+                    //        break;
+                    //}
+
+                    var claims = new[]
                 {
                     new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.Id.ToString()),
                     new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuarioNavigation.Tipo.ToString()),
-                    new Claim("Permissao", usuarioBuscado.IdTipoUsuarioNavigation.Tipo.ToString())
+                    new Claim("Permissao", usuarioBuscado.IdTipoUsuarioNavigation.Tipo.ToString()),
+                    new Claim("Nome", nome)
                 };
 
-                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("spmedgroup-chave-autenticacao"));
+                    var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("spmedgroup-chave-autenticacao"));
 
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                var token = new JwtSecurityToken(
-                    issuer: "SpMedGroup.WebApi",
-                    audience: "SpMedGroup.WebApi",
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(20),
-                    signingCredentials: creds
-                );
+                    var token = new JwtSecurityToken(
+                        issuer: "SpMedGroup.WebApi",
+                        audience: "SpMedGroup.WebApi",
+                        claims: claims,
+                        expires: DateTime.Now.AddMinutes(20),
+                        signingCredentials: creds
+                    );
 
-                return Ok(new
-                { m = "Acesso liberado !",
-                    token = new JwtSecurityTokenHandler().WriteToken(token)
-                });
+                    return Ok(new
+                    {
+                        m = "Acesso liberado !",
+                        token = new JwtSecurityTokenHandler().WriteToken(token)
+                    });
+                }
             }
-            catch(Exception XX)
+            catch (Exception XX)
             {
                 return BadRequest(XX.Message); //aparece o erro no postman
             }

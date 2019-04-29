@@ -49,7 +49,7 @@ class Header extends Component {
                 </Nav.Item>
             </Nav> */}
                 <Navbar fixed="top" style={{ 'borderBottom': '2px solid #ebebeb', 'backgroundColor': 'white' }}>
-                    <Navbar.Brand href="/" style={{ 'width': '75%' }}>
+                    <Navbar.Brand href="/" style={{ 'width': '50%' }}>
                         <img
                             src={Logo}
                             width="5%"

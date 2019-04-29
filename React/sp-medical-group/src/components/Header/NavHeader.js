@@ -17,66 +17,78 @@ class NavHeader extends Component {
   render() {
     if (usuarioAutenticado() && parseJwt().Permissao === "Administrador") {
       return (
-        <div>
+        <div style={{ display: 'flex' }}>
 
           {/* <Nav.Link> */}
-            <Link className="link" to="/funcionalidades" style={{ 'margin-right' : '5em'}}>
-              Funcionalidades
+          <Link className="link" to="/funcionalidades" style={{ 'margin-right': '5em' }}>
+            Funcionalidades
             </Link>
           {/* </Nav.Link> */}
 
           {/* <Link to="/consultas/cadastrar">Consultas</Link> */}
           {/* <Nav.Link> */}
-            <Link to="/" className="link" >
-              <span
-                onClick={this.logout.bind(this)}
-                style={{ cursor: "pointer" }}
-              >
-                Sair
+
+          {/* <span style={{ marginRight: '5em' }}> */}
+          <span style={{marginRight : '.5em' }}>Bem vindo(a), </span>
+          <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
+          {/* </span> */}
+
+          <Link to="/" className="link" >
+            <span
+              onClick={this.logout.bind(this)}
+              style={{ cursor: "pointer", marginRight: '2em' }}
+            >
+              Sair
               </span>
-            </Link>
+          </Link>
           {/* </Nav.Link> */}
         </div>
       );
     } else if (usuarioAutenticado() && parseJwt().Permissao === "Medico") {
       return (
-        <div>
+        <div style={{ display: 'flex' }}>
           {/* <Nav.Link> */}
-            <Link className="link" to="/consultasmedico" style={{ 'margin-right' : '5em'}}>
-              Minhas consultas
-            </Link>
+          <Link className="link" to="/consultasmedico" style={{ 'margin-right': '5em' }}>
+            Minhas consultas
+          </Link>
           {/* </Nav.Link> */}
 
+          <span style={{marginRight : '.5em' }}>Bem vindo(a), </span>
+          <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
+
           {/* <Nav.Link> */}
-            <Link to="/" className="link">
-              <span
-                onClick={this.logout.bind(this)}
-                style={{ cursor: "pointer" }}
-              >
-                Sair
-              </span>
-            </Link>
+          <Link to="/" className="link">
+            <span
+              onClick={this.logout.bind(this)}
+              style={{ cursor: "pointer", marginRight: '2em' }}
+            >
+              Sair
+            </span>
+          </Link>
           {/* </Nav.Link> */}
         </div>
       );
     } else if (usuarioAutenticado() && parseJwt().Permissao === "Paciente") {
       return (
-        <div>
+        <div style={{ display: 'flex' }}>
           {/* <Nav.Link> */}
-            <Link className="link" to="/consultaspaciente" style={{ 'margin-right' : '5em'}}>
-              Minhas consultas
+          <Link className="link" to="/consultaspaciente" style={{ 'margin-right': '5em' }}>
+            Minhas consultas
           </Link>
           {/* </Nav.Link> */}
-          
+
+          <span style={{marginRight : '.5em' }}>Bem vindo(a), </span>
+          <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
+
           {/* <Nav.Link> */}
-            <Link className="link" to="/" >
-              <span
-                onClick={this.logout.bind(this)}
-                style={{ cursor: "pointer" }}
-              >
-                Sair
+          <Link className="link" to="/" >
+            <span
+              onClick={this.logout.bind(this)}
+              style={{ cursor: "pointer", marginRight: '2em' }}
+            >
+              Sair
               </span>
-            </Link>
+          </Link>
           {/* </Nav.Link> */}
         </div>
       );
@@ -84,7 +96,7 @@ class NavHeader extends Component {
       return (
         <div>
           {/* <Nav.Link> */}
-            <Link className="link" to="/login">Login</Link>
+          <Link className="link" to="/login">Login</Link>
           {/* </Nav.Link> */}
         </div>
       );

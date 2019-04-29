@@ -126,6 +126,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                 var resultado = from c in consultas
                                 select new
                                 {
+                                    id = c.Id,
                                     descricao = c.Descricao,
                                     dataConsulta = c.DataConsulta,
                                     idMedico = c.IdMedicoNavigation.NomeMedico,

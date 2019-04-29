@@ -88,7 +88,7 @@ class ListarConsultaPaciente extends Component {
                                     <tr key={consulta.id}>
                                         <td>{consulta.idMedico}</td>
                                         {/* <td>{consulta.idProntuario}</td> */}
-                                        <td>{consulta.dataConsulta}</td>
+                                        <td>{consulta.dataConsulta.split("T")[0]}</td>
                                         <td>{consulta.descricao}</td>
                                         <td>{consulta.idSituacao}</td>
                                     </tr>
