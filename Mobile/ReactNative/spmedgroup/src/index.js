@@ -3,37 +3,42 @@ import {
     createStackNavigator,
     createSwitchNavigator,
     createBottomTabNavigator,
-    createDrawerNavigator,
-    create
+    createDrawerNavigator
 } from 'react-navigation';
+
+// https://reactnavigation.org/docs/en/getting-started.html
+// npm install --save react-navigation
+// npm install --save react-native-gesture-handler
 
 import Login from "./pages/Login";
 import ConsultasMedico from "./pages/ConsultasMedicos";
 import ConsultasPaciente from "./pages/ConsultasPacientes";
 
-const Main = createDrawerNavigator( 
-    {
-        "Login": {
-            screen: Login
-        }
-    },
-    
-    {
-        initialRouteName: "Login",
-    }
+const authStack = createStackNavigator(
+	
+	{
+		"Login": Login,
+		"Consultas Medico": ConsultasMedico,
+		"Consultas Paciente": ConsultasPaciente
+	},
+
+	{
+		initialRouteName: "Consultas Medico"
+	}
+
 )
 
 export default createAppContainer(
-        {
-            Main        
-        },
-        {
-            initialRouteName: "Login"
-        }
-    )
-);
+  createSwitchNavigator(
 
-export default Navigator;
+    {
+			"Login": authStack
+		},
 
+		{
+			initialRouteName:"Login"
+		}
 
+  )
+)
 // https://stackoverflow.com/questions/46684007/react-native-stacknavigator-initialroutename
