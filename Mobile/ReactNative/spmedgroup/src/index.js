@@ -23,7 +23,7 @@ const authStack = createStackNavigator(
 	},
 
 	{
-		initialRouteName: "Consultas Medico"
+		initialRouteName: "Login"
 	}
 
 )
