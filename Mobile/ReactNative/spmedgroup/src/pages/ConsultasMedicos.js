@@ -28,6 +28,10 @@ class ConsultasMedico extends Component {
         }
     }
 
+    static navigationOptions = {
+        title: 'Minhas Consultas',
+    };
+
     listaconsultas = async () => {
         const token = await AsyncStorage.getItem("asdd");
         const resposta = await api.get("/consultas", {
@@ -63,14 +67,14 @@ class ConsultasMedico extends Component {
 
     rederizarRed() {
         console.warn("chegou");
-        if (item.idSituacao == 3) {
+        if (item.idSituacao == 3 || item.idSituacao === 'Agendado') {
             return (
 
                 <View style={{ backgroundColor: '#80BFDB', padding: '2%' }}>
                     <Text>ahsduahsudhaushd</Text>
                 </View>
             );
-        } else if (item.idSituacao == 2) {
+        } else if (item.idSituacao == 2 || item.idSituacao === 'Realizado') {
             return (
 
                 <View style={{ backgroundColor: '#88D3A4', padding: '2%' }}>
@@ -94,17 +98,19 @@ class ConsultasMedico extends Component {
         return (
             <View>
 
-                <Text>
+                {/* <Text>
                     {this.state.nome}
-                </Text>
+                </Text> */}
 
-                <Image
+
+                {/* botao(iamgem) deslogar */}
+                {/* <Image
                     style={{ width: 50, height: 50 }}
                     source={require('../assets/img/logout.png')}
                     onPress={this.Sair()}
-                />
+                /> */}
 
-                <View>
+                <View style={{ elevation: 3, margin: '5%' }}>
                     {/* <View key={consulta.id} style={{ elevation: 3, margin: '10%' }}> */}
                     {/* <Text style={{ fontWeight: 'bold' }} > Consulta #{consulta.id} </Text> */}
 
@@ -135,25 +141,28 @@ class ConsultasMedico extends Component {
         );
     }
     renderizaItem = ({ item }) => {
-        console.warn(item.id);
+        // console.warn(item.id);
 
-        return(
+        return (
 
-            <View>
-        <View key={item.id}>
-            <Text style={{color: 'black'}}>{item.idProntuario}</Text>
-            <Text>{item.descricao}</Text>
-            <Text>
-                {item.dataConsulta.split("T")[0].split("-")[2]}/
-                                        {item.dataConsulta.split("T")[0].split("-")[1]}/
-                                        {item.dataConsulta.split("T")[0].split("-")[0]}
-            </Text>
-    
-    
-    
-        </View>
-        </View>
-    );
+            <View style={{ margin: '5%', padding: '3%', backgroundColor: 'white' ,elevation: 3 }}>
+                <View key={item.id}>
+                    <Text style={{ marginBottom: '2%' ,fontWeight: 'bold', borderBottomColor: 'grey', borderBottomWidth: 2, fontSize: 18 }}>Consulta #{item.id} </Text>
+                    
+                    {/* <Text>{this.rederizarRed}</Text> */}
+                    
+                    <Text>Nome do paciente: {item.idProntuario}</Text>
+                    <Text>Descrição: {item.descricao}</Text>
+                    <Text>Data da consulta:  
+                        {item.dataConsulta.split("T")[0].split("-")[2]}/
+                        {item.dataConsulta.split("T")[0].split("-")[1]}/
+                        {item.dataConsulta.split("T")[0].split("-")[0]}
+                    </Text>
+                </View>
+            </View>
+        );
+
+        // helena.strada@spmedicalgroup.com.br
     }
 }
 
