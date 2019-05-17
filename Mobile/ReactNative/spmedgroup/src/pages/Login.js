@@ -35,7 +35,7 @@ class Login extends Component {
 
     realizarLogin = async () => {
         // console.disableYellowBox = true;
-        
+
         const resposta = await api.post("/login", {
             email: this.state.email,
             senha: this.state.senha
@@ -70,6 +70,7 @@ class Login extends Component {
                     placeholder="E-mail"
                     placeholderTextColor="#808080"
                     underlineColorAndroid="#666666"
+                    defaultValue="helena.strada@spmedicalgroup.com.br" 
                     onChangeText={email => this.setState({ email })}
                 />
 
@@ -78,6 +79,7 @@ class Login extends Component {
                     placeholder="Senha"
                     placeholderTextColor="#808080"
                     secureTextEntry={true}
+                    defaultValue="654321"
                     underlineColorAndroid="#666666"
                     onChangeText={senha => this.setState({ senha })}
                 />

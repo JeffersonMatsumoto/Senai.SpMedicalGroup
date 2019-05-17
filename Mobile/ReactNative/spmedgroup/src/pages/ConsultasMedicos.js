@@ -10,7 +10,8 @@ import {
     TouchableOpacity,
     AsyncStorage,
     ScrollView,
-    FlatList
+    FlatList,
+    TouchableHighlight
 } from "react-native";
 
 import api from "../services/api";
@@ -30,6 +31,34 @@ class ConsultasMedico extends Component {
 
     static navigationOptions = {
         title: 'Minhas Consultas',
+        headerTitleStyle: {
+            marginLeft: 60,
+            // color: 'white',
+            fontWeight: 'bold'
+            // textAlign: 'right'
+        },
+        headerLeft: null,
+        // headerLayoutPreset: 'center',
+
+        headerRight: (
+            <TouchableHighlight onPress={() => this.Sair()}>
+                <Image
+                    style={{
+                        width: 30, height: 30, marginRight: 20
+                        // tintColor: 'white'
+                    }}
+                    // resizeMode={'contain'} 
+                    source={require('../assets/img/logout.png')}
+                // onPress={this.Sair()}
+                />
+            </TouchableHighlight>
+        ),
+
+        headerStyle: {
+            backgroundColor: 'lightblue',
+        },
+
+        // headerMode: 'none'
     };
 
     listaconsultas = async () => {
@@ -55,9 +84,10 @@ class ConsultasMedico extends Component {
         this.listaconsultas();
     };
 
-    Sair() {
-        AsyncStorage.removeItem('user');
-        // alert('Deslogado com sucesso.');
+    Sair = async () => {
+        await AsyncStorage.removeItem('user');
+        alert('Deslogado com sucesso.');
+        this.props.navigation.navigate('Login');
     }
 
     componentDidMount() {
@@ -65,33 +95,31 @@ class ConsultasMedico extends Component {
         this.listaconsultas();
     }
 
-    rederizarRed() {
-        console.warn("chegou");
-        if (item.idSituacao == 3 || item.idSituacao === 'Agendado') {
+    renderizarStatus(item) {
+        if (item.idSituacao == 1 || item.idSituacao === 'Agendado') {
             return (
 
-                <View style={{ backgroundColor: '#80BFDB', padding: '2%' }}>
-                    <Text>ahsduahsudhaushd</Text>
+                <View style={{ width: '25%', backgroundColor: '#80BFDB', padding: '2%' }}>
+                    <Text style={{ fontWeight: 'bold', textAlign: 'center' }} >{item.idSituacao}</Text>
                 </View>
             );
-        } else if (item.idSituacao == 2 || item.idSituacao === 'Realizado') {
+        } else if (item.idSituacao == 3 || item.idSituacao === 'Realizado') {
             return (
 
-                <View style={{ backgroundColor: '#88D3A4', padding: '2%' }}>
-                    <Text>iasduhasud</Text>
+                <View style={{ width: '25%', backgroundColor: '#88D3A4', padding: '2%' }}>
+                    <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>{item.idSituacao}</Text>
                 </View>
             );
         } else {
-            console.warn("chegou");
+            // console.warn("chegou");
             return (
 
-                <View style={{ backgroundColor: '#D38888', padding: '2%' }}>
-                    <Text>asdasdasd</Text>
+                <View style={{ width: '25%', backgroundColor: '#D38888', padding: '2%' }}>
+                    <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>{item.idSituacao}</Text>
                 </View>
             );
         }
     }
-
 
     render() {
 
@@ -140,21 +168,26 @@ class ConsultasMedico extends Component {
             // </View>
         );
     }
+
     renderizaItem = ({ item }) => {
         // console.warn(item.id);
 
         return (
 
-            <View style={{ margin: '5%', padding: '3%', backgroundColor: 'white' ,elevation: 3 }}>
+            <View style={{ margin: '5%', padding: '3%', backgroundColor: 'white', elevation: 3 }}>
                 <View key={item.id}>
-                    <Text style={{ marginBottom: '2%' ,fontWeight: 'bold', borderBottomColor: 'grey', borderBottomWidth: 2, fontSize: 18 }}>Consulta #{item.id} </Text>
-                    
-                    {/* <Text>{this.rederizarRed}</Text> */}
-                    
+
+                    <View>
+                        <Text style={{ marginBottom: '2%', fontWeight: 'bold', borderBottomColor: '#cccccc', borderBottomWidth: 1, fontSize: 18 }}>Consulta #{item.id} </Text>
+
+                        <View>
+                            {this.renderizarStatus(item)}
+                        </View>
+                    </View>
+
                     <Text>Nome do paciente: {item.idProntuario}</Text>
                     <Text>Descrição: {item.descricao}</Text>
-                    <Text>Data da consulta:  
-                        {item.dataConsulta.split("T")[0].split("-")[2]}/
+                    <Text>Data da consulta: {item.dataConsulta.split("T")[0].split("-")[2]}/
                         {item.dataConsulta.split("T")[0].split("-")[1]}/
                         {item.dataConsulta.split("T")[0].split("-")[0]}
                     </Text>
@@ -166,6 +199,6 @@ class ConsultasMedico extends Component {
     }
 }
 
-
-
+// data.slice(0,2). telefone
+// https://pusher.com/tutorials/chat-react-native
 export default ConsultasMedico;
