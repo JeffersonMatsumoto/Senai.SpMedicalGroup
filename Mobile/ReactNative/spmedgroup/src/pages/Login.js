@@ -29,8 +29,24 @@ class Login extends Component {
             {
                 email: "",
                 senha: "",
-                // mensagemErro: ""
+                mensagemErro: ""
             };
+    }
+
+    // validateEmail = (email) => {
+    //     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    //       return re.test(email);
+    //   };
+
+    validarInputs = () => {
+        var email = this.state.email
+        if (email == null || email.trim().length === 0 ) {
+            this.setState({ erro: "O campo de email está vazio, por favor preencha este campo." })
+        }
+        var senha = this.state.senha
+        if (senha == null || senha.trim().length === 0) {
+            this.setState({ erro: "O campo de senha está vazio, por favor preencha este campo." })
+        }
     }
 
     realizarLogin = async () => {
@@ -43,47 +59,55 @@ class Login extends Component {
         // this.props.navigation.navigate("MainNavigator");
         if (resposta.status === 200) {
             const token = resposta.data.token;
-            await AsyncStorage.setItem("asdd", token);
+            await AsyncStorage.setItem("user", token);
 
             if (jwt(token).Permissao === "Medico") {
                 this.props.navigation.navigate("Consultas Medico");
             } else if (jwt(token).Permissao === "Paciente") {
                 this.props.navigation.navigate("Consultas Paciente");
             } else {
+                Alert.alert("E-mail ou senha inserido é inválido.");
                 this.props.navigation.navigate("/login");
             }
-        } else {
-            Alert.alert("E-mail ou senha inserido é inválido.");
         }
     };
 
+    // https://facebook.github.io/react-native/docs/keyboardavoidingview
+
     render() {
+        console.disableYellowBox = true;
         return (
             // <ImageBackground>
-            <ScrollView style={{ height: '100%' }}>
+            <ScrollView style={{ height: '100%', marginTop: '10%'}}>
                 <Image
                     source={require("../assets/img/icon-login.png")}
                     style={{ resizeMode: 'contain', width: 150, height: 150, alignSelf: "center", marginTop: '15%', marginBottom: '10%' }}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="E-mail"
+                    // blurOnSubmit={true}
+                    placeholder="Insira seu e-mail"
                     placeholderTextColor="#808080"
                     underlineColorAndroid="#666666"
-                    defaultValue="helena.strada@spmedicalgroup.com.br" 
+                    // defaultValue="helena.strada@spmedicalgroup.com.br" 
+                    // defaultValue="alexandre@gmail.com"
                     onChangeText={email => this.setState({ email })}
+                // onSubmitEditing{this.validarInputs}
                 />
 
                 <TextInput
                     style={styles.input}
-                    placeholder="Senha"
+                    placeholder="Insira sua senha"
                     placeholderTextColor="#808080"
                     secureTextEntry={true}
-                    defaultValue="654321"
+                    // defaultValue="654321"
+                    // defaultValue="123456"
                     underlineColorAndroid="#666666"
                     onChangeText={senha => this.setState({ senha })}
                 />
 
+                {/* <Text>{this.state.mensagemErro}</Text> */}
+                
                 <TouchableOpacity
                     onPress={this.realizarLogin}
                     style={styles.button}

@@ -10,91 +10,244 @@ import {
     TouchableOpacity,
     AsyncStorage,
     ScrollView,
-    FlatList
+    FlatList,
+    TouchableHighlight,
+    Alert
 } from "react-native";
 
 import api from "../services/api";
+
+import jwt from "jwt-decode";
 
 class ConsultasPaciente extends Component {
     constructor() {
         super();
         this.state = {
-            id: '',
-            descricao: '',
-            listaConsulta: []
+            nome: '',
+            listaConsultas: []
         }
     }
 
-    // componentDidMount() {
-    //     this.listarconsultas();
+    // https://reactnavigation.org/docs/en/header-buttons.html
+
+    // static navigationOptions = {
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        return {
+        title: 'Minhas Consultas',
+        headerStyle: {
+            backgroundColor: 'lightgreen',
+        },
+        headerTitleStyle: {
+            // marginLeft: 100,
+            // justifyContent: 'center',
+            // alignSelf: 'center',
+            // textAlign: 'center',
+            marginStart: 120,
+            fontWeight: 'bold'
+        },
+        headerLeft: null,
+        tabBarVisible: false,
+        headerRight: (
+            <TouchableOpacity onPress={() => params.chamarSair()}>
+                <Image
+                    style={{
+                        width: 30, height: 30, marginRight: 20
+                    }}
+                    source={require('../assets/img/logout.png')}
+                />
+
+                {/* <Text style={{
+                    // justifyContent: 'flex-end',
+                    // alignSelf: 'center',
+                    // textAlign: 'center',
+                    marginEnd: 50,
+                    color: 'black', fontWeight: 'bold'
+                }}>SAIR</Text> */}
+
+            </TouchableOpacity>
+        ),
+    };
+};
+
+    listaconsultas = async () => {
+        const token = await AsyncStorage.getItem("user");
+        const resposta = await api.get("/consultas", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+        const dadosApi = resposta.data
+        this.setState({ listaConsultas: dadosApi })
+    }
+
+    buscarDadosDoStorage = async () => {
+        try {
+            const value = await AsyncStorage.getItem("user");
+            if (value !== null) {
+                this.setState({ nome: jwt(value).Nome });
+                this.setState({ token: value });
+            }
+        } catch (error) { }
+
+        this.listaconsultas();
+    };
+
+    // Sair = async () => {
+    //     await AsyncStorage.removeItem('user');
+    //     alert('Deslogado com sucesso.');
+    //     this.props.navigation.navigate('Login');
     // }
 
-    Sair() {
-        AsyncStorage.removeItem('user');
-        alert('Deslogado com sucesso.');
+
+    // https://facebook.github.io/react-native/docs/modal
+    // https://aboutreact.com/custom-header-using-navigation-options-in-react-native/
+
+    Sair = () => {
+
+        Alert.alert(
+            'Confirmar ação'
+            ,
+            'Deseja encerrar sua sessão?'
+            , [
+                {
+                    text: 'Sim', onPress: async () => {
+                        await AsyncStorage.removeItem('user')
+                        this.props.navigation.navigate('Login');
+                    }
+                },
+                { text: 'Não' }
+            ]
+        );
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({ chamarSair: this.Sair });
+        console.disableYellowBox = true;
+        this.buscarDadosDoStorage();
+        this.listaconsultas();
+    }
+
+    renderizarStatus(item) {
+        if (item.idSituacao == 1 || item.idSituacao === 'Agendado') {
+            return (
+
+                <View style={{ borderRadius: 3, width: '100%', backgroundColor: '#80BFDB', paddingHorizontal: '3%' }}>
+                    <Text style={{ padding: 5, fontWeight: 'bold', textAlign: 'center' }} >{item.idSituacao}</Text>
+                </View>
+            );
+        } else if (item.idSituacao == 3 || item.idSituacao === 'Realizado') {
+            return (
+
+                <View style={{ borderRadius: 3, width: '100%', backgroundColor: '#88D3A4', paddingHorizontal: '3%' }}>
+                    <Text style={{ padding: 5, fontWeight: 'bold', textAlign: 'center' }}>{item.idSituacao}</Text>
+                </View>
+            );
+        } else {
+            return (
+
+                <View style={{ borderRadius: 3, width: '100%', backgroundColor: '#D38888', paddingHorizontal: '3%' }}>
+                    <Text style={{ padding: 5, fontWeight: 'bold', textAlign: 'center' }}>{item.idSituacao}</Text>
+                </View>
+            );
+        }
     }
 
     render() {
-        if (consulta.idSituacao == 3) {
-            <View style={{ backgroundColor: '#80BFDB', padding: '2%' }}>
-                {consulta.idSituacao}
-            </View>
-        } else if (consulta.idSituacao == 2) {
-            <View style={{ backgroundColor: '#88D3A4', padding: '2%' }}>
-                {consulta.idSituacao}
-            </View>
-        } else
-            <View style={{ backgroundColor: '#D38888', padding: '2%' }}>
-                {consulta.idSituacao}
-            </View>
 
         return (
-            <ScrollView>
+            <ScrollView 
+                // style={{ minheight: '100%' }}
+            >
 
-                <Text> {} </Text>
-
-                <Image
-                    style={{ width: 50, height: 50 }}
-                    source={require('../assets/img/logout.png')}
-                    onPress={this.Sair()}
-                />
-
-                {/* <View>
-                    <FlatList
-                        data={this.state.listaConsultas}
-                        keyExtractor={item => item.nome}
-                        renderItem={this.renderizaItem}
-                    />
-                </View> */}
-
-                <View>
-                    {this.state.listaConsulta.map(function (consulta) {
-                        return (
-                            <View style={{ elevation: 3 }}>
-                                <Text style={{ borderBottomColor: 'black', borderBottomWidth: '1%', fontWeight: 'bold' }}> Consulta #{consulta.id} </Text>
-
-                                <View>
-                                    {consulta.idSituacao}
-                                </View>
-
-                                <View key={consulta.id}>
-
-                                    <Text>{consulta.idProntuario}</Text>
-                                    <Text>{consulta.descricao}</Text>
-                                    <Text>
-                                        {consulta.dataConsulta.split("T")[0].split("-")[2]}
-                                        {consulta.dataConsulta.split("T")[0].split("-")[1]}
-                                        {consulta.dataConsulta.split("T")[0].split("-")[0]}
-                                    </Text>
-                                </View>
-                            </View>
-                        );
-                    })}
+                <View style={{ elevation: 3 }}>
+                        <FlatList
+                        //esconder barra de scroll
+                            showsVerticalScrollIndicator={false}
+                            data={this.state.listaConsultas}
+                            keyExtractor={item => item.id}
+                            renderItem={this.renderizaItem}
+                        />
                 </View>
 
+                {/* <TouchableOpacity
+                    onPress={this.Sair}
+                >
+                    <Text style={{ elevation: 3 ,marginHorizontal: '40%',width: 'auto', borderRadius: 100, backgroundColor: 'darkred', textAlign: 'center', padding: '5%' , color: 'white', fontWeight: 'bold' }}>
+                        SAIR
+                    </Text>
+                </TouchableOpacity> */}
 
             </ScrollView>
+
         );
+    }
+
+    renderizaItem = ({ item }) => {
+
+        return (
+
+            <View style={{ margin: '4%', padding: '3%', backgroundColor: 'white', elevation: 3 }}>
+                <View key={item.id}>
+
+                    <View style={{ padding: '2%', justifyContent: 'space-between', marginBottom: '2%', borderBottomColor: '#cccccc', borderBottomWidth: 1, flexDirection: 'row' }}>
+                        <Text
+                            style={{
+                                // justifyContent: 'flex-start',
+                                fontWeight: 'bold',
+                                fontSize: 20
+                            }}
+                        >Consulta #{item.id} </Text>
+
+                        <View>
+                            {this.renderizarStatus(item)}
+                        </View>
+                    </View>
+
+                    <View>
+                        <Text style={{ borderRadius: 4, textAlign: 'center', backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}>
+                            MÉDICO RESPONSÁVEL
+                        </Text>
+
+                        <Text style={{ textAlign: 'center', padding: '2%' }}>{item.idMedico}</Text>
+                    </View>
+
+                    <View
+                        // style={{  textAlign: 'center' }}
+                    >
+                        <Text style={{ borderRadius: 4, textAlign: 'center',  backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}>
+                            DESCRIÇÃO
+                        </Text>
+
+                        <Text style={{ padding: '2%', textAlign: 'center' }}>{item.descricao}</Text>
+                    </View>
+
+                    <View>
+                        <Text style={{ borderRadius: 4, backgroundColor: 'grey', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold' }}>
+                            DATA DA CONSULTA
+                        </Text>
+
+                        <Text style={{ padding: '2%', textAlign: 'center' }}>
+                            {item.dataConsulta.split("T")[0].split("-")[2]}/
+                            {item.dataConsulta.split("T")[0].split("-")[1]}/
+                            {item.dataConsulta.split("T")[0].split("-")[0]}
+                        </Text>
+                    </View>
+
+                    {/* <Text>
+                        Descrição:
+                        <Text>{item.descricao}</Text>
+                    </Text>
+
+                    <Text>Data da consulta: {item.dataConsulta.split("T")[0].split("-")[2]}/
+                        {item.dataConsulta.split("T")[0].split("-")[1]}/
+                        {item.dataConsulta.split("T")[0].split("-")[0]}
+                    </Text> */}
+                </View>
+            </View>
+        );
+
+        // helena.strada@spmedicalgroup.com.br
     }
 }
 

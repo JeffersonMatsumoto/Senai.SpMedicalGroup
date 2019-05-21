@@ -10,6 +10,7 @@ import {
     TouchableOpacity,
     AsyncStorage,
     ScrollView,
+    Alert,
     FlatList,
     TouchableHighlight
 } from "react-native";
@@ -29,10 +30,12 @@ class ConsultasMedico extends Component {
         }
     }
 
-    static navigationOptions = {
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        return {
         title: 'Minhas Consultas',
         headerTitleStyle: {
-            marginLeft: 60,
+            marginLeft: 120,
             // color: 'white',
             fontWeight: 'bold'
             // textAlign: 'right'
@@ -41,7 +44,7 @@ class ConsultasMedico extends Component {
         // headerLayoutPreset: 'center',
 
         headerRight: (
-            <TouchableHighlight onPress={() => this.Sair()}>
+            <TouchableOpacity onPress={() => params.chamarSair()}>
                 <Image
                     style={{
                         width: 30, height: 30, marginRight: 20
@@ -51,18 +54,18 @@ class ConsultasMedico extends Component {
                     source={require('../assets/img/logout.png')}
                 // onPress={this.Sair()}
                 />
-            </TouchableHighlight>
+            </TouchableOpacity>
         ),
 
         headerStyle: {
             backgroundColor: 'lightblue',
         },
-
+    };
         // headerMode: 'none'
     };
 
     listaconsultas = async () => {
-        const token = await AsyncStorage.getItem("asdd");
+        const token = await AsyncStorage.getItem("user");
         const resposta = await api.get("/consultas", {
             headers: {
                 "Authorization": "Bearer " + token
@@ -84,13 +87,33 @@ class ConsultasMedico extends Component {
         this.listaconsultas();
     };
 
-    Sair = async () => {
-        await AsyncStorage.removeItem('user');
-        alert('Deslogado com sucesso.');
-        this.props.navigation.navigate('Login');
+    Sair = () => {
+
+        Alert.alert(
+            'Confirmar ação'
+            ,
+            'Deseja encerrar sua sessão?'
+            , [
+                {
+                    text: 'Sim', onPress: async () => {
+                        await AsyncStorage.removeItem('user')
+                        this.props.navigation.navigate('Login');
+                    }
+                },
+                { text: 'Não' }
+            ]
+        );
     }
 
+    // Sair = async () => {
+    //     await AsyncStorage.removeItem('user');
+    //     alert('Deslogado com sucesso.');
+    //     this.props.navigation.navigate('Login');
+    // }
+
     componentDidMount() {
+        this.props.navigation.setParams({ chamarSair: this.Sair });
+        console.disableYellowBox = true;
         this.buscarDadosDoStorage();
         this.listaconsultas();
     }
@@ -99,23 +122,22 @@ class ConsultasMedico extends Component {
         if (item.idSituacao == 1 || item.idSituacao === 'Agendado') {
             return (
 
-                <View style={{ width: '25%', backgroundColor: '#80BFDB', padding: '2%' }}>
-                    <Text style={{ fontWeight: 'bold', textAlign: 'center' }} >{item.idSituacao}</Text>
+                <View style={{ borderRadius: 3, width: '100%', backgroundColor: '#80BFDB', paddingHorizontal: '3%' }}>
+                    <Text style={{ padding: 5, fontWeight: 'bold', textAlign: 'center' }} >{item.idSituacao}</Text>
                 </View>
             );
         } else if (item.idSituacao == 3 || item.idSituacao === 'Realizado') {
             return (
 
-                <View style={{ width: '25%', backgroundColor: '#88D3A4', padding: '2%' }}>
-                    <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>{item.idSituacao}</Text>
+                <View style={{ borderRadius: 3, width: '100%', backgroundColor: '#88D3A4', paddingHorizontal: '3%' }}>
+                    <Text style={{ padding: 5, fontWeight: 'bold', textAlign: 'center' }}>{item.idSituacao}</Text>
                 </View>
             );
         } else {
-            // console.warn("chegou");
             return (
 
-                <View style={{ width: '25%', backgroundColor: '#D38888', padding: '2%' }}>
-                    <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>{item.idSituacao}</Text>
+                <View style={{ borderRadius: 3, width: '100%', backgroundColor: '#D38888', paddingHorizontal: '3%' }}>
+                    <Text style={{ padding: 5, fontWeight: 'bold', textAlign: 'center' }}>{item.idSituacao}</Text>
                 </View>
             );
         }
@@ -138,7 +160,7 @@ class ConsultasMedico extends Component {
                     onPress={this.Sair()}
                 /> */}
 
-                <View style={{ elevation: 3, margin: '5%' }}>
+                <View style={{ elevation: 3 }}>
                     {/* <View key={consulta.id} style={{ elevation: 3, margin: '10%' }}> */}
                     {/* <Text style={{ fontWeight: 'bold' }} > Consulta #{consulta.id} </Text> */}
 
@@ -174,23 +196,49 @@ class ConsultasMedico extends Component {
 
         return (
 
-            <View style={{ margin: '5%', padding: '3%', backgroundColor: 'white', elevation: 3 }}>
+            <View style={{ margin: '4%', padding: '3%', backgroundColor: 'white', elevation: 3 }}>
                 <View key={item.id}>
 
-                    <View>
-                        <Text style={{ marginBottom: '2%', fontWeight: 'bold', borderBottomColor: '#cccccc', borderBottomWidth: 1, fontSize: 18 }}>Consulta #{item.id} </Text>
+                    <View style={{ padding: '2%', justifyContent: 'space-between', marginBottom: '2%', borderBottomColor: '#cccccc', borderBottomWidth: 1, flexDirection: 'row' }}>
+                        <Text style={{
+                            fontWeight: 'bold',
+                            fontSize: 20
+                        }}>
+                            Consulta #{item.id}
+                        </Text>
 
                         <View>
                             {this.renderizarStatus(item)}
                         </View>
                     </View>
 
-                    <Text>Nome do paciente: {item.idProntuario}</Text>
-                    <Text>Descrição: {item.descricao}</Text>
-                    <Text>Data da consulta: {item.dataConsulta.split("T")[0].split("-")[2]}/
-                        {item.dataConsulta.split("T")[0].split("-")[1]}/
-                        {item.dataConsulta.split("T")[0].split("-")[0]}
-                    </Text>
+                    <View>
+                        <Text style={{ borderRadius: 4, textAlign: 'center', backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}>NOME DO PACIENTE</Text>
+                        <Text style={{ textAlign: 'center', padding: '2%' }}>{item.idProntuario}</Text>
+                    </View>
+
+
+                    <View>
+                        <Text style={{ borderRadius: 4, textAlign: 'center',  backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}>
+                            DESCRIÇÃO
+                        </Text>
+
+                        <Text style={{ padding: '2%', textAlign: 'center' }}>{item.descricao}</Text>
+                    </View>
+
+
+                    <View>
+                        <Text style={{ borderRadius: 4, backgroundColor: 'grey', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold' }}>
+                            DATA DA CONSULTA
+                        </Text>
+
+                        <Text style={{ padding: '2%', textAlign: 'center' }}>
+                            {item.dataConsulta.split("T")[0].split("-")[2]}/
+                            {item.dataConsulta.split("T")[0].split("-")[1]}/
+                            {item.dataConsulta.split("T")[0].split("-")[0]}
+                        </Text>
+                    </View>
+
                 </View>
             </View>
         );
