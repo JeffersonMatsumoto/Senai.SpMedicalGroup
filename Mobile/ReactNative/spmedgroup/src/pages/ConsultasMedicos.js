@@ -35,7 +35,7 @@ class ConsultasMedico extends Component {
         return {
         title: 'Minhas Consultas',
         headerTitleStyle: {
-            marginLeft: 120,
+            // marginLeft: 120,
             // color: 'white',
             fontWeight: 'bold'
             // textAlign: 'right'

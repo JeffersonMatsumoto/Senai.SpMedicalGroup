@@ -23,7 +23,7 @@ class ConsultasPaciente extends Component {
     constructor() {
         super();
         this.state = {
-            nome: '',
+            nomeLogado: '',
             listaConsultas: []
         }
     }
@@ -41,9 +41,9 @@ class ConsultasPaciente extends Component {
         headerTitleStyle: {
             // marginLeft: 100,
             // justifyContent: 'center',
-            // alignSelf: 'center',
+            alignSelf: 'center',
             // textAlign: 'center',
-            marginStart: 120,
+            // marginStart: 120,
             fontWeight: 'bold'
         },
         headerLeft: null,
@@ -85,7 +85,7 @@ class ConsultasPaciente extends Component {
         try {
             const value = await AsyncStorage.getItem("user");
             if (value !== null) {
-                this.setState({ nome: jwt(value).Nome });
+                this.setState({ nomeLogado: jwt(value).Nome });
                 this.setState({ token: value });
             }
         } catch (error) { }
@@ -159,7 +159,8 @@ class ConsultasPaciente extends Component {
             <ScrollView 
                 // style={{ minheight: '100%' }}
             >
-
+                
+                <Text style={styles.bemvindo}> Bem vindo(a) {this.state.nomeLogado} </Text>
                 <View style={{ elevation: 3 }}>
                         <FlatList
                         //esconder barra de scroll
@@ -186,7 +187,6 @@ class ConsultasPaciente extends Component {
     renderizaItem = ({ item }) => {
 
         return (
-
             <View style={{ margin: '4%', padding: '3%', backgroundColor: 'white', elevation: 3 }}>
                 <View key={item.id}>
 
@@ -205,29 +205,47 @@ class ConsultasPaciente extends Component {
                     </View>
 
                     <View>
-                        <Text style={{ borderRadius: 4, textAlign: 'center', backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}>
+                        <Text 
+                        style={styles.label}
+                        // {{ borderRadius: 4, textAlign: 'center', backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}
+                        >
                             MÉDICO RESPONSÁVEL
                         </Text>
 
-                        <Text style={{ textAlign: 'center', padding: '2%' }}>{item.idMedico}</Text>
+                        <Text 
+                        style={styles.details}
+                        // {{ textAlign: 'center', padding: '2%', fontSize: 20 }}
+                        >{item.idMedico}</Text>
                     </View>
 
                     <View
                         // style={{  textAlign: 'center' }}
                     >
-                        <Text style={{ borderRadius: 4, textAlign: 'center',  backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}>
+                        <Text 
+                            style={styles.label}
+                            // {{ borderRadius: 4, textAlign: 'center',  backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold'}}
+                        >
                             DESCRIÇÃO
                         </Text>
 
-                        <Text style={{ padding: '2%', textAlign: 'center' }}>{item.descricao}</Text>
+                        <Text 
+                        style={styles.details}
+                        // {{ padding: '2%', textAlign: 'center' }}
+                        >{item.descricao}</Text>
                     </View>
 
                     <View>
-                        <Text style={{ borderRadius: 4, backgroundColor: 'grey', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold' }}>
+                        <Text 
+                        style={styles.label}
+                        // {{ borderRadius: 4, backgroundColor: 'grey', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold' }}
+                        >
                             DATA DA CONSULTA
                         </Text>
 
-                        <Text style={{ padding: '2%', textAlign: 'center' }}>
+                        <Text 
+                        style={styles.details}
+                        // {{ padding: '2%', textAlign: 'center' }}
+                        >
                             {item.dataConsulta.split("T")[0].split("-")[2]}/
                             {item.dataConsulta.split("T")[0].split("-")[1]}/
                             {item.dataConsulta.split("T")[0].split("-")[0]}
@@ -250,5 +268,25 @@ class ConsultasPaciente extends Component {
         // helena.strada@spmedicalgroup.com.br
     }
 }
+
+const styles = StyleSheet.create({
+
+    bemvindo : {
+        textAlign: 'center',
+        margin: '2%',
+        marginTop: '4%'
+    },
+
+    label : {
+        borderRadius: 4, backgroundColor: '#bfbfbf', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold'
+    },
+
+    details : {
+        textAlign: 'center', padding: '2%', fontSize: 20
+    }
+
+
+
+})
 
 export default ConsultasPaciente;

@@ -38,16 +38,16 @@ class Login extends Component {
     //       return re.test(email);
     //   };
 
-    validarInputs = () => {
-        var email = this.state.email
-        if (email == null || email.trim().length === 0 ) {
-            this.setState({ erro: "O campo de email está vazio, por favor preencha este campo." })
-        }
-        var senha = this.state.senha
-        if (senha == null || senha.trim().length === 0) {
-            this.setState({ erro: "O campo de senha está vazio, por favor preencha este campo." })
-        }
-    }
+    // validarInputs = () => {
+    //     var email = this.state.email
+    //     if (email == null || email.trim().length === 0 ) {
+    //         this.setState({ erro: "O campo de email está vazio, por favor preencha este campo." })
+    //     }
+    //     var senha = this.state.senha
+    //     if (senha == null || senha.trim().length === 0) {
+    //         this.setState({ erro: "O campo de senha está vazio, por favor preencha este campo." })
+    //     }
+    // }
 
     realizarLogin = async () => {
         // console.disableYellowBox = true;
@@ -55,6 +55,10 @@ class Login extends Component {
         const resposta = await api.post("/login", {
             email: this.state.email,
             senha: this.state.senha
+        })
+        .catch(erro => {
+            // this.setState({ mensagemErro : "" })
+            this.setState({ mensagemErro : 'Email ou senha inválido(s)'});
         })
         // this.props.navigation.navigate("MainNavigator");
         if (resposta.status === 200) {
@@ -89,9 +93,10 @@ class Login extends Component {
                     placeholder="Insira seu e-mail"
                     placeholderTextColor="#808080"
                     underlineColorAndroid="#666666"
+                    autoCapitalize = 'none'
                     // defaultValue="helena.strada@spmedicalgroup.com.br" 
                     // defaultValue="alexandre@gmail.com"
-                    onChangeText={email => this.setState({ email })}
+                    onChangeText={email => this.setState({ email, mensagemErro : '' })}
                 // onSubmitEditing{this.validarInputs}
                 />
 
@@ -100,13 +105,14 @@ class Login extends Component {
                     placeholder="Insira sua senha"
                     placeholderTextColor="#808080"
                     secureTextEntry={true}
+                    autoCapitalize = 'none'
                     // defaultValue="654321"
                     // defaultValue="123456"
                     underlineColorAndroid="#666666"
-                    onChangeText={senha => this.setState({ senha })}
+                    onChangeText={senha => this.setState({ senha, mensagemErro : '' })}
                 />
 
-                {/* <Text>{this.state.mensagemErro}</Text> */}
+                <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>{this.state.mensagemErro}</Text>
                 
                 <TouchableOpacity
                     onPress={this.realizarLogin}
