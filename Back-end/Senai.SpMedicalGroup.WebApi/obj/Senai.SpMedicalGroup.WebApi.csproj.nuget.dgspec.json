@@ -14,7 +14,7 @@
         "outputPath": "C:\\Users\\ccgm1\\Documents\\Jefferson\\CURSO\\PROJETO SPMEDICALGROUP\\Senai.SpMedicalGroup\\Back-end\\Senai.SpMedicalGroup.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\ProgramData\\Xamarin\\NuGet\\",
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [

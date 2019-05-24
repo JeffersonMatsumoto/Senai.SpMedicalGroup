@@ -25,7 +25,7 @@ class ConsultasMedico extends Component {
         this.state = {
             // id: '',
             // descricao: '',
-            nome: '',
+            nomeLogado: '',
             listaConsultas: []
         }
     }
@@ -71,6 +71,17 @@ class ConsultasMedico extends Component {
                 "Authorization": "Bearer " + token
             }
         });
+
+        // if (resposta.lenght > 0) {
+
+        //     this.setState({ listaConsultas: dadosApi })
+        //     const dadosApi = resposta.data
+
+        // } else {
+
+        //     this.setState({ semConsulta: 'Você não possui consultas cadastradas, contate nossos atendentes para agendar consultas ou para obter mais informações.' })
+
+        // }
         const dadosApi = resposta.data
         this.setState({ listaConsultas: dadosApi })
     }
@@ -79,7 +90,7 @@ class ConsultasMedico extends Component {
         try {
             const value = await AsyncStorage.getItem("user");
             if (value !== null) {
-                this.setState({ nome: jwt(value).Nome });
+                this.setState({ nomeLogado: jwt(value).Nome });
                 this.setState({ token: value });
             }
         } catch (error) { }
@@ -147,10 +158,12 @@ class ConsultasMedico extends Component {
 
         return (
             <View>
-
+                <Text style={styles.bemvindo}> Bem vindo(a) {this.state.nomeLogado} </Text>
                 {/* <Text>
                     {this.state.nome}
                 </Text> */}
+
+                <Text style={styles.semConsulta}>{this.state.semConsulta}</Text>
 
 
                 {/* botao(iamgem) deslogar */}
@@ -213,26 +226,26 @@ class ConsultasMedico extends Component {
                     </View>
 
                     <View>
-                        <Text style={{ borderRadius: 4, textAlign: 'center', backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}>NOME DO PACIENTE</Text>
-                        <Text style={{ textAlign: 'center', padding: '2%' }}>{item.idProntuario}</Text>
+                        <Text style={{ borderRadius: 4, textAlign: 'center', backgroundColor: '#bfbfbf', color: 'white', padding: '1%', fontWeight: 'bold' }}>NOME DO PACIENTE</Text>
+                        <Text style={{ textAlign: 'center', padding: '2%', color: 'black',fontSize: 18 }}>{item.idProntuario}</Text>
                     </View>
 
 
                     <View>
-                        <Text style={{ borderRadius: 4, textAlign: 'center',  backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}>
+                        <Text style={{ borderRadius: 4, textAlign: 'center',  backgroundColor: '#bfbfbf', color: 'white', padding: '1%', fontWeight: 'bold' }}>
                             DESCRIÇÃO
                         </Text>
 
-                        <Text style={{ padding: '2%', textAlign: 'center' }}>{item.descricao}</Text>
+                        <Text style={{ padding: '2%', textAlign: 'center', color: 'black',fontSize: 18 }}>{item.descricao}</Text>
                     </View>
 
 
                     <View>
-                        <Text style={{ borderRadius: 4, backgroundColor: 'grey', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold' }}>
+                        <Text style={{ borderRadius: 4, backgroundColor: '#bfbfbf', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold' }}>
                             DATA DA CONSULTA
                         </Text>
 
-                        <Text style={{ padding: '2%', textAlign: 'center' }}>
+                        <Text style={{ padding: '2%', textAlign: 'center', color: 'black',fontSize: 18 }}>
                             {item.dataConsulta.split("T")[0].split("-")[2]}/
                             {item.dataConsulta.split("T")[0].split("-")[1]}/
                             {item.dataConsulta.split("T")[0].split("-")[0]}
@@ -246,6 +259,26 @@ class ConsultasMedico extends Component {
         // helena.strada@spmedicalgroup.com.br
     }
 }
+
+const styles = StyleSheet.create({
+    bemvindo : {
+        textAlign: 'center',
+        margin: '2%',
+        marginTop: '4%'
+    }
+    ,
+    semConsulta: {
+        textAlign: 'center',
+        flex: 1,
+        flexWrap: 'wrap',
+        margin: '1%',
+        color: 'black',
+        fontSize: 18
+        , marginTop: '50%'
+        , justifyContent: 'center', alignItems: 'center'
+
+    },
+})
 
 // data.slice(0,2). telefone
 // https://pusher.com/tutorials/chat-react-native

@@ -24,6 +24,7 @@ class ConsultasPaciente extends Component {
         super();
         this.state = {
             nomeLogado: '',
+            semConsulta: '',
             listaConsultas: []
         }
     }
@@ -34,30 +35,30 @@ class ConsultasPaciente extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
         return {
-        title: 'Minhas Consultas',
-        headerStyle: {
-            backgroundColor: 'lightgreen',
-        },
-        headerTitleStyle: {
-            // marginLeft: 100,
-            // justifyContent: 'center',
-            alignSelf: 'center',
-            // textAlign: 'center',
-            // marginStart: 120,
-            fontWeight: 'bold'
-        },
-        headerLeft: null,
-        tabBarVisible: false,
-        headerRight: (
-            <TouchableOpacity onPress={() => params.chamarSair()}>
-                <Image
-                    style={{
-                        width: 30, height: 30, marginRight: 20
-                    }}
-                    source={require('../assets/img/logout.png')}
-                />
+            title: 'Minhas Consultas',
+            headerStyle: {
+                backgroundColor: 'lightgreen',
+            },
+            headerTitleStyle: {
+                // marginLeft: 100,
+                // justifyContent: 'center',
+                alignSelf: 'center',
+                // textAlign: 'center',
+                // marginStart: 120,
+                fontWeight: 'bold'
+            },
+            headerLeft: null,
+            tabBarVisible: false,
+            headerRight: (
+                <TouchableOpacity onPress={() => params.chamarSair()}>
+                    <Image
+                        style={{
+                            width: 30, height: 30, marginRight: 20
+                        }}
+                        source={require('../assets/img/logout.png')}
+                    />
 
-                {/* <Text style={{
+                    {/* <Text style={{
                     // justifyContent: 'flex-end',
                     // alignSelf: 'center',
                     // textAlign: 'center',
@@ -65,10 +66,10 @@ class ConsultasPaciente extends Component {
                     color: 'black', fontWeight: 'bold'
                 }}>SAIR</Text> */}
 
-            </TouchableOpacity>
-        ),
+                </TouchableOpacity>
+            ),
+        };
     };
-};
 
     listaconsultas = async () => {
         const token = await AsyncStorage.getItem("user");
@@ -77,6 +78,18 @@ class ConsultasPaciente extends Component {
                 "Authorization": "Bearer " + token
             }
         });
+
+        // if (resposta.length > 0) {
+
+        //     const dadosApi = resposta.data
+        //     this.setState({ listaConsultas: dadosApi })
+
+        // } else {
+
+        //     this.setState({ semConsulta: 'Você não possui consultas cadastradas, contate nossos atendentes para agendar consultas ou para obter mais informações.' })
+
+        // }
+        
         const dadosApi = resposta.data
         this.setState({ listaConsultas: dadosApi })
     }
@@ -156,19 +169,27 @@ class ConsultasPaciente extends Component {
     render() {
 
         return (
-            <ScrollView 
-                // style={{ minheight: '100%' }}
+            <ScrollView
+            style={{ flex: 1 }}
             >
-                
+
                 <Text style={styles.bemvindo}> Bem vindo(a) {this.state.nomeLogado} </Text>
+
+
+                {/* <Text 
+                // style={styles.semConsulta}
+                >
+                {this.state.semConsulta}
+                </Text> */}
+
                 <View style={{ elevation: 3 }}>
-                        <FlatList
+                    <FlatList
                         //esconder barra de scroll
-                            showsVerticalScrollIndicator={false}
-                            data={this.state.listaConsultas}
-                            keyExtractor={item => item.id}
-                            renderItem={this.renderizaItem}
-                        />
+                        showsVerticalScrollIndicator={false}
+                        data={this.state.listaConsultas}
+                        keyExtractor={item => item.id}
+                        renderItem={this.renderizaItem}
+                    />
                 </View>
 
                 {/* <TouchableOpacity
@@ -185,7 +206,13 @@ class ConsultasPaciente extends Component {
     }
 
     renderizaItem = ({ item }) => {
-
+        // if(item === null){
+        // return (
+        //     <View>
+        //         <Text>Você não possui consultas cadastradas, contate nossos atendentes agendamentos de novas consultas ou para obter mais informações.</Text>
+        //     </View>
+        // );
+        // } else {
         return (
             <View style={{ margin: '4%', padding: '3%', backgroundColor: 'white', elevation: 3 }}>
                 <View key={item.id}>
@@ -205,45 +232,45 @@ class ConsultasPaciente extends Component {
                     </View>
 
                     <View>
-                        <Text 
-                        style={styles.label}
+                        <Text
+                            style={styles.label}
                         // {{ borderRadius: 4, textAlign: 'center', backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold' }}
                         >
                             MÉDICO RESPONSÁVEL
                         </Text>
 
-                        <Text 
-                        style={styles.details}
+                        <Text
+                            style={styles.details}
                         // {{ textAlign: 'center', padding: '2%', fontSize: 20 }}
                         >{item.idMedico}</Text>
                     </View>
 
                     <View
-                        // style={{  textAlign: 'center' }}
+                    // style={{  textAlign: 'center' }}
                     >
-                        <Text 
+                        <Text
                             style={styles.label}
-                            // {{ borderRadius: 4, textAlign: 'center',  backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold'}}
+                        // {{ borderRadius: 4, textAlign: 'center',  backgroundColor: 'grey', color: 'white', padding: '1%', fontWeight: 'bold'}}
                         >
                             DESCRIÇÃO
                         </Text>
 
-                        <Text 
-                        style={styles.details}
+                        <Text
+                            style={styles.details}
                         // {{ padding: '2%', textAlign: 'center' }}
                         >{item.descricao}</Text>
                     </View>
 
                     <View>
-                        <Text 
-                        style={styles.label}
+                        <Text
+                            style={styles.label}
                         // {{ borderRadius: 4, backgroundColor: 'grey', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold' }}
                         >
                             DATA DA CONSULTA
                         </Text>
 
-                        <Text 
-                        style={styles.details}
+                        <Text
+                            style={styles.details}
                         // {{ padding: '2%', textAlign: 'center' }}
                         >
                             {item.dataConsulta.split("T")[0].split("-")[2]}/
@@ -264,6 +291,7 @@ class ConsultasPaciente extends Component {
                 </View>
             </View>
         );
+        // }
 
         // helena.strada@spmedicalgroup.com.br
     }
@@ -271,18 +299,31 @@ class ConsultasPaciente extends Component {
 
 const styles = StyleSheet.create({
 
-    bemvindo : {
+    bemvindo: {
         textAlign: 'center',
         margin: '2%',
         marginTop: '4%'
     },
 
-    label : {
+    semConsulta: {
+        textAlign: 'center',
+        // flex: 1,
+        flexWrap: 'wrap',
+        // margin: '1%',
+        color: 'black',
+        fontSize: 18
+        // , marginTop: '50%'
+        // , textAlignVertical : 'center'
+        , justifyContent: 'center', alignItems: 'center'
+
+    },
+
+    label: {
         borderRadius: 4, backgroundColor: '#bfbfbf', color: 'white', textAlign: 'center', padding: '1%', fontWeight: 'bold'
     },
 
-    details : {
-        textAlign: 'center', padding: '2%', fontSize: 20
+    details: {
+        textAlign: 'center', padding: '2%', fontSize: 18
     }
 
 
