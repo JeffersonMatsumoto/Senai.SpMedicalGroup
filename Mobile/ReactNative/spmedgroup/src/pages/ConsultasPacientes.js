@@ -89,7 +89,7 @@ class ConsultasPaciente extends Component {
         //     this.setState({ semConsulta: 'Você não possui consultas cadastradas, contate nossos atendentes para agendar consultas ou para obter mais informações.' })
 
         // }
-        
+
         const dadosApi = resposta.data
         this.setState({ listaConsultas: dadosApi })
     }
@@ -167,32 +167,32 @@ class ConsultasPaciente extends Component {
     }
 
     render() {
+        if (this.state.listaConsultas.length > 0) {
+            return (
+                <ScrollView
+                    style={{ flex: 1 }}
+                >
 
-        return (
-            <ScrollView
-            style={{ flex: 1 }}
-            >
-
-                <Text style={styles.bemvindo}> Bem vindo(a) {this.state.nomeLogado} </Text>
+                    <Text style={styles.bemvindo}> Bem vindo(a) {this.state.nomeLogado} </Text>
 
 
-                {/* <Text 
+                    {/* <Text 
                 // style={styles.semConsulta}
                 >
                 {this.state.semConsulta}
                 </Text> */}
 
-                <View style={{ elevation: 3 }}>
-                    <FlatList
-                        //esconder barra de scroll
-                        showsVerticalScrollIndicator={false}
-                        data={this.state.listaConsultas}
-                        keyExtractor={item => item.id}
-                        renderItem={this.renderizaItem}
-                    />
-                </View>
+                    <View style={{ elevation: 3 }}>
+                        <FlatList
+                            //esconder barra de scroll
+                            showsVerticalScrollIndicator={false}
+                            data={this.state.listaConsultas}
+                            keyExtractor={item => item.id}
+                            renderItem={this.renderizaItem}
+                        />
+                    </View>
 
-                {/* <TouchableOpacity
+                    {/* <TouchableOpacity
                     onPress={this.Sair}
                 >
                     <Text style={{ elevation: 3 ,marginHorizontal: '40%',width: 'auto', borderRadius: 100, backgroundColor: 'darkred', textAlign: 'center', padding: '5%' , color: 'white', fontWeight: 'bold' }}>
@@ -200,9 +200,18 @@ class ConsultasPaciente extends Component {
                     </Text>
                 </TouchableOpacity> */}
 
-            </ScrollView>
+                </ScrollView>
+            )
+        } else {
+            return (
+                <View>
+                    <Text style={styles.bemvindo}> Bem vindo(a) {this.state.nomeLogado} </Text>
+                    <Text style={styles.semConsulta}>Você não possui consultas cadastradas, contate nossos atendentes para agendar consultas ou para obter mais informações.</Text>
+                </View>
+                
 
-        );
+            );
+        }
     }
 
     renderizaItem = ({ item }) => {
@@ -309,7 +318,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         // flex: 1,
         flexWrap: 'wrap',
-        // margin: '1%',
+        margin: '1%',
         color: 'black',
         fontSize: 18
         // , marginTop: '50%'

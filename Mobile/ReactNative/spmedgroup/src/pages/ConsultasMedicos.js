@@ -155,7 +155,14 @@ class ConsultasMedico extends Component {
     }
 
     render() {
-
+        if (this.state.listaConsultas.length === 0) {
+            return (
+                <View>
+                    <Text style={styles.bemvindo}> Bem vindo(a) {this.state.nomeLogado} </Text>
+                    <Text style={styles.semConsulta}>Você não possui consultas cadastradas, contate nossos atendentes para agendar consultas ou para obter mais informações.</Text>
+                </View>
+            )
+        } else {
         return (
             <View>
                 <Text style={styles.bemvindo}> Bem vindo(a) {this.state.nomeLogado} </Text>
@@ -163,7 +170,7 @@ class ConsultasMedico extends Component {
                     {this.state.nome}
                 </Text> */}
 
-                <Text style={styles.semConsulta}>{this.state.semConsulta}</Text>
+                {/* <Text style={styles.semConsulta}>{this.state.semConsulta}</Text> */}
 
 
                 {/* botao(iamgem) deslogar */}
@@ -203,6 +210,7 @@ class ConsultasMedico extends Component {
             // </View>
         );
     }
+}
 
     renderizaItem = ({ item }) => {
         // console.warn(item.id);
@@ -263,7 +271,8 @@ class ConsultasMedico extends Component {
 const styles = StyleSheet.create({
     bemvindo : {
         textAlign: 'center',
-        margin: '2%',
+        marginLeft: '2%',
+        marginRight: '2%',
         marginTop: '4%'
     }
     ,
