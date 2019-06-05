@@ -3,6 +3,9 @@ import firebase from './services/firebaseConfig';
 
 // https://www.youtube.com/watch?v=ke1pkMV44iU
 
+// npm install react-bootstrap bootstrap
+import { Button, Form } from 'react-bootstrap';
+
 export default class App extends Component {
   constructor() {
     super();
@@ -10,7 +13,12 @@ export default class App extends Component {
       listaUsuarios: [],
       nome: "",
       idade: "",
-      // localizacao: [longitude = '', latitude = ''],
+
+      localizacao: [
+        longitude = '',
+        latitude = ''
+      ],
+
       especialidade: "",
       idUsuario: 0
     }
@@ -34,6 +42,8 @@ export default class App extends Component {
         //       longitude: snap.val().lon
         //   });
         // });
+
+        let localizacaoArray = [];
 
         usuarios.forEach((usuario) => {
           usuariosArray.push({
@@ -60,9 +70,9 @@ export default class App extends Component {
     if (this.state.idUsuario === 0) {
       firebase.firestore().collection("Usuarios")
         .add({
-          localizacao: this.state.localizacao,
+          localizacao: firebase.firestore.GeoPoint(latitude, longitude),
         }).then((resultado) => {
-          alert("Localizacao Cadastrado")
+          alert("Localizacao Cadastrada")
           this.limparFormulario();
         }).catch((erro) => {
           console.log('tag', erro)
@@ -93,8 +103,16 @@ export default class App extends Component {
     //   </div>
     // )
     return (
-      <div>
 
+      <div>
+        <link
+          rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous"
+        />
+
+        <h2>Lista de Usuários</h2>
         <ul>
           {
             this.state.listaUsuarios.map((usuario, key) => {
@@ -117,7 +135,7 @@ export default class App extends Component {
           }
         </ul>
 
-        <form onSubmit={this.cadastraLocalizacao.bind(this)}>
+        {/* <form onSubmit={this.cadastraLocalizacao.bind(this)}>
           <div>
             <label>Localização (latitude): </label>
             <input
@@ -141,8 +159,33 @@ export default class App extends Component {
             </input>
           </div>
           <button type="submit">Enviar</button>
-        </form>
+        </form> */}
 
+        <Form 
+        style={{  marginLeft: '2%',
+        //  marginRight: '5%'
+         }}
+         onSubmit={this.cadastraLocalizacao.bind(this)}>
+          <h2 style={{ fontWeight: 'bold' }}>Cadastro de Localização</h2>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label style={{ fontWeight: 'bold' }}>Latitude</Form.Label>
+            <Form.Control style={{ width: '25%' }} type="text" placeholder="Insira uma latitude" />
+
+            {/* <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text> */}
+
+          </Form.Group>
+
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label style={{ fontWeight: 'bold' }}>Longitude</Form.Label>
+            <Form.Control style={{ width: '25%' }} type="text" placeholder="Insira uma longitude" />
+          </Form.Group>
+
+          <Button variant="primary" type="submit">
+            Enviar
+          </Button>
+        </Form>
 
       </div>
     )
