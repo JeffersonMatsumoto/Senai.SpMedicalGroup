@@ -3,8 +3,15 @@ import firebase from './services/firebaseConfig';
 
 // https://www.youtube.com/watch?v=ke1pkMV44iU
 
+// https://www.youtube.com/watch?v=29Dp2mSwS4w
+
+// https://www.youtube.com/watch?v=SySVBV_jcCM
+
 // npm install react-bootstrap bootstrap
 import { Button, Form } from 'react-bootstrap';
+
+import Geocode from 'react-geocode';
+// npm install --save react-geocode
 
 export default class App extends Component {
   constructor() {
@@ -43,7 +50,7 @@ export default class App extends Component {
         //   });
         // });
 
-        let localizacaoArray = [];
+        // let localizacaoArray = [];
 
         usuarios.forEach((usuario) => {
           usuariosArray.push({
@@ -99,6 +106,18 @@ export default class App extends Component {
   //   }
   // }
 
+  exibirEndereco(){
+    Geocode.fromLatLng("48.8583701", "2.2922926").then(
+      response => {
+        const address = response.results[0].formatted_address;
+        console.log(address);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+  }
+
   render() {
     // const listOfPositions = this.state.localizacao.map(position => 
     //   <div>
@@ -153,6 +172,10 @@ export default class App extends Component {
 
         </Form>
 
+        <Button variant="primary" onClick={this.exibirEndereco()}>
+            Mostra endereço pela latitude e longitude
+        </Button>
+      
       </div>
     )
   }
