@@ -14,10 +14,10 @@ export default class App extends Component {
       nome: "",
       idade: "",
 
-      localizacao: [
-        longitude = '',
-        latitude = ''
-      ],
+      // localizacao: [
+      longitude: '',
+      latitude: '',
+      // ],
 
       especialidade: "",
       idUsuario: 0
@@ -51,6 +51,9 @@ export default class App extends Component {
             nome: usuario.data().Nome,
             idade: usuario.data().Idade,
 
+            longitude: usuario.data().longitude,
+            latitude: usuario.data().latitude,
+
             // localizacao: usuario.data().Localizacao,
             // localizacao: usuario.data().localizacao[latitude, longitude],
 
@@ -70,7 +73,9 @@ export default class App extends Component {
     if (this.state.idUsuario === 0) {
       firebase.firestore().collection("Usuarios")
         .add({
-          localizacao: firebase.firestore.GeoPoint(latitude, longitude),
+          latitude: this.state.latitude,
+          longitude: this.state.longitude
+          // localizacao: firebase.firestore.GeoPoint(latitude, longitude),
         }).then((resultado) => {
           alert("Localizacao Cadastrada")
           this.limparFormulario();
@@ -112,85 +117,43 @@ export default class App extends Component {
           crossorigin="anonymous"
         />
 
-        <h2>Lista de Usuários</h2>
+        <div>
+        <h2 style={{ marginLeft: '2%'}} >Lista de Usuários</h2>
+
         <ul>
           {
             this.state.listaUsuarios.map((usuario, key) => {
               return (
                 <li key={key}>
-                  {/* {usuario.id} /  */}
-                  {usuario.nome} / {usuario.idade} / {usuario.especialidade}
-                  {/* / {listOfPositions} */}
-
-                  {/* {
-                    this.state.localizacao.map(() =>
-                      <div>
-                        <p>{latitude}</p>
-                        <p>{longitude}</p></div>)
-                  } */}
-
+                  {usuario.nome} / {usuario.idade} / {usuario.especialidade} / {usuario.latitude} / {usuario.longitude}
                 </li>
               )
             })
           }
         </ul>
+        </div>
 
-        {/* <form onSubmit={this.cadastraLocalizacao.bind(this)}>
-          <div>
-            <label>Localização (latitude): </label>
-            <input
-              name="longitude"
-              required
-              placeholder="Insira uma latitude"
-              // value={this.state.localizacao.latitude}
-              onChange={this.atualizaEstado.bind(this)}
-              type="text">
-            </input>
-          </div>
-          <div>
-            <label>Localização (longitude): </label>
-            <input
-              name="longitude"
-              required
-              placeholder="Insira uma longitude"
-              // value={this.state.localizacao.longitude}
-              onChange={this.atualizaEstado.bind(this)}
-              type="text">
-            </input>
-          </div>
-          <button type="submit">Enviar</button>
-        </form> */}
+        <Form style={{ marginLeft: '2%'}} onSubmit={this.cadastraLocalizacao.bind(this)}>
 
-        <Form 
-        style={{  marginLeft: '2%',
-        //  marginRight: '5%'
-         }}
-         onSubmit={this.cadastraLocalizacao.bind(this)}>
-          <h2 style={{ fontWeight: 'bold' }}>Cadastro de Localização</h2>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label style={{ fontWeight: 'bold' }}>Latitude</Form.Label>
-            <Form.Control style={{ width: '25%' }} type="text" placeholder="Insira uma latitude" />
+          <h2>Cadastro de Localização</h2>
 
-            {/* <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text> */}
-
+          <Form.Group>
+            <Form.Label>Latitude</Form.Label>
+            <Form.Control style={{ width: '25%' }} type="text" name="latitude" value={this.state.latitude} onChange={this.atualizaEstado.bind(this)}/> 
           </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label style={{ fontWeight: 'bold' }}>Longitude</Form.Label>
-            <Form.Control style={{ width: '25%' }} type="text" placeholder="Insira uma longitude" />
+          <Form.Group>
+            <Form.Label>Longitude</Form.Label>
+              <Form.Control style={{ width: '25%' }} type="text" name="longitude" value={this.state.longitude} onChange={this.atualizaEstado.bind(this)}  />
           </Form.Group>
 
           <Button variant="primary" type="submit">
             Enviar
           </Button>
+
         </Form>
 
       </div>
     )
   }
-
-
-
 }
