@@ -99,19 +99,20 @@ export class App extends Component {
 
   // The number of requests has exceeded the usage limits for the Maps JavaScript API. Your app's requests will work again at the next daily quota reset.
   //reseta no dia seguinte a quantidade de requisições para essa API
-  converterEmEndereco(user) {
-    Geocode.setApiKey("AIzaSyBTgGsrboDqra1bK7KCZioT_B5w7iFqlxs");
-    Geocode.fromLatLng('-23.5274636', '-46.6720958') //-23.5274636,-46.6720958 // user.latitude, user.longitude
-      .then(
-        response => {
-          const address = response.results[0].formatted_address;
-          alert(address);
-        },
-        error => {
-          console.error(error);
-        }
-      );
-  }
+
+  // converterEmEndereco(user) {
+  //   Geocode.setApiKey("AIzaSyBTgGsrboDqra1bK7KCZioT_B5w7iFqlxs");
+  //   Geocode.fromLatLng('-23.5274636', '-46.6720958') //-23.5274636,-46.6720958 // user.latitude, user.longitude
+  //     .then(
+  //       response => {
+  //         const address = response.results[0].formatted_address;
+  //         alert(address);
+  //       },
+  //       error => {
+  //         console.error(error);
+  //       }
+  //     );
+  // }
 
   render() {
     const {google} = this.props;
@@ -186,12 +187,12 @@ export class App extends Component {
 
             <Form.Group>
               <Form.Label>Latitude</Form.Label>
-              <Form.Control required style={{}} type="text" name="latitude" value={this.state.latitude} onChange={this.atualizaEstado.bind(this)} />
+              <Form.Control step={0.001} min={-90} required style={{}} type="text" name="latitude" value={this.state.latitude} onChange={this.atualizaEstado.bind(this)} />
             </Form.Group>
 
             <Form.Group>
               <Form.Label>Longitude</Form.Label>
-              <Form.Control required style={{}} type="text" name="longitude" value={this.state.longitude} onChange={this.atualizaEstado.bind(this)} />
+              <Form.Control step={0.001} min={-180} required style={{}} type="text" name="longitude" value={this.state.longitude} onChange={this.atualizaEstado.bind(this)} />
             </Form.Group>
 
             <Button variant="primary" style={{ width: '100%' }} size="lg" type="submit">
@@ -240,7 +241,8 @@ export class App extends Component {
                         <td style={{ fontSize: '.75em', verticalAlign: 'inherit' }}>{user.latitude}, {user.longitude}</td>
                         <td>
                           <Button variant="outline-primary" size='sm' style={{ alignSelf: 'center' }} type="button"
-                            onClick={this.converterEmEndereco(user)}>
+                            // onClick={this.converterEmEndereco(user)}
+                            >
                             Converter coordenadas em endereço
                           </Button>
                         </td>
