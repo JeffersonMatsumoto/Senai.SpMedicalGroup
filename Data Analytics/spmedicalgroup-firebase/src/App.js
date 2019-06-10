@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from './services/firebaseConfig';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import { Button, Form, Table } from 'react-bootstrap';
+import { Button, Form, Table, Navbar } from 'react-bootstrap';
 
 import Geocode from "react-geocode";
 
@@ -48,7 +48,7 @@ export class App extends Component {
           })
         })
         this.setState({ listaUsuarios: usuariosArray }, () => {
-          console.log(this.state.listaUsuarios)
+          // console.log(this.state.listaUsuarios)
         });
       })
   }
@@ -57,22 +57,22 @@ export class App extends Component {
     event.preventDefault();
 
     // if (this.state.idUsuario === 0) {
-      firebase.firestore().collection("Usuarios")
-        .add({
-          nome: this.state.nome,
-          idade: this.state.idade,
-          doenca: this.state.doenca,
-          especialidade: this.state.especialidade,
+    firebase.firestore().collection("Usuarios")
+      .add({
+        nome: this.state.nome,
+        idade: this.state.idade,
+        doenca: this.state.doenca,
+        especialidade: this.state.especialidade,
 
 
-          latitude: this.state.latitude,
-          longitude: this.state.longitude
-        }).then((resultado) => {
-          alert("Localizacao Cadastrada")
-          // this.limparFormulario();
-        }).catch((erro) => {
-          console.log('tag', erro)
-        })
+        latitude: this.state.latitude,
+        longitude: this.state.longitude
+      }).then((resultado) => {
+        alert("Localizacao Cadastrada")
+        // this.limparFormulario();
+      }).catch((erro) => {
+        console.log('tag', erro)
+      })
     // }
   }
 
@@ -87,20 +87,22 @@ export class App extends Component {
       showingInfoWindow: true
     });
 
-    onMapClicked = (props) => {
-      if (this.state.showingInfoWindow) {
-        this.setState({
-          showingInfoWindow: false,
-          activeMarker: null
-        })
-      }
-    };
-    
-    converterEmEndereco(){
-      Geocode.setApiKey("AIzaSyBTgGsrboDqra1bK7KCZioT_B5w7iFqlxs");
-      // Geocode.fromLatLng
-      Geocode.fromLatLng("48.8583701", "2.2922926")
-        .then(
+  onMapClicked = (props) => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      })
+    }
+  };
+
+
+  // The number of requests has exceeded the usage limits for the Maps JavaScript API. Your app's requests will work again at the next daily quota reset.
+  //reseta no dia seguinte a quantidade de requisições para essa API
+  converterEmEndereco(user) {
+    Geocode.setApiKey("AIzaSyBTgGsrboDqra1bK7KCZioT_B5w7iFqlxs");
+    Geocode.fromLatLng('-23.5274636', '-46.6720958') //-23.5274636,-46.6720958 // user.latitude, user.longitude
+      .then(
         response => {
           const address = response.results[0].formatted_address;
           alert(address);
@@ -109,80 +111,100 @@ export class App extends Component {
           console.error(error);
         }
       );
-    }
+  }
 
   render() {
+    const {google} = this.props;
     return (
-      <div style={{ }}>
+      <div style={{ fontFamily: 'Saira Semi Condensed' }}>
 
-      <div style={{ marginTop: '.5%', display: 'grid', paddingBottom: '2%', gridTemplateColumns: '0.4fr 1fr', fontFamily: 'Saira Semi Condensed' }}>
-        
-        <link
-          rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossOrigin="anonymous"
-        />
-        <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed&display=swap" rel="stylesheet"></link>
-        
-        <Form style={{ paddingRight: '5%',borderRight: '3px solid rgb(212, 212, 212)', marginLeft: '2%', justifySelf: 'center' }} onSubmit={this.cadastraLocalizacao.bind(this)}>
+        <Navbar style={{ display: 'flex', justifyContent: 'center', marginBottom: '2%', borderColor: 'lightgrey', borderStyle: 'double' }} bg="light">
+          <Navbar.Brand style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <img
+              src={require('./assets/img/logo.png')}
+              width="30"
+              height="30"
+              alt="Logo SP Medical Group"
+            />
+            <span style={{ fontWeight: 'bold', marginInlineStart: '5%' }}>Sistema de localização de usuários</span>
+          </Navbar.Brand>
+        </Navbar>
 
-          <h2 style={{ marginTop: '.5%', fontWeight: 'bold' }}>Formulário de cadastro</h2>
+        <div style={{ marginTop: '.5%', display: 'grid', paddingBottom: '2%', gridTemplateColumns: '0.4fr 1fr' }}>
 
-          
+          <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossOrigin="anonymous"
+          />
+          <link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed&display=swap" rel="stylesheet"></link>
 
-          <Form.Group>
-            <Form.Label>Nome</Form.Label>
-            <Form.Control required style={{  }} type="text" name="nome" value={this.state.nome} onChange={this.atualizaEstado.bind(this)} />
-          </Form.Group>
+          <Form style={{ paddingRight: '5%', borderRight: '3px solid rgb(212, 212, 212)', marginLeft: '2%', justifySelf: 'center' }} onSubmit={this.cadastraLocalizacao.bind(this)}>
 
-          <Form.Group>
-            <Form.Label>Especialidade</Form.Label>
-            <Form.Control required as='select' required style={{  }} type="text" name="especialidade" value={this.state.especialidade} onChange={this.atualizaEstado.bind(this)} >
-              <option selected="selected disabled hidden" ></option>
-              <option>Odontologista</option>
-              <option>Otorrinolaringologista</option>
-              <option>Otorpedista</option>
-              <option>Endocrinologista</option>
-              <option>Psiquiatra</option>
-              <option>Pediatra</option>
-              <option>Clínico Geral</option>
-              <option>Oftalmologista</option>
-              <option>Dermatologista</option>
-            </Form.Control>
-          </Form.Group>
+            <h2 style={{ fontWeight: 'bold' }}>Formulário de cadastro</h2>
 
-          <Form.Group>
-            <Form.Label>Idade</Form.Label>
-            <Form.Control min="1" required style={{  }} type="number" name="idade" value={this.state.idade} onChange={this.atualizaEstado.bind(this)} />
-          </Form.Group>
-          
-          <Form.Group>
-            <Form.Label>Doença</Form.Label>
-            <Form.Control required style={{  }} type="text" name="doenca" value={this.state.doenca} onChange={this.atualizaEstado.bind(this)} />
-          </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Latitude</Form.Label>
-            <Form.Control required style={{  }} type="text" name="latitude" value={this.state.latitude} onChange={this.atualizaEstado.bind(this)} />
-          </Form.Group>
 
-          <Form.Group>
-            <Form.Label>Longitude</Form.Label>
-            <Form.Control required style={{  }} type="text" name="longitude" value={this.state.longitude} onChange={this.atualizaEstado.bind(this)} />
-          </Form.Group>
+            <Form.Group>
+              <Form.Label>Nome</Form.Label>
+              <Form.Control required style={{ textTransform: 'capitalize' }} type="text" name="nome" value={this.state.nome} onChange={this.atualizaEstado.bind(this)} />
+            </Form.Group>
 
-          <Button variant="primary" style={{ width: '100%' }} size="lg" type="submit">
-            Enviar
+            <Form.Group>
+              <Form.Label>Especialidade</Form.Label>
+              <Form.Control required as='select' type="text" name="especialidade" value={this.state.especialidade} onChange={this.atualizaEstado.bind(this)} >
+                <option
+                  defaultValue
+                // selected="selected disabled hidden"
+                ></option>
+                <option>Oncologista</option>
+                <option>Neurologista</option>
+                <option>Odontologista</option>
+                <option>Otorrinolaringologista</option>
+                <option>Otorpedista</option>
+                <option>Endocrinologista</option>
+                <option>Psiquiatra</option>
+                <option>Pediatra</option>
+                <option>Clínico Geral</option>
+                <option>Oftalmologista</option>
+                <option>Dermatologista</option>
+                <option>Urologista</option>
+                <option>Ginecologista</option>
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Idade</Form.Label>
+              <Form.Control min="1" required style={{}} type="number" name="idade" value={this.state.idade} onChange={this.atualizaEstado.bind(this)} />
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Diagnóstico</Form.Label>
+              <Form.Control required style={{ textTransform: 'capitalize' }} type="text" name="doenca" value={this.state.doenca} onChange={this.atualizaEstado.bind(this)} />
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Latitude</Form.Label>
+              <Form.Control required style={{}} type="text" name="latitude" value={this.state.latitude} onChange={this.atualizaEstado.bind(this)} />
+            </Form.Group>
+
+            <Form.Group>
+              <Form.Label>Longitude</Form.Label>
+              <Form.Control required style={{}} type="text" name="longitude" value={this.state.longitude} onChange={this.atualizaEstado.bind(this)} />
+            </Form.Group>
+
+            <Button variant="primary" style={{ width: '100%' }} size="lg" type="submit">
+              Enviar
           </Button>
 
-        </Form>
+          </Form>
 
-        <div style={{ textAlign: 'center', marginRight: '2%', paddingRight:'2%', paddingLeft:'2%'}}>
+          <div style={{ textAlign: 'center', marginRight: '2%', paddingRight: '2%', paddingLeft: '2%' }}>
 
-          <h2 style={{ marginTop: '.1%', marginLeft: '2%', fontWeight: 'bold' }} >Lista de localizações</h2>
+            <h2 style={{ fontWeight: 'bold' }} >Lista de localizações</h2>
 
-          {/* <ul>
+            {/* <ul>
             {
               this.state.listaUsuarios.map((usuario, key) => {
                 return (
@@ -193,72 +215,101 @@ export class App extends Component {
               })
             }
           </ul> */}
-          
-          <Table  striped bordered hover variant='dark'>
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Idade</th>
-                            <th>Especialidade</th> 
-                            <th>Diagnóstico</th>
-                            <th>Latitude e Longitude</th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
-                        {
-                            this.state.listaUsuarios.map((user) => {
-                                return (
-                                    <tr>
-                                        <td>{user.nome}</td>
-                                        <td>{user.idade}</td>
-                                        <td>{user.especialidade}</td>
-                                        <td>{user.doenca}</td>
-                                        <td>{user.latitude}, {user.longitude}</td>
-                                    </tr>
-                                );
-                            })
-                        }
-                    </tbody>
-                </Table>
-                
-                <Button type="button" onClick={this.converterEmEndereco()}>Converter coordenadas em endereço</Button>
-        </div>
-        
-        
+            <Table striped bordered hover variant='dark'>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Idade</th>
+                  <th>Especialidade</th>
+                  <th>Diagnóstico</th>
+                  <th>Latitude e Longitude</th>
+                  <th>Endereço</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {
+                  this.state.listaUsuarios.map((user) => {
+                    return (
+                      <tr key={user.id}>
+                        <td style={{ fontSize: '.75em', verticalAlign: 'inherit' }} >{user.nome}</td>
+                        <td style={{ fontSize: '.75em', verticalAlign: 'inherit' }}>{user.idade}</td>
+                        <td style={{ fontSize: '.75em', verticalAlign: 'inherit' }}>{user.especialidade}</td>
+                        <td style={{ fontSize: '.75em', verticalAlign: 'inherit' }}>{user.doenca}</td>
+                        <td style={{ fontSize: '.75em', verticalAlign: 'inherit' }}>{user.latitude}, {user.longitude}</td>
+                        <td>
+                          <Button variant="outline-primary" size='sm' style={{ alignSelf: 'center' }} type="button"
+                            onClick={this.converterEmEndereco(user)}>
+                            Converter coordenadas em endereço
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                }
+              </tbody>
+            </Table>
+
+
+          </div>
+
+
         </div>
 
         <div style={{ marginTop: '2%' }}>
-          
+
           <Map
             controlSize
             google={this.props.google}
-            zoom={15}
+            zoom={14}
             initialCenter={{
-              lat: -23.5345442,
-              lng: -46.6493879
+              lat: -23.5364985,
+              lng: -46.6483357
             }}
             onClick={this.onMapClicked}
-            styles={tamanho}
+            // styles={tamanho}
+            style={{ margin: '2%', width: '96%', height: '100%' }}
           >
 
+            {/* <Map google={this.props.google}
+              onClick={this.onMapClicked}>
+              <Marker onClick={this.onMarkerClick}
+                name={'Current location'} />
+
+              <InfoWindow
+                marker={this.state.activeMarker}
+                visible={this.state.showingInfoWindow}>
+                <div>
+                  <h1>{this.state.selectedPlace.name}</h1>
+                </div>
+              </InfoWindow>
+              </Map> */}
 
             {
               this.state.listaUsuarios.map((usuario) => {
                 return (
                   <Marker
-                    onClick={this.onMarkerClick}  
+                    key={usuario.id}
+                    onClick={this.onMarkerClick}
                     clickable
+                    // name={"a"}
+                    icon={{
+                      url: require('./assets/img/pin.svg')
+                      ,                    
+                      anchor: new google.maps.Point(32,32),
+                      scaledSize: new google.maps.Size(64,64)
+                    }}
                     title={`Nome: ${usuario.nome}, Idade: ${usuario.idade}, Especialidade: ${usuario.especialidade}, Diagnóstico: ${usuario.doenca}`}
                     position={{ lat: usuario.latitude, lng: usuario.longitude }}>
-                    
-                      <InfoWindow 
-                       marker={this.state.activeMarker}
-                       visible={this.state.showingInfoWindow}
-                      >
-                        <h1></h1>
-                      </InfoWindow>
-                    
+
+                    <InfoWindow
+                      marker={this.state.activeMarker}
+                      visible={this.state.showingInfoWindow}
+                    >
+                      <h1>teste</h1>
+                    </InfoWindow>
+
                   </Marker>
                 )
               })
@@ -275,7 +326,7 @@ export default GoogleApiWrapper({
   apiKey: ("AIzaSyBTgGsrboDqra1bK7KCZioT_B5w7iFqlxs")
 })(App)
 
-const tamanho = {
+// const tamanho = {
   // display: 'flex',
   // width:'100%' 
-}
+// }
