@@ -7,9 +7,11 @@
 //         .then(res => )
 // }
 
+// https://github.com/Microsoft/vscode/issues/46462
+
 import React, { Component } from 'react';
 import Axios from "axios";
-import { Table, Button, FormControl } from 'react-bootstrap';
+import { Table, Button, FormControl, Form } from 'react-bootstrap';
 
 import Header from '../../components/Header/Header';
 import Rodape from '../../components/Rodape/Rodape';
@@ -21,6 +23,7 @@ class ListarConsultaMedico extends Component {
         this.state = {
             id: '',
             descricao: '',
+            situacao:'',
             listaConsulta: []
         }
     }
@@ -55,13 +58,18 @@ class ListarConsultaMedico extends Component {
         this.setState({ descricao: event.target.value })
     }
 
+    atualizaEstadoSituacao(event) {
+        this.setState({ situacao: event.target.value })
+    }
+
     editarconsultas(event) {
         event.preventDefault();
 
         Axios.put("http://localhost:5000/api/consultas",
             {
                 id: this.state.id,
-                descricao: this.state.descricao
+                descricao: this.state.descricao,
+                situacao: this.state.situacao
             },
 
             {
@@ -75,7 +83,7 @@ class ListarConsultaMedico extends Component {
 
             .then(data => {
                 if (data.status === 200) {
-                    this.setState({ Mensagem: 'Descrição da consulta adicionada.' });
+                    this.setState({ Mensagem: 'Atualização bem sucedido.' });
                     alert('Descrição adicionada com sucesso!');
                 }
             })
@@ -150,23 +158,30 @@ class ListarConsultaMedico extends Component {
 
                     </Table>
 
-                    <p>Selecione o Id da consulta que deseja adicionar uma descrição:</p>
-                    <form style={{ display: 'flex' }} onSubmit={this.editarconsultas.bind(this)}>
-                        <select style={{ padding: '.2em', borderRadius: '10%'}} value={this.state.id} name="consulta"
+                    <p>Selecione o Id da consulta que deseja adicionar uma descrição ou alterar o status:</p>
+                    <Form style={{ display: 'flex' }} onSubmit={this.editarconsultas.bind(this)}>
+                        <select style={{ padding: '.2em', borderRadius: '10%' }} value={this.state.id} name="consulta"
                             onChange={this.atualizaEstadoId.bind(this)} required>
                             {
                                 this.state.listaConsulta.map(function (consulta) {
                                     return (
-                                        <option key={consulta.id}>
+                                        <option key={consulta.id} value={consulta.id}>
                                             {consulta.id}
                                         </option>
                                     );
                                 })
                             }
                         </select>
-                        <FormControl style={{ width: '75%', marginLeft: '1em' }} type="text" value={this.state.descricao} onChange={this.atualizaEstadoDescricao.bind(this)} />
-                        <Button style={{ width: '25%', marginLeft: '1em' }} onClick={this.editarconsultas.bind(this)}>Adicionar / Alterar descrição</Button>
-                    </form>
+                        <FormControl style={{ width: '55%', marginLeft: '1em' }} type="text" value={this.state.descricao} onChange={this.atualizaEstadoDescricao.bind(this)} />
+                        <FormControl style={{ width: '15%', marginLeft: '1em' }} required as='select' type="text" value={this.state.situacao} onChange={this.atualizaEstadoSituacao.bind(this)} >
+                            <option>Agendado</option>
+                            <option>Realizado</option>
+                            <option>Cancelado</option>
+                        </FormControl>
+                        <Button type="submit" style={{ width: '25%', marginLeft: '1em' }} 
+                            // onClick={this.editarconsultas.bind(this)}
+                        >Adicionar / Alterar descrição</Button>
+                    </Form>
 
                     {/* <textarea value={this.state.descricao} onChange={(e) => this.setState({ descricao: e.target.value })} />
                         <button onClick={this.editaConsulta.bind(this)}>Alterar descrição</button> */}
