@@ -22,6 +22,11 @@ class ListarConsultaMedico extends Component {
         super();
         this.state = {
             id: '',
+
+            paciente: '',
+            medico: '',
+            dataconsulta: '',
+
             descricao: '',
             situacao:'',
             listaConsulta: []
@@ -51,7 +56,16 @@ class ListarConsultaMedico extends Component {
     }
 
     atualizaEstadoId(event) {
-        this.setState({ id: event.target.value })
+        this.setState(
+            { 
+                id: event.target.value ,
+                paciente: '',
+                medico: '',
+                dataconsulta: '',
+                descricao: '',
+                situacao:'',
+            }
+        )
     }
 
     atualizaEstadoDescricao(event) {
@@ -68,8 +82,13 @@ class ListarConsultaMedico extends Component {
         Axios.put("http://localhost:5000/api/consultas",
             {
                 id: this.state.id,
-                descricao: this.state.descricao,
-                situacao: this.state.situacao
+                // descricao: this.state.descricao,
+                idMedico: this.state.medico,
+                idProntuario: this.state.paciente,
+                DataConsulta: this.state.dataconsulta,
+                Descricao: this.state.descricao,
+                idSituacao: this.state.situacao 
+                // situacao: this.state.situacao
             },
 
             {
@@ -174,9 +193,9 @@ class ListarConsultaMedico extends Component {
                         </select>
                         <FormControl style={{ width: '55%', marginLeft: '1em' }} type="text" value={this.state.descricao} onChange={this.atualizaEstadoDescricao.bind(this)} />
                         <FormControl style={{ width: '15%', marginLeft: '1em' }} required as='select' type="text" value={this.state.situacao} onChange={this.atualizaEstadoSituacao.bind(this)} >
-                            <option>Agendado</option>
-                            <option>Realizado</option>
-                            <option>Cancelado</option>
+                            <option value='1'>Agendado</option>
+                            <option value='3'>Realizado</option>
+                            <option value='2'>Cancelado</option>
                         </FormControl>
                         <Button type="submit" style={{ width: '25%', marginLeft: '1em' }} 
                             // onClick={this.editarconsultas.bind(this)}

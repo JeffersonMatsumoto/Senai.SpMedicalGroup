@@ -100,19 +100,19 @@ export class App extends Component {
   // The number of requests has exceeded the usage limits for the Maps JavaScript API. Your app's requests will work again at the next daily quota reset.
   //reseta no dia seguinte a quantidade de requisições para essa API
 
-  // converterEmEndereco(user) {
-  //   Geocode.setApiKey("AIzaSyBTgGsrboDqra1bK7KCZioT_B5w7iFqlxs");
-  //   Geocode.fromLatLng('-23.5274636', '-46.6720958') //-23.5274636,-46.6720958 // user.latitude, user.longitude
-  //     .then(
-  //       response => {
-  //         const address = response.results[0].formatted_address;
-  //         alert(address);
-  //       },
-  //       error => {
-  //         console.error(error);
-  //       }
-  //     );
-  // }
+  converterEmEndereco(user) {
+    Geocode.setApiKey("AIzaSyBTgGsrboDqra1bK7KCZioT_B5w7iFqlxs");
+    Geocode.fromLatLng(user.latitude, user.longitude) //-23.5274636,-46.6720958 // user.latitude, user.longitude
+      .then(
+        response => {
+          const address = response.results[0].formatted_address;
+          alert(address);
+        },
+        error => {
+          console.error(error);
+        }
+      );
+  }
 
   render() {
     const {google} = this.props;

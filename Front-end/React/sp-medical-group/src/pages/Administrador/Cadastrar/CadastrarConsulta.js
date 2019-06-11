@@ -48,6 +48,7 @@ class CadastrarConsulta extends Component {
     }
 
     atualizaEstadoPaciente(event) {
+        // console.log(event.target.value)
         this.setState({ paciente: event.target.value });
     }
 
@@ -64,16 +65,31 @@ class CadastrarConsulta extends Component {
     }
 
     cadastraConsulta(event) {
-        event.preventDefault();
 
+        if (this.state.situacao === '' || this.state.situacao === null ) {
+            alert("O campo está vazio");
+        
+        } else if (this.state.paciente === '' || this.state.paciente === null ) {
+            alert("O campo está vazio");
+        } else if (this.state.medico === '' || this.state.medico === null ) {
+            alert("O campo está vazio");
+        } else if (this.state.dataconsulta === '' || this.state.dataconsulta === null ) {
+            alert("O campo está vazio");
+        } else if ( this.state.descricao === '' || this.state.descricao === null) {
+            alert("O campo está vazio");
+        } else {
+        event.preventDefault();
+        const dados = {
+            idMedico: this.state.medico,
+            idProntuario: this.state.paciente,
+            DataConsulta: this.state.dataconsulta,
+            Descricao: this.state.descricao,
+            idSituacao: this.state.situacao   
+        }
+        console.log(dados)
         Axios.post("http://localhost:5000/api/consultas",
-            {
-                Medico: this.state.medico,
-                Paciente: this.state.paciente,
-                DataConsulta: this.state.dataconsulta,
-                Descricao: this.state.descricao,
-                Situacao: this.state.situacao
-            },
+            dados
+            ,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -91,8 +107,10 @@ class CadastrarConsulta extends Component {
                 }
             })
             .catch(erro => {
+                console.error(erro)
                 this.setState({ Mensagem: 'Por favor, verifique os campos e tente novamente' + erro });
             })
+        }
     }
 
     render() {
@@ -142,7 +160,7 @@ class CadastrarConsulta extends Component {
 
                                     {
                                         this.state.listaPaciente.map(function (i) {
-        
+                                            
                                             return (
                                                 <option key={i.id} value={i.id}> {i.nomePaciente} </option>
                                             );
@@ -183,9 +201,9 @@ class CadastrarConsulta extends Component {
                                     required
                                     onChange={this.atualizaEstadoSituacao.bind(this)}>
                                     {/* <option value="" selected="selected"></option> */}
-                                    <option value="Agendado" selected="selected">       Agendado   </option>
-                                    <option value="Cancelado">                          Cancelado          </option>
-                                    <option value="Realizado">                          Realizado        </option>
+                                    <option value="1" selected="selected">       Agendado   </option>
+                                    <option value="2">                          Cancelado          </option>
+                                    <option value="3">                          Realizado        </option>
 
                                 </Form.Control>
 

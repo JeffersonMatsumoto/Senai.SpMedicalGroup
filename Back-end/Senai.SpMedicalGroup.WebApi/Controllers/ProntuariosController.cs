@@ -33,6 +33,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                 var resultado = from p in prontuarios
                                 select new
                                 {
+                                    id = p.Id,
                                     nomePaciente = p.NomePaciente,
                                     cpf = p.Cpf,
                                     rg = p.Rg,

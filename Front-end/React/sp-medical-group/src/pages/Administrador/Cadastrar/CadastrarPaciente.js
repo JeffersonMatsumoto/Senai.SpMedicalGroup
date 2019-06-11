@@ -238,7 +238,7 @@ class CadastrarPaciente extends Component {
                     </Form.Group>
 
                     <Form.Group>
-                        <Form.Label>Usuario (id):</Form.Label>
+                        <Form.Label>Selecione um e-mail de usuário previamente cadastrado :</Form.Label>
 
                         <Form.Control
                             className="input-ajustado"

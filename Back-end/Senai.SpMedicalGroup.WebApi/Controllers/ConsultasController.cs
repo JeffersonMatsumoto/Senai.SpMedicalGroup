@@ -115,6 +115,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                 else if (usuarioLogado == "Medico")
                 {
                     int idUsuario = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value);
+                    //int idMEDICO = Med
                     consultas = ConsultaRepository.ListarConsultasMedico(idUsuario);   
                 } 
                 else if (usuarioLogado == "Paciente") //f10 para ir passo a passo

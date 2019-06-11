@@ -165,7 +165,8 @@ VALUES('ligia@gmail.com','123456',3)
 	,('mariana@outlook.com','123456',3)
 	,('ricardo.lemos@spmedicalgroup.com.br','654321',2)
 	,('roberto.possarle@spmedicalgroup.com.br','654321',2)
-	,('helena.strada@spmedicalgroup.com.br','654321',2)	
+	,('helena.strada@spmedicalgroup.com.br','654321',2)
+	,('jefferson@gmail.com','adm123456',1)	
 
 INSERT INTO CLINICAS
 VALUES('SP Medical Group','Clinica Possarle','86400902000130','Horário comercial, das 9 às 18 horas',1)
@@ -189,19 +190,19 @@ VALUES('Ricardo Lemos','54356',1,2,8)
 --select * from prontuarios
 
 INSERT INTO PRONTUARIOS --(yyyy-mm-dd)
-VALUES('Ligia','94839859000','381336694','13/10/1983','11 3456-7654',2,1)
-	,('Alexandre','73556944057','195545412','23/07/2001','11 98765-6543',3,2)
-	,('Fernando','16839338002','345157679','10/10/1978','11 97208-4453',4,3)
-	,('Henrique','14332654765','392696204','13/10/1985','11 3456-6543',5,4)
-	,('João','91305348010','485339857','27/08/1975','11 7656-6377',6,5)
-	,('Bruno','79799299004','210386988','21/03/1972','11 95436-8769',7,6)
-	,('Mariana','13771913039','449188899','05/03/2018','',8,7) --PODE DEIXAR VAZIO? OU CRIA TABELA TELEFONES?
+VALUES('Ligia','94839859000','381336694','1983-10-13','11 3456-7654',2,1)
+	,('Alexandre','73556944057','195545412','2001-07-23','11 98765-6543',3,2)
+	,('Fernando','16839338002','345157679','1978-10-10','11 97208-4453',4,3)
+	,('Henrique','14332654765','392696204','1985-10-13','11 3456-6543',5,4)
+	,('João','91305348010','485339857','1975-08-27','11 7656-6377',6,5)
+	,('Bruno','79799299004','210386988','1972-03-21','11 95436-8769',7,6)
+	,('Mariana','13771913039','449188899','2018-03-05','',8,7) --PODE DEIXAR VAZIO? OU CRIA TABELA TELEFONES?
 
 INSERT INTO CONSULTAS
-VALUES('Crise de Bronquite','20/01/2019 15:00',3,7,3) -- CONSULTA  1 P/ 1  SITUAÇÃO ? OU N CONSULTA PARA 1 SITUAÇÃO?
-	,('Distúrbio Mental','06/01/2018 10:00',2,2,2)
-	,('Esquizofrenia','07/02/2019 11:00',2,3,3)
-	,('Depressão','06/02/2018 10:00',2,2,3)
-	,('Cirurgia no coração','07/02/2019 11:00',1,4,2)
-	,('Febre','08/02/2019 15:00',3,7,1)
-	,('Cirurgia de Hérnia de Disco','09/02/2019 11:00',1,4,1)
+VALUES('Crise de Bronquite','2019-01-20 15:00',3,7,3) -- CONSULTA  1 P/ 1  SITUAÇÃO ? OU N CONSULTA PARA 1 SITUAÇÃO?
+	,('Distúrbio Mental','2018-01-06 10:00',2,2,2)
+	,('Esquizofrenia','2019-02-07 11:00',2,3,3)
+	,('Depressão','2018-02-06 10:00',2,2,3)
+	,('Cirurgia no coração','2019-02-07 11:00',1,4,2)
+	,('Febre','2019-02-08 15:00',3,7,1)
+	,('Cirurgia de Hérnia de Disco','2019-02-09 11:00',1,4,1)
