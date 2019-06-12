@@ -14,21 +14,29 @@ namespace Senai.SpMedicalGroup.WebApi.Repositories
         {
             using (SpmedgroupContext ctx = new SpmedgroupContext())
             {
-                //Consultas consultaExiste = ctx.Consultas.Find(consulta.Id);
+                Consultas consultaExiste = ctx.Consultas.Find(consulta.Id);
 
-                //if (consultaExiste != null)
-                //{
-                //consultaExiste.IdSituacao = consulta.IdSituacao;
-                //ctx.Consultas.Update(consultaExiste);
-                
-                //SEM PASSAR O ID
-                ctx.Consultas.Update(consulta);
-                ctx.SaveChanges();
-                
-                //}
+                if (consultaExiste != null)
+                {
+                    consultaExiste.IdSituacao = consulta.IdSituacao;
+                    //ctx.Consultas.Update(consultaExiste);
+
+                    //SEM PASSAR O ID
+                    ctx.Consultas.Update(consulta);
+                    //ctx.SaveChanges();
+
+                }
 
             }
         }
+
+        //public Consultas BuscarConsultaPorId()
+        //{
+        //    using (SpmedgroupContext ctx = new SpmedgroupContext())
+        //    {
+        //        Consultas consultaBuscada = ctx.Consultas.Find(); 
+        //    }
+        //}
 
         public void Cadastrar(Consultas consulta)
         {

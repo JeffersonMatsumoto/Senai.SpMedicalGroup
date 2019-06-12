@@ -28,15 +28,31 @@ class ListarConsultaMedico extends Component {
             dataconsulta: '',
 
             descricao: '',
-            situacao:'',
-            listaConsulta: []
+            situacao: '',
+            listaConsulta: [],
+            listaPaciente: []
         }
     }
 
     componentDidMount() {
         this.listarconsultas();
+        this.buscarPacientes();
     }
 
+    buscarPacientes() {
+        fetch('http://localhost:5000/api/prontuarios', {
+            method:'GET',
+            headers:
+        {
+            "Content-Type":"application/json",
+            "Authorization": "Bearer " + localStorage.getItem("user")
+        }
+    })
+            .then(resposta => resposta.json())
+            .then(data => this.setState({ listaPaciente: data }))
+            .catch((erro) => console.log(erro))
+    }
+    
     listarconsultas() {
 
         // var bearer = 'Bearer ' + localStorage.getItem("user");
@@ -57,23 +73,33 @@ class ListarConsultaMedico extends Component {
 
     atualizaEstadoId(event) {
         this.setState(
-            { 
-                id: event.target.value ,
-                paciente: '',
-                medico: '',
-                dataconsulta: '',
-                descricao: '',
-                situacao:'',
+            {
+                id: event.target.value
             }
         )
+        //
+        ///
+        //
+        //
+        // this.setState({medico: Consulta.idMedico})
     }
 
     atualizaEstadoDescricao(event) {
         this.setState({ descricao: event.target.value })
     }
 
+    atualizaEstadoPaciente(event) {
+        this.setState({ paciente: event.target.value })
+    }
+
+    atualizaEstadoMedico(event) {
+        this.setState({ medico: event.target.value })
+    }
+
     atualizaEstadoSituacao(event) {
+        console.log('passei aqui')
         this.setState({ situacao: event.target.value })
+
     }
 
     editarconsultas(event) {
@@ -87,7 +113,7 @@ class ListarConsultaMedico extends Component {
                 idProntuario: this.state.paciente,
                 DataConsulta: this.state.dataconsulta,
                 Descricao: this.state.descricao,
-                idSituacao: this.state.situacao 
+                idSituacao: this.state.situacao
                 // situacao: this.state.situacao
             },
 
@@ -178,27 +204,91 @@ class ListarConsultaMedico extends Component {
                     </Table>
 
                     <p>Selecione o Id da consulta que deseja adicionar uma descrição ou alterar o status:</p>
-                    <Form style={{ display: 'flex' }} onSubmit={this.editarconsultas.bind(this)}>
-                        <select style={{ padding: '.2em', borderRadius: '10%' }} value={this.state.id} name="consulta"
-                            onChange={this.atualizaEstadoId.bind(this)} required>
-                            {
-                                this.state.listaConsulta.map(function (consulta) {
-                                    return (
-                                        <option key={consulta.id} value={consulta.id}>
-                                            {consulta.id}
-                                        </option>
-                                    );
-                                })
-                            }
-                        </select>
-                        <FormControl style={{ width: '55%', marginLeft: '1em' }} type="text" value={this.state.descricao} onChange={this.atualizaEstadoDescricao.bind(this)} />
-                        <FormControl style={{ width: '15%', marginLeft: '1em' }} required as='select' type="text" value={this.state.situacao} onChange={this.atualizaEstadoSituacao.bind(this)} >
+                    <Form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={this.editarconsultas.bind(this)}>
+
+                        <div style={{ display: 'flex', flexDirection: 'row' }}>
+                            <select style={{ height: '1%', padding: '1%', marginRight: '1%', borderRadius: '3%' }} value={this.state.id} name="consulta"
+                                onChange={this.atualizaEstadoId.bind(this)} required>
+                                {
+                                    this.state.listaConsulta.map(function (consulta) {
+                                        return (
+                                            <option key={consulta.id} value={consulta.id}>
+                                                {consulta.id}
+                                            </option>
+                                        );
+                                    })
+                                }
+                            </select>
+                            
+                        </div>
+                            <label style={{ marginTop: '1%' }}>Selecione o status da consulta:</label>
+                            <select value={this.state.situacao}
+                                onChange={this.atualizaEstadoSituacao.bind(this)}
+                                style={{ height: '1%', padding: '1%', borderRadius: '3%', width: '20%' }}
+                            >
+                                {/* <option defaultChecked></option> */}
+                                <option value='1'>Agendado</option>
+                                <option value='3'>Realizado</option>
+                                <option value='2'>Cancelado</option>
+                            </select>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '1%', marginBottom: '1%' }}>
+
+                            {/* <div style={{ display: 'flex', flexDirection:'row', justifyContent:'space-between'}}> */}
+                                
+                                <label>Informe o id do médico ( 1 = Ricardo Lemos / 2 = Roberto Possarle / 3 = Helena Strada ):</label>
+                                <FormControl style={{ width: '20%' }} type="text"
+                                    placeholder="Insira o id do médico"
+                                    value={this.state.medico}
+                                    onChange={this.atualizaEstadoMedico.bind(this)}
+                                />
+
+                                <label style={{ marginTop: '1%' }}>Selecione um paciente:</label>
+                                <FormControl style={{ width: '20%' }} 
+                                    // type="text"
+                                    // placeholder="Insira o id do paciente"
+                                    // value={this.state.paciente}
+                                    // onChange={this.atualizaEstadoPaciente.bind(this)}
+                                    type="text"
+                                    value={this.state.paciente}
+                                    required
+                                    as="select"
+                                    onChange={this.atualizaEstadoPaciente.bind(this)} 
+                                >
+                                    {
+                                        this.state.listaPaciente.map(function (i) {
+                                            
+                                            return (
+                                                <option key={i.id} value={i.id}> {i.nomePaciente} </option>
+                                            );
+        
+                                        })
+                                    }
+                                </FormControl>
+
+                            {/* </div> */}
+
+                            <textarea style={{ width: '100%', marginTop:'1%',resize: 'none', padding: '.375rem .75rem' }} 
+                                type="text"
+                                cols="30" rows="5"
+                                placeholder="Insira uma descrição"
+                                value={this.state.descricao}
+                                onChange={this.atualizaEstadoDescricao.bind(this)}
+                            />
+                        </div>
+                        {/* <FormControl style={{ width: '15%', marginLeft: '1em' }} required as='select' type="text"
+                            value={this.state.situacao}
+                            onChange={this.atualizaEstadoSituacao.bind(this)}
+                        >
                             <option value='1'>Agendado</option>
                             <option value='3'>Realizado</option>
                             <option value='2'>Cancelado</option>
-                        </FormControl>
-                        <Button type="submit" style={{ width: '25%', marginLeft: '1em' }} 
-                            // onClick={this.editarconsultas.bind(this)}
+                        </FormControl> */}
+
+
+
+                        <Button type="submit" style={{ width: '25%', alignSelf: 'center' }}
+                        // onClick={this.editarconsultas.bind(this)}
                         >Adicionar / Alterar descrição</Button>
                     </Form>
 

@@ -17,5 +17,7 @@ namespace Senai.SpMedicalGroup.WebApi.Interfaces
         void Cadastrar(Consultas consulta);
                     
         void Alterar(Consultas consulta);
+
+        //Consultas BuscarConsultaPorId();
     }
 }

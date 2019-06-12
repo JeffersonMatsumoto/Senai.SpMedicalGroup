@@ -164,7 +164,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
         {
             try
             {
-                ConsultaRepository.Alterar(consulta);
+                ConsultaRepository.Alterar(consulta); //breakpoint aq
                 return Ok();
             }
             catch (Exception)

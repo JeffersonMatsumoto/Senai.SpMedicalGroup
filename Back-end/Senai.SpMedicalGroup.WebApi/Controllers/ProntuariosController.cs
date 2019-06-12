@@ -23,7 +23,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             ProntuarioRepository = new ProntuarioRepository();
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Medico")]
         [HttpGet]
         public IActionResult Get()
         {
