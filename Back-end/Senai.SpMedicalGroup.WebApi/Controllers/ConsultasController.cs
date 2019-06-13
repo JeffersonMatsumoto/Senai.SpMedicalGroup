@@ -172,5 +172,60 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                 return BadRequest();
             }
         }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet("{consultaId}")]
+        public IActionResult GetPorId(int consultaId)
+        {
+            try
+            {
+                Consultas consultaBuscada = ConsultaRepository.BuscarConsultaPorId(consultaId);
+
+                if (consultaBuscada == null)
+                {
+                    return NotFound(
+                        new
+                            {
+                                mensagem = "Nenhuma consulta foi encontrada."
+                            }
+                        );
+                }
+
+                return Ok(consultaBuscada);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [Authorize(Roles = "Administrador")]
+        //[HttpPut("/descricao")]
+        [HttpPut("/api/consultas/descricao")]
+        public IActionResult AtualizarDescricao(Consultas descricao)
+        {
+            try
+            {
+                Consultas consultaBuscada = ConsultaRepository.BuscarConsultaPorId(descricao.Id);
+
+                if (consultaBuscada == null)
+                {
+                    return NotFound(
+                        new
+                            {
+                                mensagem = "Nenhuma consulta foi encontrada."
+                            }
+                        );
+                }
+
+                Consultas consultaAtualizada = ConsultaRepository.AtualizarDescricao(descricao, consultaBuscada);
+
+                return Ok(consultaAtualizada);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
     }
 }

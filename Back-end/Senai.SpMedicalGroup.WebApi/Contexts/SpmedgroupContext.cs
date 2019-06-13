@@ -29,7 +29,7 @@ namespace Senai.SpMedicalGroup.WebApi.Domains
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("Server=tcp:spmedicalgroup-jefferson.database.windows.net,1433;Initial Catalog=SPMEDGROUP;Persist Security Info=False;User ID=jefferson;Password=Admin132;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
+                //optionsBuilder.UseSqlServer("Server=tcp:spmedicalgroup-jefferson.database.windows.net,1433;Initial Catalog=SPMEDGROUP;Persist Security Info=False;User ID=;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
                 optionsBuilder.UseSqlServer("Data Source=.\\SqlExpress;Initial Catalog=SPMEDGROUP;User Id=sa;pwd=132");
             }
         }
