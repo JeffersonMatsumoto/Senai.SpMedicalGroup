@@ -167,13 +167,13 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
                 ConsultaRepository.Alterar(consulta); //breakpoint aq
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-                return BadRequest();
+                return BadRequest(exc);
             }
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Medico")]
         [HttpGet("{consultaId}")]
         public IActionResult GetPorId(int consultaId)
         {
@@ -181,15 +181,15 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             {
                 Consultas consultaBuscada = ConsultaRepository.BuscarConsultaPorId(consultaId);
 
-                if (consultaBuscada == null)
-                {
-                    return NotFound(
-                        new
-                            {
-                                mensagem = "Nenhuma consulta foi encontrada."
-                            }
-                        );
-                }
+                //if (consultaBuscada == null)
+                //{
+                //    return NotFound(
+                //        new
+                //            {
+                //                mensagem = "Nenhuma consulta foi encontrada."
+                //            }
+                //        );
+                //}
 
                 return Ok(consultaBuscada);
             }
@@ -208,15 +208,15 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
             {
                 Consultas consultaBuscada = ConsultaRepository.BuscarConsultaPorId(descricao.Id);
 
-                if (consultaBuscada == null)
-                {
-                    return NotFound(
-                        new
-                            {
-                                mensagem = "Nenhuma consulta foi encontrada."
-                            }
-                        );
-                }
+                //if (consultaBuscada == null)
+                //{
+                //    return NotFound(
+                //        new
+                //            {
+                //                mensagem = "Nenhuma consulta foi encontrada."
+                //            }
+                //        );
+                //}
 
                 Consultas consultaAtualizada = ConsultaRepository.AtualizarDescricao(descricao, consultaBuscada);
 

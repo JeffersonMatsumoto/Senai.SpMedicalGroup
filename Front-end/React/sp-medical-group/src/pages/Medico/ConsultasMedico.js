@@ -30,6 +30,7 @@ class ListarConsultaMedico extends Component {
             descricao: '',
             situacao: '',
             listaConsulta: [],
+            listaConsultaPorId: [],
             listaPaciente: []
         }
     }
@@ -41,18 +42,47 @@ class ListarConsultaMedico extends Component {
 
     buscarPacientes() {
         fetch('http://localhost:5000/api/prontuarios', {
-            method:'GET',
+            method: 'GET',
             headers:
-        {
-            "Content-Type":"application/json",
-            "Authorization": "Bearer " + localStorage.getItem("user")
-        }
-    })
+            {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("user")
+            }
+        })
             .then(resposta => resposta.json())
             .then(data => this.setState({ listaPaciente: data }))
             .catch((erro) => console.log(erro))
     }
-    
+
+    consultas(id) {
+
+        Axios.get("http://localhost:5000/api/consultas/" + id,
+            {
+                headers: {
+                    'Content-Type': 'application/json', Charset: 'UTF-8',
+                    'Authorization': "Bearer " + localStorage.getItem("user")
+                }
+            })
+            .then((response) => {
+                console.log(response);
+                response = this.setState(
+                    {
+                        listaConsultaPorId: response.data,
+                        descricao: response.data.descricao,
+                        paciente: response.data.idProntuario,
+                        medico: response.data.idMedico,
+                        dataconsulta: response.data.dataConsulta,
+                        situacao: response.data.idSituacao
+                    })
+            })
+            .catch((erro) => console.log(erro))
+    }
+
+    preencherDadosDaConsulta(id_consulta) {
+        this.consultas(id_consulta);
+        // console.log(id_consulta);
+    }
+
     listarconsultas() {
 
         // var bearer = 'Bearer ' + localStorage.getItem("user");
@@ -77,11 +107,7 @@ class ListarConsultaMedico extends Component {
                 id: event.target.value
             }
         )
-        //
-        ///
-        //
-        //
-        // this.setState({medico: Consulta.idMedico})
+        this.preencherDadosDaConsulta(event.target.value);
     }
 
     atualizaEstadoDescricao(event) {
@@ -96,6 +122,10 @@ class ListarConsultaMedico extends Component {
         this.setState({ medico: event.target.value })
     }
 
+    atualizaEstadoData(event) {
+        this.setState({ dataConsulta: event.target.value })
+    }
+
     atualizaEstadoSituacao(event) {
         console.log('passei aqui')
         this.setState({ situacao: event.target.value })
@@ -103,19 +133,20 @@ class ListarConsultaMedico extends Component {
     }
 
     editarconsultas(event) {
-        event.preventDefault();
-
+        // event.preventDefault();
+        const dados = {
+            id: this.state.id,
+            // descricao: this.state.descricao,
+            idMedico: this.state.medico,
+            idProntuario: this.state.paciente,
+            DataConsulta: this.state.dataconsulta,
+            Descricao: this.state.descricao,
+            idSituacao: this.state.situacao
+            // situacao: this.state.situacao
+        }
+        console.log(dados)
         Axios.put("http://localhost:5000/api/consultas",
-            {
-                id: this.state.id,
-                // descricao: this.state.descricao,
-                idMedico: this.state.medico,
-                idProntuario: this.state.paciente,
-                DataConsulta: this.state.dataconsulta,
-                Descricao: this.state.descricao,
-                idSituacao: this.state.situacao
-                // situacao: this.state.situacao
-            },
+            dados,
 
             {
 
@@ -135,6 +166,7 @@ class ListarConsultaMedico extends Component {
 
             .catch(erro => {
                 this.setState({ Mensagem: 'Há informações inválidas, verifique e tente novamente.' + erro });
+                console.error(erro)
             })
     }
 
@@ -159,6 +191,10 @@ class ListarConsultaMedico extends Component {
 
 
     render() {
+        let erro = this.state.dataconsulta === null? (
+            <p>Selecione um id de consulta para alterar</p>
+        ):
+        null
         return (
             <div>
                 <Header></Header>
@@ -190,7 +226,9 @@ class ListarConsultaMedico extends Component {
                                             <td>{consulta.id}</td>
 
                                             <td>{consulta.idProntuario}</td>
-                                            <td>{consulta.dataConsulta.split("T")[0]}</td>
+                                            <td>{consulta.dataConsulta.split("T")[0].split("-")[2]}/
+                                            {consulta.dataConsulta.split("T")[0].split("-")[1]}/
+                                            {consulta.dataConsulta.split("T")[0].split("-")[0]}</td>
 
                                             <td>{consulta.descricao}</td>
 
@@ -203,12 +241,16 @@ class ListarConsultaMedico extends Component {
 
                     </Table>
 
-                    <p>Selecione o Id da consulta que deseja adicionar uma descrição ou alterar o status:</p>
+                    <p style={{ fontWeight: 'bold' }}>Selecione o Id da consulta que deseja adicionar uma descrição ou alterar o status:</p>
                     <Form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={this.editarconsultas.bind(this)}>
 
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <select style={{ height: '1%', padding: '1%', marginRight: '1%', borderRadius: '3%' }} value={this.state.id} name="consulta"
-                                onChange={this.atualizaEstadoId.bind(this)} required>
+                                onChange={this.atualizaEstadoId.bind(this)} 
+                                // onClick={this.preencherDadosDaConsulta(this.state.id)} 
+                                required>
+                                    <option  selected value></option>
+                                    
                                 {
                                     this.state.listaConsulta.map(function (consulta) {
                                         return (
@@ -218,57 +260,77 @@ class ListarConsultaMedico extends Component {
                                         );
                                     })
                                 }
+                                
+
+                                {/* {this.state.dataconsulta === null || this.state.dataconsulta === undefined ?
+                <p>Selecione um id de consulta para alterar</p> :  */}
+                                
                             </select>
-                            
+                            {/* {
+                                    erro
+                                } */}
+
                         </div>
-                            <label style={{ marginTop: '1%' }}>Selecione o status da consulta:</label>
-                            <select value={this.state.situacao}
-                                onChange={this.atualizaEstadoSituacao.bind(this)}
-                                style={{ height: '1%', padding: '1%', borderRadius: '3%', width: '20%' }}
-                            >
-                                {/* <option defaultChecked></option> */}
-                                <option value='1'>Agendado</option>
-                                <option value='3'>Realizado</option>
-                                <option value='2'>Cancelado</option>
-                            </select>
+                        <label style={{ marginTop: '1%', fontWeight: 'bold' }}>Selecione o status da consulta:</label>
+                        <select value={this.state.situacao}
+                            onChange={this.atualizaEstadoSituacao.bind(this)}
+                            style={{ height: '1%', padding: '1%', borderRadius: '3%', width: '20%' }}
+                        >
+                            {/* <option defaultChecked></option> */}
+                            <option value='1'>Agendado</option>
+                            <option value='3'>Realizado</option>
+                            <option value='2'>Cancelado</option>
+                        </select>
 
                         <div style={{ display: 'flex', flexDirection: 'column', marginTop: '1%', marginBottom: '1%' }}>
 
                             {/* <div style={{ display: 'flex', flexDirection:'row', justifyContent:'space-between'}}> */}
-                                
-                                <label>Informe o id do médico ( 1 = Ricardo Lemos / 2 = Roberto Possarle / 3 = Helena Strada ):</label>
+
+                            {/* <label>Informe o id do médico ( 1 = Ricardo Lemos / 2 = Roberto Possarle / 3 = Helena Strada ):</label>
                                 <FormControl style={{ width: '20%' }} type="text"
                                     placeholder="Insira o id do médico"
                                     value={this.state.medico}
                                     onChange={this.atualizaEstadoMedico.bind(this)}
-                                />
+                                /> */}
 
-                                <label style={{ marginTop: '1%' }}>Selecione um paciente:</label>
-                                <FormControl style={{ width: '20%' }} 
-                                    // type="text"
-                                    // placeholder="Insira o id do paciente"
-                                    // value={this.state.paciente}
-                                    // onChange={this.atualizaEstadoPaciente.bind(this)}
-                                    type="text"
-                                    value={this.state.paciente}
-                                    required
-                                    as="select"
-                                    onChange={this.atualizaEstadoPaciente.bind(this)} 
-                                >
-                                    {
-                                        this.state.listaPaciente.map(function (i) {
-                                            
-                                            return (
-                                                <option key={i.id} value={i.id}> {i.nomePaciente} </option>
-                                            );
-        
-                                        })
-                                    }
-                                </FormControl>
+                            <label style={{ fontWeight: 'bold' }}>Data da consulta:</label>
+                            <p style={{ width: '20%' }} type="text"
+                                // placeholder="Data da consulta"
+                                // value=
+                                onChange={this.atualizaEstadoData.bind(this)}
+                            >
+                                {this.state.dataconsulta.split("T")[0].split("-")[2]}/
+                                {this.state.dataconsulta.split("T")[0].split("-")[1]}/
+                                {this.state.dataconsulta.split("T")[0].split("-")[0]}
+                            </p>
+
+                                <label style={{ fontWeight: 'bold' }}>Selecione um paciente:</label>
+                                <FormControl style={{ width: '20%' }}
+                                // type="text"
+                                // placeholder="Insira o id do paciente"
+                                // value={this.state.paciente}
+                                // onChange={this.atualizaEstadoPaciente.bind(this)}
+                                type="text"
+                                value={this.state.paciente}
+                                required
+                                as="select"
+
+                                onChange={this.atualizaEstadoPaciente.bind(this)}
+                            >
+                                {
+                                    this.state.listaPaciente.map(function (i) {
+
+                                        return (
+                                            <option key={i.id} value={i.id}> {i.nomePaciente} </option>
+                                        );
+
+                                    })
+                                }
+                            </FormControl>
 
                             {/* </div> */}
 
-                            <textarea style={{ width: '100%', marginTop:'1%',resize: 'none', padding: '.375rem .75rem' }} 
+                            <textarea style={{ width: '100%', marginTop: '1%', resize: 'none', padding: '.375rem .75rem' }}
                                 type="text"
                                 cols="30" rows="5"
                                 placeholder="Insira uma descrição"
