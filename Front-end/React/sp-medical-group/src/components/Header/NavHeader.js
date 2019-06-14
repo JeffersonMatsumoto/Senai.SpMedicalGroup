@@ -33,7 +33,7 @@ class NavHeader extends Component {
           <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
           {/* </span> */}
 
-          <Link to="/" className="link" >
+          <Link className="link" >
             <span
               onClick={this.logout.bind(this)}
               style={{ cursor: "pointer", marginRight: '2em' }}
@@ -57,7 +57,7 @@ class NavHeader extends Component {
           <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
 
           {/* <Nav.Link> */}
-          <Link to="/" className="link">
+          <Link className="link">
             <span
               onClick={this.logout.bind(this)}
               style={{ cursor: "pointer", marginRight: '2em' }}
@@ -81,7 +81,7 @@ class NavHeader extends Component {
           <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
 
           {/* <Nav.Link> */}
-          <Link className="link" to="/" >
+          <Link className="link"  >
             <span
               onClick={this.logout.bind(this)}
               style={{ cursor: "pointer", marginRight: '2em' }}

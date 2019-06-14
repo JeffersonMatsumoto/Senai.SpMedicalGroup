@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Header from '../../components/Header/Header.js';
 import Rodape from '../../components/Rodape/Rodape.js';
 import Banner from '../../assets/img/Banner.jpg';
-import SegundoBanner from '../../assets/img/Banner-layout.png';
+// import SegundoBanner from '../../assets/img/Banner-layout.png';
 import "../../assets/css/home.css";
 // import { Carousel } from 'react-bootstrap';
 
@@ -40,13 +40,13 @@ class App extends Component {
 
           {/* </Carousel.Caption> */}
 
-          <div id="banner-h">
+          {/* <div id="banner-h"> */}
             <img className="img-banner" src={Banner} alt="banner"></img>
-            <div><img className="img-banner" src={SegundoBanner} alt="segundo banner"></img>
+            {/* <div><img className="img-banner" src={SegundoBanner} alt="segundo banner"></img> */}
               {/* <h2 className="h">Os melhores profissionais empenhados em cuidar da saúde de quem precisa.</h2> */}
               {/* <h2 className="h">Veja suas consultas quando, como e onde quiser.</h2> */}
-            </div>
-          </div>
+            {/* </div> */}
+          {/* </div> */}
           {/* </Carousel.Item> */}
 
           {/* <Carousel.Item> */}

@@ -11,7 +11,7 @@
 
 import React, { Component } from 'react';
 import Axios from "axios";
-import { Table, Button, FormControl, Form } from 'react-bootstrap';
+import { Table, Button, Form,FormControl } from 'react-bootstrap';
 
 import Header from '../../components/Header/Header';
 import Rodape from '../../components/Rodape/Rodape';
@@ -98,6 +98,13 @@ class ListarConsultaMedico extends Component {
                 console.log(response);
                 response = this.setState({ listaConsulta: response.data })
             })
+            // .then(data => {
+            //     if (data.status === 401) {
+            //         this.setState({ Mensagem: 'Sem permissão.' });
+            //         alert('Sessão expirada. É necessário estar logado para acessar esta página');
+            //         this.props.history.push("/login")
+            //     }
+            // })
             .catch((erro) => console.log(erro))
     }
 
@@ -162,6 +169,11 @@ class ListarConsultaMedico extends Component {
                     this.setState({ Mensagem: 'Atualização bem sucedido.' });
                     alert('Descrição adicionada com sucesso!');
                 }
+                // if (data.status === 401) {
+                //         this.setState({ Mensagem: 'Sem permissão.' });
+                //         alert('Sessão expirada. É necessário estar logado para acessar esta página');
+                //         this.props.history.push("/login")
+                // }
             })
 
             .catch(erro => {
@@ -188,13 +200,71 @@ class ListarConsultaMedico extends Component {
     //         .catch((erro) => console.log(erro))
     // }
 
+    verificaDataConsulta() {
+        if (this.state.dataconsulta === null || this.state.dataconsulta === undefined || this.state.dataconsulta === '//') {
+            return (
+                <p>Primeiro você deve selecionar um id de consulta para realizar uma alteração</p>
+            )
+        } else {
+            return (
+                <div>
+                    {this.state.dataconsulta.split("T")[0].split("-")[2]}/
+                    {this.state.dataconsulta.split("T")[0].split("-")[1]}/
+                    {this.state.dataconsulta.split("T")[0].split("-")[0]}
+                </div>
+            )
+        }
+    }
+
+    pegarNomeDoPaciente(){
+        if(this.state.paciente !== null) {
+            
+            return(
+                <div>
+                    {/* {
+                        this.state.listaPaciente.map(function (i) {
+                            
+                            if (i.id === this.state.paciente){
+                                return (
+                                    <p> {i.nomePaciente} </p>
+                                );
+                            }
+                        })
+                    } */}
+                </div>
+            )
+            
+            } else {
+                
+                return(
+                    <p>{this.state.paciente}</p>
+                )
+
+            } 
+    }
 
 
     render() {
-        let erro = this.state.dataconsulta === null? (
-            <p>Selecione um id de consulta para alterar</p>
-        ):
-        null
+        // let erro = this.state.dataconsulta === null? (
+        //     <p>Selecione um id de consulta para alterar</p>
+        // ):
+        // null
+
+        // if( this.state.dataconsulta === null || this.state.dataconsulta === undefined )
+        // {
+        //     return (
+        //         <p>Primeiro você deve selecionar um id de consulta para realizar uma alteração</p>
+        //     )
+        // } else {
+        //     return (
+        //         <div>
+        //             {this.state.dataconsulta.split("T")[0].split("-")[2]}/
+        //             {this.state.dataconsulta.split("T")[0].split("-")[1]}/
+        //             {this.state.dataconsulta.split("T")[0].split("-")[0]}
+        //         </div>
+        //     )
+        // }
+
         return (
             <div>
                 <Header></Header>
@@ -246,11 +316,11 @@ class ListarConsultaMedico extends Component {
 
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                             <select style={{ height: '1%', padding: '1%', marginRight: '1%', borderRadius: '3%' }} value={this.state.id} name="consulta"
-                                onChange={this.atualizaEstadoId.bind(this)} 
+                                onChange={this.atualizaEstadoId.bind(this)}
                                 // onClick={this.preencherDadosDaConsulta(this.state.id)} 
                                 required>
-                                    <option  selected value></option>
-                                    
+                                <option selected value ></option>
+
                                 {
                                     this.state.listaConsulta.map(function (consulta) {
                                         return (
@@ -260,15 +330,13 @@ class ListarConsultaMedico extends Component {
                                         );
                                     })
                                 }
-                                
+
 
                                 {/* {this.state.dataconsulta === null || this.state.dataconsulta === undefined ?
                 <p>Selecione um id de consulta para alterar</p> :  */}
-                                
+
                             </select>
-                            {/* {
-                                    erro
-                                } */}
+
 
                         </div>
                         <label style={{ marginTop: '1%', fontWeight: 'bold' }}>Selecione o status da consulta:</label>
@@ -299,12 +367,15 @@ class ListarConsultaMedico extends Component {
                                 // value=
                                 onChange={this.atualizaEstadoData.bind(this)}
                             >
-                                {this.state.dataconsulta.split("T")[0].split("-")[2]}/
+                                {
+                                    this.verificaDataConsulta()
+                                }
+                                {/* {this.state.dataconsulta.split("T")[0].split("-")[2]}/
                                 {this.state.dataconsulta.split("T")[0].split("-")[1]}/
-                                {this.state.dataconsulta.split("T")[0].split("-")[0]}
+                                {this.state.dataconsulta.split("T")[0].split("-")[0]} */}
                             </p>
 
-                                <label style={{ fontWeight: 'bold' }}>Selecione um paciente:</label>
+                            <label style={{ fontWeight: 'bold' }}>Paciente:</label>
                                 <FormControl style={{ width: '20%' }}
                                 // type="text"
                                 // placeholder="Insira o id do paciente"
@@ -321,12 +392,29 @@ class ListarConsultaMedico extends Component {
                                     this.state.listaPaciente.map(function (i) {
 
                                         return (
-                                            <option key={i.id} value={i.id}> {i.nomePaciente} </option>
+                                            <option disabled key={i.id} value={i.id}> {i.nomePaciente} </option>
                                         );
 
                                     })
                                 }
                             </FormControl>
+
+                            {/* <label style={{ fontWeight: 'bold' }}>Paciente:</label>
+                            <p style={{ width: '20%' }} type="text"
+                                onChange={this.atualizaEstadoPaciente.bind(this)}
+                                value={this.state.paciente}
+                            >     */}
+                                {/* {
+                                    this.state.paciente.map(function (i) {
+
+                                        return (
+                                            <p> {i.nomePaciente} </p>
+                                        );
+
+                                    })
+                                } */}
+                                {/* {this.pegarNomeDoPaciente()} */}
+                            {/* </p> */}
 
                             {/* </div> */}
 

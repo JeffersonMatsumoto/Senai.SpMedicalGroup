@@ -16,6 +16,7 @@
     overflow-y: hidden;
     background-size: 100% 100%;
     overflow-x: hidden; 
+    min-height: 100%
 
 }
 
@@ -61,15 +62,17 @@ h4{
 }
 
 #img-login{
-    width: 15%;
+    width: 20%;
     height: 80%;
     /* background-color: lightgray; */
     padding: .1em;
     /* border-radius: 10%; */
+    align-self: center
 }
 
 #form-title{
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
+    flex-direction: column;
     
 }
