@@ -75,7 +75,7 @@ class Login extends Component {
                 }
             })
             .catch(erro => {
-                this.setState({ erroMensagem: 'O endereço de email e (ou) a senha que você inseriu é inválido.\n Tente novamente.' });
+                this.setState({ erroMensagem: 'O endereço de email e/ou a senha que você inseriu é inválido.\n Tente novamente.' });
             })
     }
 

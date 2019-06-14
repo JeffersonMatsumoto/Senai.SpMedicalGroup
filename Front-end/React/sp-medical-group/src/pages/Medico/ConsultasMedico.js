@@ -201,9 +201,10 @@ class ListarConsultaMedico extends Component {
     // }
 
     verificaDataConsulta() {
-        if (this.state.dataconsulta === null || this.state.dataconsulta === undefined || this.state.dataconsulta === '//') {
+
+        if (this.state.dataconsulta === null || this.state.dataconsulta === undefined || this.state.dataconsulta === '//' || this.state.dataconsulta === '') {
             return (
-                <p>Primeiro você deve selecionar um id de consulta para realizar uma alteração</p>
+                <p style={{ whiteSpace: 'nowrap' }}>Primeiro você deve selecionar um id de consulta para realizar uma alteração</p>
             )
         } else {
             return (
@@ -217,20 +218,22 @@ class ListarConsultaMedico extends Component {
     }
 
     pegarNomeDoPaciente(){
-        if(this.state.paciente !== null) {
+        console.log(this.state.paciente)
+        if(this.state.paciente !== '') {
+            let idPaciente = this.state.paciente;
             
             return(
                 <div>
-                    {/* {
+                    {
                         this.state.listaPaciente.map(function (i) {
                             
-                            if (i.id === this.state.paciente){
+                            if (i.id === idPaciente){
                                 return (
                                     <p> {i.nomePaciente} </p>
                                 );
                             }
                         })
-                    } */}
+                    }
                 </div>
             )
             
@@ -375,7 +378,7 @@ class ListarConsultaMedico extends Component {
                                 {this.state.dataconsulta.split("T")[0].split("-")[0]} */}
                             </p>
 
-                            <label style={{ fontWeight: 'bold' }}>Paciente:</label>
+                            {/* <label style={{ fontWeight: 'bold' }}>Paciente:</label>
                                 <FormControl style={{ width: '20%' }}
                                 // type="text"
                                 // placeholder="Insira o id do paciente"
@@ -397,13 +400,13 @@ class ListarConsultaMedico extends Component {
 
                                     })
                                 }
-                            </FormControl>
+                            </FormControl> */}
 
-                            {/* <label style={{ fontWeight: 'bold' }}>Paciente:</label>
+                            <label style={{ fontWeight: 'bold' }}>Paciente:</label>
                             <p style={{ width: '20%' }} type="text"
                                 onChange={this.atualizaEstadoPaciente.bind(this)}
                                 value={this.state.paciente}
-                            >     */}
+                            >    
                                 {/* {
                                     this.state.paciente.map(function (i) {
 
@@ -413,8 +416,8 @@ class ListarConsultaMedico extends Component {
 
                                     })
                                 } */}
-                                {/* {this.pegarNomeDoPaciente()} */}
-                            {/* </p> */}
+                                {this.pegarNomeDoPaciente()}
+                            </p>
 
                             {/* </div> */}
 
