@@ -61,9 +61,9 @@ class Header extends Component {
                     <Nav>
                         <Nav.Item>
                             {/* <Nav.Link href="/consultas">CONSULTAS</Nav.Link> */}
-                            <Nav.Link>
+                            {/* <Nav.Link> */}
                                 <NavHeader />
-                            </Nav.Link>
+                            {/* </Nav.Link> */}
                         </Nav.Item>
                         {/* <Nav.Item style={{ 'marginLeft' : '50%' }} >
                         <Nav.Link href="/login">LOGIN</Nav.Link>

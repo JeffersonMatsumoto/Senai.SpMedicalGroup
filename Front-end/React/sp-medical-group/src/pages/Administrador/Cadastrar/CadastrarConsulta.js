@@ -21,28 +21,44 @@ class CadastrarConsulta extends Component {
             descricao: '',
             situacao: '',
             erroMensagem: '',
-            listaPaciente: []
+            listaPaciente: [],
+            listaMedico: []
         }
     }
 
     componentDidMount() {
         this.buscarPacientes();
+        this.buscarMedicos();
     }
 
     buscarPacientes() {
         fetch('http://localhost:5000/api/prontuarios', {
-            method:'GET',
+            method: 'GET',
             headers:
-        {
-            "Content-Type":"application/json",
-            "Authorization": "Bearer " + localStorage.getItem("user")
-        }
-    })
+            {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("user")
+            }
+        })
             .then(resposta => resposta.json())
             .then(data => this.setState({ listaPaciente: data }))
             .catch((erro) => console.log(erro))
     }
-    
+
+    buscarMedicos() {
+        fetch('http://localhost:5000/api/medicos', {
+            method: 'GET',
+            headers:
+            {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("user")
+            }
+        })
+            .then(resposta => resposta.json())
+            .then(data => this.setState({ listaMedico: data }))
+            .catch((erro) => console.log(erro))
+    }
+
     atualizaEstadoMedico(event) {
         this.setState({ medico: event.target.value });
     }
@@ -67,16 +83,20 @@ class CadastrarConsulta extends Component {
     cadastraConsulta(event) {
 
         if (this.state.situacao === '' || this.state.situacao === null ) {
-            alert("O campo está vazio");
-        
+            alert("O campo *SITUAÇÃO* está vazio");
+            event.preventDefault();
         } else if (this.state.paciente === '' || this.state.paciente === null ) {
-            alert("O campo está vazio");
+            alert("O campo *PACIENTE* está vazio");
+            event.preventDefault();
         } else if (this.state.medico === '' || this.state.medico === null ) {
-            alert("O campo está vazio");
+            alert("O campo *MÉDICO* está vazio");
+            event.preventDefault();
         } else if (this.state.dataconsulta === '' || this.state.dataconsulta === null ) {
-            alert("O campo está vazio");
+            alert("O campo *DATA DA CONSULTA* está vazio");
+            event.preventDefault();
         } else if ( this.state.descricao === '' || this.state.descricao === null) {
-            alert("O campo está vazio");
+            alert("O campo *DESCRIÇÃO* está vazio");
+            event.preventDefault();
         } else {
         event.preventDefault();
         const dados = {
@@ -84,7 +104,7 @@ class CadastrarConsulta extends Component {
             idProntuario: this.state.paciente,
             DataConsulta: this.state.dataconsulta,
             Descricao: this.state.descricao,
-            idSituacao: this.state.situacao   
+            idSituacao: this.state.situacao
         }
         console.log(dados)
         Axios.post("http://localhost:5000/api/consultas",
@@ -100,10 +120,11 @@ class CadastrarConsulta extends Component {
                 if (data.status === 200) {
                     console.log(data);
                     this.setState({ Mensagem: 'Consulta cadastrada com sucesso!' });
+                    this.limparForm();
                     alert('Consulta cadastrada com sucesso!');
-                    if (this.state.tipousuario === "Administrador") {
-                        this.props.history.push("/funcionalidades");
-                    }
+                    // if (this.state.tipousuario === "Administrador") {
+                    //     this.props.history.push("/funcionalidades");
+                    // }
                 }
             })
             .catch(erro => {
@@ -111,6 +132,18 @@ class CadastrarConsulta extends Component {
                 this.setState({ Mensagem: 'Por favor, verifique os campos e tente novamente' + erro });
             })
         }
+    }
+
+    limparForm() {
+        this.setState(
+            {
+                medico: '',
+                paciente: '',
+                dataconsulta: '',
+                descricao: '',
+                situacao: ''
+            }
+        )
     }
 
     render() {
@@ -131,16 +164,22 @@ class CadastrarConsulta extends Component {
                                     type="text"
                                     value={this.state.medico}
                                     required
-                                    onChange={this.atualizaEstadoMedico.bind(this)} />
-                                {/* {
-                                    this.state.listaMedico.map(function (i) {
+                                    as="select"
+                                    onChange={this.atualizaEstadoMedico.bind(this)}>
+                                        <option 
+                                        // selected
+                                        defaultValue
+                                        value></option>
+                                    {
+                                        this.state.listaMedico.map(function (m) {
 
-                                        return (
-                                            <option key={i.id} value={i.id}> {i.email} </option>
-                                        );
+                                            return (
+                                                <option key={m.id} value={m.id}> {m.nome} </option>
+                                            );
 
-                                    })
-                                } */}
+                                        })
+                                    }
+                                </Form.Control>
 
                             </Form.Group>
                         </Col>
@@ -155,16 +194,19 @@ class CadastrarConsulta extends Component {
                                     value={this.state.paciente}
                                     required
                                     as="select"
-                                    onChange={this.atualizaEstadoPaciente.bind(this)} 
+                                    onChange={this.atualizaEstadoPaciente.bind(this)}
                                 >
-
+                                    <option 
+                                    // selected 
+                                    defaultValue
+                                    value></option>
                                     {
                                         this.state.listaPaciente.map(function (i) {
-                                            
+
                                             return (
                                                 <option key={i.id} value={i.id}> {i.nomePaciente} </option>
                                             );
-        
+
                                         })
                                     }
                                 </Form.Control>
@@ -201,7 +243,10 @@ class CadastrarConsulta extends Component {
                                     required
                                     onChange={this.atualizaEstadoSituacao.bind(this)}>
                                     {/* <option value="" selected="selected"></option> */}
-                                    <option value="1" selected="selected">       Agendado   </option>
+                                    <option value="1" 
+                                    // selected="selected"
+                                    defaultValue
+                                    >       Agendado   </option>
                                     <option value="2">                          Cancelado          </option>
                                     <option value="3">                          Realizado        </option>
 
@@ -228,8 +273,8 @@ class CadastrarConsulta extends Component {
                     <p>{this.state.erroMensagem}</p>
 
                     <div className="flex-btns">
-                    <Button href="/funcionalidades" id="btns" className="btn" size="lg" variant="primary">Voltar </Button>
-                    <Button id="btns" type="submit" value="Cadastrar" className="btn" size="lg" variant="primary">Cadastrar</Button>
+                        <Button href="/funcionalidades" id="btns" className="btn" size="lg" variant="primary">Voltar </Button>
+                        <Button id="btns" type="submit" value="Cadastrar" className="btn" size="lg" variant="primary">Cadastrar</Button>
                     </div>
 
                 </Form>

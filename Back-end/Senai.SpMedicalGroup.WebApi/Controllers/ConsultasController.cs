@@ -149,7 +149,7 @@ namespace Senai.SpMedicalGroup.WebApi.Controllers
         {
             try
             {
-                ConsultaRepository.Cadastrar(consulta);
+                ConsultaRepository.Cadastrar(consulta); ////break aq
                 return Ok();
             }
             catch (Exception)

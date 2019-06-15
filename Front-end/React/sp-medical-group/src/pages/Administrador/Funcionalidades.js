@@ -35,6 +35,7 @@ class Funcionalidades extends Component {
         <div>
           <Header />
           <div id="container-funcionalidades">
+            <div id="funcionalidades">
             <h1 id="h1-func">Funcionalidades</h1>
 
             <div id="funcionalidades-grid">
@@ -101,7 +102,7 @@ class Funcionalidades extends Component {
               
             </div>
             </div>
-
+            </div>
           </div>
           <Rodape />
         </div>

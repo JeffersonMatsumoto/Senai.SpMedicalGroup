@@ -11,7 +11,7 @@
 
 import React, { Component } from 'react';
 import Axios from "axios";
-import { Table, Button, Form,FormControl } from 'react-bootstrap';
+import { Table, Button, Form } from 'react-bootstrap';
 
 import Header from '../../components/Header/Header';
 import Rodape from '../../components/Rodape/Rodape';
@@ -96,8 +96,13 @@ class ListarConsultaMedico extends Component {
             })
             .then((response) => {
                 console.log(response);
-                response = this.setState({ listaConsulta: response.data })
+                response = this.setState({ listaConsulta: response.data });
+                // if (response.status === 401) {
+                //     alert('Sessão expirada. É necessário estar logado para acessar esta página');
+                //     this.props.history.push("/");
+                // }
             })
+            
             // .then(data => {
             //     if (data.status === 401) {
             //         this.setState({ Mensagem: 'Sem permissão.' });
@@ -139,8 +144,42 @@ class ListarConsultaMedico extends Component {
 
     }
 
+    limparForm() {
+        this.setState(
+            {
+                id: '',
+                medico: '',
+                paciente: '',
+                dataconsulta: '',
+                descricao: '',
+                situacao: ''
+            }
+        )
+    }
+
     editarconsultas(event) {
         // event.preventDefault();
+        if (this.state.situacao === '' || this.state.situacao === null ) {
+            alert("O campo *STATUS* está vazio");
+            event.preventDefault();
+            this.limparForm();
+        } else if (this.state.paciente === '' || this.state.paciente === null ) {
+            alert("O campo *PACIENTE* está vazio");
+            event.preventDefault();
+            this.limparForm();
+        } else if (this.state.medico === '' || this.state.medico === null ) {
+            alert("O campo *MÉDICO* está vazio");
+            event.preventDefault();
+            this.limparForm();
+        } else if (this.state.dataconsulta === '' || this.state.dataconsulta === null ) {
+            alert("O campo *DATA DA CONSULTA* está vazio");
+            event.preventDefault();
+            this.limparForm();
+        } else if ( this.state.descricao === '' || this.state.descricao === null) {
+            alert("O campo *DESCRIÇÃO* está vazio");
+            event.preventDefault();
+            this.limparForm();
+        } else {
         const dados = {
             id: this.state.id,
             // descricao: this.state.descricao,
@@ -166,20 +205,22 @@ class ListarConsultaMedico extends Component {
 
             .then(data => {
                 if (data.status === 200) {
-                    this.setState({ Mensagem: 'Atualização bem sucedido.' });
+                    this.setState({ Mensagem: 'Atualização bem sucedida.' });
                     alert('Descrição adicionada com sucesso!');
+                    this.props.history.push("/")
                 }
-                // if (data.status === 401) {
-                //         this.setState({ Mensagem: 'Sem permissão.' });
-                //         alert('Sessão expirada. É necessário estar logado para acessar esta página');
-                //         this.props.history.push("/login")
-                // }
+                if (data.status === 401) {
+                        this.setState({ Mensagem: 'Sem permissão.' });
+                        alert('Sessão expirada. É necessário estar logado para acessar esta página');
+                        this.props.history.push("/login")
+                }
             })
 
             .catch(erro => {
                 this.setState({ Mensagem: 'Há informações inválidas, verifique e tente novamente.' + erro });
                 console.error(erro)
             })
+        }
     }
 
 
@@ -217,6 +258,18 @@ class ListarConsultaMedico extends Component {
         }
     }
 
+    verificaPaciente(){
+        if (this.state.dataconsulta === null || this.state.dataconsulta === undefined || this.state.paciente === '') {
+            return (
+                <p style={{ whiteSpace: 'nowrap' }}>Primeiro você deve selecionar um id de consulta para realizar uma alteração</p>
+            )
+        } else {
+            return (
+                null
+            )
+        }
+    }
+
     pegarNomeDoPaciente(){
         console.log(this.state.paciente)
         if(this.state.paciente !== '') {
@@ -231,6 +284,8 @@ class ListarConsultaMedico extends Component {
                                 return (
                                     <p> {i.nomePaciente} </p>
                                 );
+                            } else {
+                                return(null)
                             }
                         })
                     }
@@ -322,7 +377,7 @@ class ListarConsultaMedico extends Component {
                                 onChange={this.atualizaEstadoId.bind(this)}
                                 // onClick={this.preencherDadosDaConsulta(this.state.id)} 
                                 required>
-                                <option selected value ></option>
+                                <option defaultValue  ></option>
 
                                 {
                                     this.state.listaConsulta.map(function (consulta) {
@@ -347,7 +402,7 @@ class ListarConsultaMedico extends Component {
                             onChange={this.atualizaEstadoSituacao.bind(this)}
                             style={{ height: '1%', padding: '1%', borderRadius: '3%', width: '20%' }}
                         >
-                            {/* <option defaultChecked></option> */}
+                            <option defaultValue  ></option>
                             <option value='1'>Agendado</option>
                             <option value='3'>Realizado</option>
                             <option value='2'>Cancelado</option>
@@ -416,6 +471,9 @@ class ListarConsultaMedico extends Component {
 
                                     })
                                 } */}
+                                {
+                                    this.verificaPaciente()
+                                }
                                 {this.pegarNomeDoPaciente()}
                             </p>
 

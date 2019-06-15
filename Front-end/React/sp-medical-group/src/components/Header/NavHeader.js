@@ -20,7 +20,7 @@ class NavHeader extends Component {
         <div style={{ display: 'flex' }}>
 
           {/* <Nav.Link> */}
-          <Link className="link" to="/funcionalidades" style={{ 'margin-right': '5em' }}>
+          <Link className="link" to="/funcionalidades" style={{ 'marginRight': '5em' }}>
             Funcionalidades
             </Link>
           {/* </Nav.Link> */}
@@ -33,7 +33,9 @@ class NavHeader extends Component {
           <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
           {/* </span> */}
 
-          <Link className="link" >
+          <Link className="link" 
+            // to="/"
+             >
             <span
               onClick={this.logout.bind(this)}
               style={{ cursor: "pointer", marginRight: '2em' }}
@@ -48,7 +50,7 @@ class NavHeader extends Component {
       return (
         <div style={{ display: 'flex' }}>
           {/* <Nav.Link> */}
-          <Link className="link" to="/consultasmedico" style={{ 'margin-right': '5em' }}>
+          <Link className="link" to="/consultasmedico" style={{ 'marginRight': '5em' }}>
             Minhas consultas
           </Link>
           {/* </Nav.Link> */}
@@ -57,7 +59,9 @@ class NavHeader extends Component {
           <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
 
           {/* <Nav.Link> */}
-          <Link className="link">
+          <Link className="link" 
+            // to="/"
+            >
             <span
               onClick={this.logout.bind(this)}
               style={{ cursor: "pointer", marginRight: '2em' }}
@@ -72,7 +76,7 @@ class NavHeader extends Component {
       return (
         <div style={{ display: 'flex' }}>
           {/* <Nav.Link> */}
-          <Link className="link" to="/consultaspaciente" style={{ 'margin-right': '5em' }}>
+          <Link className="link" to="/consultaspaciente" style={{ 'marginRight': '5em' }}>
             Minhas consultas
           </Link>
           {/* </Nav.Link> */}
@@ -81,7 +85,9 @@ class NavHeader extends Component {
           <b id="nav-nome" style={{ marginRight: '5em', pointerEvents: 'none'}}>{parseJwt().Nome}</b> 
 
           {/* <Nav.Link> */}
-          <Link className="link"  >
+          <Link className="link" 
+          // to="/" SE DEIXAR COM ISSO RETIRA O WARNING MAS N EFETUA O LOGOFF E DIRECIONA PARA A HOME..TENDO Q APERTAR SAIR DUAS VEZES
+            >
             <span
               onClick={this.logout.bind(this)}
               style={{ cursor: "pointer", marginRight: '2em' }}
