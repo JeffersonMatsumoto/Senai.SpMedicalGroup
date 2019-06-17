@@ -40,7 +40,7 @@ class ListarUsuario extends Component {
         return (
             <div >
                 <Header></Header>
-                <div style={{ padding: '10%' }}>
+                <div style={{ padding: '10%', minHeight: '100vh' }}>
                     <Table striped bordered hover >
                         <thead>
                             <tr>

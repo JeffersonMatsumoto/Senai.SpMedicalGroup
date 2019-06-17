@@ -42,7 +42,7 @@ class ListarPaciente extends Component {
         return (
             <div >
                 <Header></Header>
-                <div style={{ marginTop : '5%', padding: '5%' }}>
+                <div style={{ marginTop : '5%', padding: '5%', minHeight: '100vh' }}>
                     <Table striped bordered hover >
                         <thead>
                             <tr>

@@ -70,7 +70,8 @@ class Login extends Component {
                     } else if (parseJwt().Permissao === "Paciente") {
                         this.props.history.push("/consultaspaciente");
                     } else {
-                        this.props.history.push("/login")
+                        alert("Você não tem permissão para acessar esta página");
+                        this.props.history.push("/login");
                     }
                 }
             })

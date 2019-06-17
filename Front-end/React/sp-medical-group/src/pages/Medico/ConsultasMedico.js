@@ -16,6 +16,9 @@ import { Table, Button, Form } from 'react-bootstrap';
 import Header from '../../components/Header/Header';
 import Rodape from '../../components/Rodape/Rodape';
 
+import "../../services/auth.js";
+import { verToken } from '../../services/auth.js';
+
 class ListarConsultaMedico extends Component {
 
     constructor() {
@@ -36,8 +39,14 @@ class ListarConsultaMedico extends Component {
     }
 
     componentDidMount() {
-        this.listarconsultas();
-        this.buscarPacientes();
+        if(verToken()){
+            this.listarconsultas();
+            this.buscarPacientes();
+        }else{
+            alert("Sessão expirada. É necessário estar logado para acessar esta página.");
+            this.props.history.push("/login");
+            localStorage.removeItem("user");
+        }
     }
 
     buscarPacientes() {
@@ -84,7 +93,7 @@ class ListarConsultaMedico extends Component {
     }
 
     listarconsultas() {
-
+        //console.clear();
         // var bearer = 'Bearer ' + localStorage.getItem("user");
 
         Axios.get("http://localhost:5000/api/consultas",
@@ -97,10 +106,6 @@ class ListarConsultaMedico extends Component {
             .then((response) => {
                 console.log(response);
                 response = this.setState({ listaConsulta: response.data });
-                // if (response.status === 401) {
-                //     alert('Sessão expirada. É necessário estar logado para acessar esta página');
-                //     this.props.history.push("/");
-                // }
             })
             
             // .then(data => {
@@ -110,7 +115,9 @@ class ListarConsultaMedico extends Component {
             //         this.props.history.push("/login")
             //     }
             // })
-            .catch((erro) => console.log(erro))
+            .catch((erro) => {
+                console.error(erro)
+            })
     }
 
     atualizaEstadoId(event) {
@@ -204,13 +211,14 @@ class ListarConsultaMedico extends Component {
             })
 
             .then(data => {
+                console.log(data.status)
                 if (data.status === 200) {
                     this.setState({ Mensagem: 'Atualização bem sucedida.' });
                     alert('Descrição adicionada com sucesso!');
                     this.props.history.push("/")
                 }
                 if (data.status === 401) {
-                        this.setState({ Mensagem: 'Sem permissão.' });
+                        // this.setState({ Mensagem: 'Sem permissão.' });
                         alert('Sessão expirada. É necessário estar logado para acessar esta página');
                         this.props.history.push("/login")
                 }
@@ -245,7 +253,7 @@ class ListarConsultaMedico extends Component {
 
         if (this.state.dataconsulta === null || this.state.dataconsulta === undefined || this.state.dataconsulta === '//' || this.state.dataconsulta === '') {
             return (
-                <p style={{ whiteSpace: 'nowrap' }}>Primeiro você deve selecionar um id de consulta para realizar uma alteração</p>
+                <p style={{ whiteSpace: 'nowrap' }}>Primeiro você deve selecionar um ID de uma consulta para realizar uma alteração.</p>
             )
         } else {
             return (
@@ -261,7 +269,7 @@ class ListarConsultaMedico extends Component {
     verificaPaciente(){
         if (this.state.dataconsulta === null || this.state.dataconsulta === undefined || this.state.paciente === '') {
             return (
-                <p style={{ whiteSpace: 'nowrap' }}>Primeiro você deve selecionar um id de consulta para realizar uma alteração</p>
+                <p style={{ whiteSpace: 'nowrap' }}>Primeiro você deve selecionar um ID de uma consulta para realizar uma alteração.</p>
             )
         } else {
             return (
@@ -369,7 +377,7 @@ class ListarConsultaMedico extends Component {
 
                     </Table>
 
-                    <p style={{ fontWeight: 'bold' }}>Selecione o Id da consulta que deseja adicionar uma descrição ou alterar o status:</p>
+                    <p style={{ fontWeight: 'bold' }}>Selecione o ID da consulta que deseja adicionar uma descrição ou alterar o status:</p>
                     <Form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={this.editarconsultas.bind(this)}>
 
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -482,7 +490,7 @@ class ListarConsultaMedico extends Component {
                             <textarea style={{ width: '100%', marginTop: '1%', resize: 'none', padding: '.375rem .75rem' }}
                                 type="text"
                                 cols="30" rows="5"
-                                placeholder="Insira uma descrição"
+                                placeholder="Insira uma descrição..."
                                 value={this.state.descricao}
                                 onChange={this.atualizaEstadoDescricao.bind(this)}
                             />
